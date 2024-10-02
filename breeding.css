@@ -3,7 +3,6 @@ body {
     font-family: 'Arial', sans-serif;
     font-size: 0.9em;
     color: white;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
     height: 100%;
     background-attachment: fixed;
     background-image: url(background.webp);
@@ -26,34 +25,54 @@ body::before {
     z-index: -1;
 }
 
-/* Links */
-a {
-    color: #00FFFF; /* Tek-style blue */
-    text-decoration: none;
+/* Metallic Container */
+.box {
+    display: table;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background: linear-gradient(145deg, #3a3a3a, #2e2e2e, #5c5c5c); /* Metallic look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #00FFFF; /* Tek-style border */
 }
 
-a:hover {
-    text-shadow: 0 0 5px #00FFFF;
+/* Headings */
+h3 {
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    color: #00FFFF; /* Tek Blue */
+    font-size: 1.3em;
+    text-shadow: none; /* Remove shadow for sharper text */
+}
+
+/* Subheading and Footer */
+p.subheading, p.footer {
+    margin-top: 0px;
+    font-size: 0.8em;
+    text-shadow: none;
+    color: #00FFFF;
 }
 
 /* Inputs */
-input {
-    width: 50px;
-    background-color: rgba(40, 150, 150, 0.4);
-    border-width: 0;
+input, select {
+    width: 100%;
+    background-color: rgba(50, 150, 150, 0.5);
+    border: 1px solid #00FFFF; /* Tek border */
+    border-radius: 5px;
     color: white;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
     font-size: 10pt;
-    transition: background 0.3s ease;
+    text-shadow: none; /* Sharp text */
+    padding: 5px;
 }
 
 input[type=button] {
+    background-color: #3a3a3a;
     width: auto;
-    background-color: #1a1a1a;
     border-radius: 5px;
 }
 
-input:hover {
+input:hover, select:hover {
     background-color: #00FFFF;
     color: black;
 }
@@ -62,28 +81,19 @@ input:hover {
     width: 120px;
 }
 
-/* Headings */
-h3 {
-    margin-bottom: 0px;
-    text-transform: uppercase;
-    text-shadow: 0 0 5px #00FFFF;
+/* Links */
+a {
+    color: #00FFFF; /* Tek-style color */
+    text-decoration: none;
 }
 
-/* Subheading */
-p.subheading {
-    margin-top: 0px;
-    font-size: 0.7em;
+a:hover {
+    color: #5cf5f5;
 }
 
-/* Footer */
-p.footer {
-    margin-top: 0px;
-    font-size: 0.8em;
-}
-
-/* Tables */
+/* Table Style */
 table {
-    background: linear-gradient(rgba(40, 100, 100, 0.6), rgba(40, 100, 100, 0.3));
+    background: linear-gradient(145deg, #3a3a3a, #5c5c5c); /* Metallic table background */
     border-radius: 10px;
     margin-bottom: 15px;
     width: 100%;
@@ -91,103 +101,26 @@ table {
     border-collapse: collapse;
 }
 
-td {
-    margin: 2px;
-    padding: 5px;
+td, th {
+    padding: 10px;
+    border: 1px solid #00FFFF;
 }
 
 thead {
     font-weight: bold;
+    color: #00FFFF;
 }
 
-caption, .tableheader {
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-/* Dimming Table Headers */
-.hiderows caption, .tableheader.dimmed {
-    color: #999999;
-}
-
-/* Hidden Rows */
-.hiderows tr {
-    display: none;
-}
-
-/* Select and Input Styling */
-input, select {
-    background-color: rgba(40, 150, 150, 0.3);
-    border-width: 0px;
-    color: white;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-    font-size: 10pt;
-    transition: all 0.3s ease;
-}
-
-input:hover, select:hover {
-    background-color: #00FFFF;
-    color: black;
-}
-
-/* Option Styling */
-option {
-    background-color: rgba(30, 100, 100, 1);
-    text-shadow: none;
-    font-size: 10pt;
-}
-
-/* Labels */
-label {
-    background-color: rgba(40, 150, 150, 0.3);
-    padding: 2px;
-    margin-left: 5px;
-    font-size: 0.8em;
-    border-radius: 5px;
-}
-
-input:checked + label {
-    background-color: rgba(51, 153, 255, 0.7);
-}
-
-/* Box Style */
-.box {
-    display: table;
-    text-align: center;
-    border-radius: 10px;
-    background: linear-gradient(rgba(40, 100, 100, 0.6), rgba(40, 100, 100, 0.3));
-    padding: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.wrapperbox {
-    min-height: 100%;
-    width: 100%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-/* Tooltip Styling */
-.tooltip {
-    position: relative;
-}
-
+/* Tooltip */
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 200px;
     background-color: rgba(40, 100, 100, 1);
     color: #fff;
     text-align: center;
-    padding: 5px 0;
+    padding: 5px;
     border-radius: 6px;
-    position: absolute;
-    z-index: 1;
     font-size: 0.9em;
-    opacity: 0;
-    transition: opacity 0.6s;
 }
 
 .tooltip:hover .tooltiptext {
