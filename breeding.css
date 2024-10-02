@@ -44,6 +44,11 @@ input[type=button] {
     font-size: 10pt;
 }
 
+.creature-dropdown option {
+    background-color: rgba(30, 100, 150, 1); /* Tek blue for creature dropdown */
+    color: white;
+}
+
 .autocomplete {
     width: 120px;
 }
