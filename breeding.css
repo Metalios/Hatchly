@@ -1,186 +1,214 @@
-		body {
-			font-family: Arial;
-			font-size: 0.9em;
-			color: white;
-			text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
-			height: 100%;
-			background-attachment: fixed;
-			background-image: url(background.webp);
-			background-repeat: no-repeat;
-			background-size: cover;
-			padding:0px;
-			margin: 0px;
-		}
-			body::before {
-				background-color: rgba(0,0,0,0.7);
-			}
-		a {
-			color: white;
-		}
-		input {
-			width: 50px;
-		}
-		input[type=button] {
-			width: auto;
-		}
-		.autocomplete {
-			width: 120px;
-		}
-		h3 {
-			margin-bottom: 0px;
-		}
-		p.subheading {
-			margin-top: 0px;
-			font-size: 0.7em;
-		}
-		p.footer {
-			margin-top: 0px;
-			font-size: 0.8em;
-		}
-		table {
-			/*background-color: rgba(40, 100, 100, 0.5);*/
-			background: linear-gradient(rgba(40, 100, 100, 0.6), rgba(40, 100, 100, 0.3));
-			border-radius: 10px;
-			margin-bottom: 15px;
-			width: 100%;
-			min-width: 400px;
-		}
-		td {
-			/*border-width: 1px;
-			border-style: solid;
-			border-color:  rgba(50, 255, 255, 0.5);*/
-			margin: 2px;
-			padding:5px;
-		}
-		thead {
-			font-weight: bold;
-		}
-		caption, .tableheader {
-			font-weight: bold;
-			font-size: 1.1em;
-		}
-		.hiderows caption, .tableheader.dimmed {
-			color: #999999;
-		}
-		.hiderows tr {
-			display: none;
-		}
-		input, select {
-			background-color: rgba(40, 150, 150, 0.3);
-			border-width: 0px;
-			color: white;
-			text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
-			font-size: 10pt;
-		}
-		option {
-			background-color: rgba(30, 100, 100, 1);
-			text-shadow: none;
-			font-size: 10pt;
-		}
-		.label {
-			font-weight: bold;
-		}
-		.box {
-			display: table;
-			text-align: center;
-			/*border-width: 2px;
-			border-style: solid;*/
-			border-radius: 10px;
-			/*border-color:  rgba(50, 200, 200, 0.6);*/
-			/*background-color: rgba(40, 100, 100, 0.5);*/
-			background: linear-gradient(rgba(40, 100, 100, 0.6), rgba(40, 100, 100, 0.3));
-			padding:10px;
-			margin-left: 10px;
-			margin-right: 10px;
-		}
-		.messagebox {
-    		max-width: 400px;
-    		display: inline-block;
-    		margin-bottom: 5px;
-		}
-		.wrapperbox {
-			min-height:100%;
-			width:100%;
-			display:inline-flex;
-			justify-content: center;
-			align-items:center;
-			flex-wrap: wrap;
-		}
-		.helpbox {
-			margin-left: 10px;
-			margin-right: 10px;
-			max-width: 50%;
-			display: inline-flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			text-shadow: none;
+/* General Body Style */
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.9em;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
+    height: 100%;
+    background-attachment: fixed;
+    background-image: url(background.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+}
 
-		}
-		.helpbox .box {
-			background: linear-gradient(rgba(40, 100, 100, 0.7), rgba(40, 100, 100, 0.5));
-			margin-bottom:10px;
-		}
-		.hidden {
-			display: none;
-		}
-		label {
-			background-color: rgba(40, 150, 150, 0.3);
-			padding: 2px;
-			margin-left: 5px;
-			font-size: 0.8em;
-		}
-		input:checked + label {
-			background-color: rgba(51, 153, 255, 0.7);
-		}
-		.fillfood {
-			font-style: italic;
-			text-shadow: -1px -1px 0 rgba(85, 85, 85, 0.8), 1px -1px 0 rgba(85, 85, 85, 0.8), -1px 1px 0 rgba(85, 85, 85, 0.8), 1px 1px 0 rgba(85, 85, 85, 0.8)
-		}
-		.red {
-			color: red;
-		}
-		.redselect {
-			background-color: red;
-		}
-		.tooltip {
-		    position: relative;
-		    /*display: inline-block;*/
-		}
+/* Background Dimmed Overlay */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
 
-		.tooltip .tooltiptext {
-		    visibility: hidden;
-		    width: 200px;
-		    background-color: black;
-		    color: #fff;
-		    text-align: center;
-		    padding: 5px 0;
-		    border-radius: 6px;
-		 
-		    position: absolute;
-		    z-index: 1;
+/* Links */
+a {
+    color: #00FFFF; /* Tek-style blue */
+    text-decoration: none;
+}
 
-		    font-size: 0.9em;
-		    font-weight: normal;
-		}
+a:hover {
+    text-shadow: 0 0 5px #00FFFF;
+}
 
-		.tooltip:hover .tooltiptext {
-		    visibility: visible;
-		    top: 0px;
-		    left: 100%;
-		}
+/* Inputs */
+input {
+    width: 50px;
+    background-color: rgba(40, 150, 150, 0.4);
+    border-width: 0;
+    color: white;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    font-size: 10pt;
+    transition: background 0.3s ease;
+}
 
-	.tooltip .tooltiptext {
-	    opacity: 0;
-	    transition: opacity 1s;
-	    background: rgba(40, 100, 100, 1);
-	}
+input[type=button] {
+    width: auto;
+    background-color: #1a1a1a;
+    border-radius: 5px;
+}
 
-	.tooltip:hover .tooltiptext {
-	    opacity: 1;
-	}
+input:hover {
+    background-color: #00FFFF;
+    color: black;
+}
 
-	.tooltip .tooltiptext:hover {
-		opacity: 0;
-		visibility: hidden;
-	}
+.autocomplete {
+    width: 120px;
+}
+
+/* Headings */
+h3 {
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #00FFFF;
+}
+
+/* Subheading */
+p.subheading {
+    margin-top: 0px;
+    font-size: 0.7em;
+}
+
+/* Footer */
+p.footer {
+    margin-top: 0px;
+    font-size: 0.8em;
+}
+
+/* Tables */
+table {
+    background: linear-gradient(rgba(40, 100, 100, 0.6), rgba(40, 100, 100, 0.3));
+    border-radius: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    min-width: 400px;
+    border-collapse: collapse;
+}
+
+td {
+    margin: 2px;
+    padding: 5px;
+}
+
+thead {
+    font-weight: bold;
+}
+
+caption, .tableheader {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Dimming Table Headers */
+.hiderows caption, .tableheader.dimmed {
+    color: #999999;
+}
+
+/* Hidden Rows */
+.hiderows tr {
+    display: none;
+}
+
+/* Select and Input Styling */
+input, select {
+    background-color: rgba(40, 150, 150, 0.3);
+    border-width: 0px;
+    color: white;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    font-size: 10pt;
+    transition: all 0.3s ease;
+}
+
+input:hover, select:hover {
+    background-color: #00FFFF;
+    color: black;
+}
+
+/* Option Styling */
+option {
+    background-color: rgba(30, 100, 100, 1);
+    text-shadow: none;
+    font-size: 10pt;
+}
+
+/* Labels */
+label {
+    background-color: rgba(40, 150, 150, 0.3);
+    padding: 2px;
+    margin-left: 5px;
+    font-size: 0.8em;
+    border-radius: 5px;
+}
+
+input:checked + label {
+    background-color: rgba(51, 153, 255, 0.7);
+}
+
+/* Box Style */
+.box {
+    display: table;
+    text-align: center;
+    border-radius: 10px;
+    background: linear-gradient(rgba(40, 100, 100, 0.6), rgba(40, 100, 100, 0.3));
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.wrapperbox {
+    min-height: 100%;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(40, 100, 100, 1);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    font-size: 0.9em;
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    top: 0;
+    left: 100%;
+}
+
+/* Responsive Adjustments */
+@media only screen and (max-width: 768px) {
+    .box {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    table {
+        font-size: 0.8em;
+    }
+
+    input, select {
+        font-size: 8pt;
+    }
+}
