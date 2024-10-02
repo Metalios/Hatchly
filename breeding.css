@@ -21,20 +21,24 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7); /* Dim the background */
     z-index: -1;
 }
 
-/* Metallic Container */
+/* Brushed Metallic Container */
 .box {
-    display: table;
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
     margin: 10px;
-    background: linear-gradient(145deg, #3a3a3a, #2e2e2e, #5c5c5c); /* Metallic look */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    border: 1px solid #00FFFF; /* Tek-style border */
+    background: rgba(50, 50, 50, 0.6); /* Semi-transparent effect */
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.6); /* Tek-style border */
+    background-image: linear-gradient(135deg, rgba(40, 40, 40, 0.8), rgba(60, 60, 60, 0.8)), 
+                      url('https://www.transparenttextures.com/patterns/brushed-alum.png'); /* Brushed metal texture */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    background-blend-mode: multiply;
 }
 
 /* Headings */
@@ -43,7 +47,7 @@ h3 {
     text-transform: uppercase;
     color: #00FFFF; /* Tek Blue */
     font-size: 1.3em;
-    text-shadow: none; /* Remove shadow for sharper text */
+    text-shadow: none; /* Sharp text */
 }
 
 /* Subheading and Footer */
@@ -57,7 +61,7 @@ p.subheading, p.footer {
 /* Inputs */
 input, select {
     width: 100%;
-    background-color: rgba(50, 150, 150, 0.5);
+    background-color: rgba(50, 150, 150, 0.3); /* Slight transparency */
     border: 1px solid #00FFFF; /* Tek border */
     border-radius: 5px;
     color: white;
@@ -67,9 +71,10 @@ input, select {
 }
 
 input[type=button] {
-    background-color: #3a3a3a;
+    background-color: rgba(40, 40, 40, 0.8);
     width: auto;
     border-radius: 5px;
+    border: 1px solid #00FFFF;
 }
 
 input:hover, select:hover {
@@ -89,26 +94,6 @@ a {
 
 a:hover {
     color: #5cf5f5;
-}
-
-/* Table Style */
-table {
-    background: linear-gradient(145deg, #3a3a3a, #5c5c5c); /* Metallic table background */
-    border-radius: 10px;
-    margin-bottom: 15px;
-    width: 100%;
-    min-width: 400px;
-    border-collapse: collapse;
-}
-
-td, th {
-    padding: 10px;
-    border: 1px solid #00FFFF;
-}
-
-thead {
-    font-weight: bold;
-    color: #00FFFF;
 }
 
 /* Tooltip */
@@ -135,10 +120,6 @@ thead {
     .box {
         margin-left: 5px;
         margin-right: 5px;
-    }
-
-    table {
-        font-size: 0.8em;
     }
 
     input, select {
