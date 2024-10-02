@@ -13,7 +13,7 @@
             <td style="width: 50%" class="label tooltip">Creature: <span class="tooltiptext">Creature type</span>
             </td>
             <td>
-              <select ng-show="displayconfig.showoldselects" class="creature-dropdown" ng-options="name as name for (name, details) in creatures" ng-model="creature.name" ng-change="switchcreature()"></select>
+              <select ng-show="displayconfig.showoldselects" class="creature-dropdown" ng-options="name as name for (name, details) in creatures" ng-model="creature.name" ng-style="{'background-color': 'rgba(50, 50, 50, 0.8)', 'color': 'white'}" ng-change="switchcreature()"></select>
               <input ng-hide="displayconfig.showoldselects" class="autocomplete" autocomplete data-source="creatures" ng-change="searchcreature()" data-default="creature.name" ng-model="creature.searchname">
             </td>
           </tr>
