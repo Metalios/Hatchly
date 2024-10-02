@@ -11,11 +11,12 @@ body {
     padding: 0px;
     margin: 0px;
     position: relative;
+    z-index: 1; /* Ensure the content is on top */
 }
 
 body::before {
     content: "";
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
