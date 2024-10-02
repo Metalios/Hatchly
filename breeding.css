@@ -3,6 +3,7 @@ body {
     font-family: 'Arial', sans-serif;
     font-size: 0.9em;
     color: white;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
     height: 100%;
     background-attachment: fixed;
     background-image: url(background.webp);
@@ -21,11 +22,11 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Dim the background */
+    background-color: rgba(0, 0, 0, 0.7); /* Dims the background image */
     z-index: -1;
 }
 
-/* Brushed Metallic Container */
+/* Semi-Transparent Brushed Metallic Container */
 .box {
     display: flex;
     flex-direction: column;
@@ -39,45 +40,28 @@ body::before {
                       url('https://www.transparenttextures.com/patterns/brushed-alum.png'); /* Brushed metal texture */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
     background-blend-mode: multiply;
-}
-
-/* Headings */
-h3 {
-    margin-bottom: 0px;
-    text-transform: uppercase;
-    color: #00FFFF; /* Tek Blue */
-    font-size: 1.3em;
-    text-shadow: none; /* Sharp text */
-}
-
-/* Subheading and Footer */
-p.subheading, p.footer {
-    margin-top: 0px;
-    font-size: 0.8em;
-    text-shadow: none;
-    color: #00FFFF;
+    backdrop-filter: blur(5px); /* Optional: Adds glass-like blur effect */
 }
 
 /* Inputs */
-input, select {
-    width: 100%;
-    background-color: rgba(50, 150, 150, 0.3); /* Slight transparency */
-    border: 1px solid #00FFFF; /* Tek border */
-    border-radius: 5px;
+input {
+    width: 50px;
+    background-color: rgba(50, 150, 150, 0.4); /* Semi-transparent for Tek style */
+    border-width: 0;
     color: white;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
     font-size: 10pt;
-    text-shadow: none; /* Sharp text */
-    padding: 5px;
+    transition: background 0.3s ease;
 }
 
 input[type=button] {
-    background-color: rgba(40, 40, 40, 0.8);
     width: auto;
+    background-color: rgba(20, 20, 20, 0.8);
     border-radius: 5px;
-    border: 1px solid #00FFFF;
+    border: 1px solid #00FFFF; /* Tek style border */
 }
 
-input:hover, select:hover {
+input:hover {
     background-color: #00FFFF;
     color: black;
 }
@@ -88,15 +72,112 @@ input:hover, select:hover {
 
 /* Links */
 a {
-    color: #00FFFF; /* Tek-style color */
+    color: #00FFFF; /* Tek-style blue */
     text-decoration: none;
 }
 
 a:hover {
-    color: #5cf5f5;
+    text-shadow: 0 0 5px #00FFFF;
 }
 
-/* Tooltip */
+/* Headings */
+h3 {
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #00FFFF;
+    color: #00FFFF; /* Tek-style blue */
+}
+
+/* Subheading */
+p.subheading {
+    margin-top: 0px;
+    font-size: 0.7em;
+    color: #00FFFF;
+}
+
+/* Footer */
+p.footer {
+    margin-top: 0px;
+    font-size: 0.8em;
+    color: #00FFFF;
+}
+
+/* Tables */
+table {
+    background: rgba(50, 50, 50, 0.6); /* Semi-transparent metallic look */
+    border-radius: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    min-width: 400px;
+    border-collapse: collapse;
+}
+
+td {
+    margin: 2px;
+    padding: 5px;
+}
+
+thead {
+    font-weight: bold;
+    color: #00FFFF;
+}
+
+caption, .tableheader {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #00FFFF; /* Tek color for headers */
+}
+
+/* Dimming Table Headers */
+.hiderows caption, .tableheader.dimmed {
+    color: #999999;
+}
+
+/* Hidden Rows */
+.hiderows tr {
+    display: none;
+}
+
+/* Select and Input Styling */
+input, select {
+    background-color: rgba(50, 150, 150, 0.3); /* Semi-transparent */
+    border-width: 0px;
+    color: white;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    font-size: 10pt;
+    transition: all 0.3s ease;
+}
+
+input:hover, select:hover {
+    background-color: #00FFFF;
+    color: black;
+}
+
+/* Option Styling */
+option {
+    background-color: rgba(30, 100, 100, 1);
+    text-shadow: none;
+    font-size: 10pt;
+}
+
+/* Labels */
+label {
+    background-color: rgba(50, 150, 150, 0.4);
+    padding: 2px;
+    margin-left: 5px;
+    font-size: 0.8em;
+    border-radius: 5px;
+}
+
+input:checked + label {
+    background-color: rgba(51, 153, 255, 0.7);
+}
+
+/* Tooltip Styling */
+.tooltip {
+    position: relative;
+}
+
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 200px;
@@ -105,7 +186,11 @@ a:hover {
     text-align: center;
     padding: 5px;
     border-radius: 6px;
+    position: absolute;
+    z-index: 1;
     font-size: 0.9em;
+    opacity: 0;
+    transition: opacity 0.6s;
 }
 
 .tooltip:hover .tooltiptext {
@@ -120,6 +205,10 @@ a:hover {
     .box {
         margin-left: 5px;
         margin-right: 5px;
+    }
+
+    table {
+        font-size: 0.8em;
     }
 
     input, select {
