@@ -537,6 +537,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 325.0
 		},
 
+		Basilisk: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.001543,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 0.5,
+			eggspeed: 0.005556,
+			eggspeedmult: 0.8,
+			weight: 800.0
+		},
+		
 		Basilosaurus: { //
 			birthtype: "Gestation",
 			type: "Carnivore",
@@ -680,7 +693,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 400
 		},
 
-		Compsognathus: { //
+		Compy: { //
 			birthtype: "Incubation",
 			type: "Carnivore",
 			basefoodrate: 0.000868,
@@ -691,6 +704,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeed: 0.005556,
 			eggspeedmult: 6.0,
 			weight: 25
+		},
+
+		Cosmo: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.000868,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 1,
+			eggspeed: 0.005556,
+			eggspeedmult: 3.5,
+			weight: 70
 		},
 		
 		"Crystal Wyvern": { //Food Check - Primal Crystal 350 Food Value - need more Tests!?
@@ -1168,6 +1194,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 140.0
 		},
 
+		Karkinos: { //
+			birthtype: "Gestation",
+			type: "Carrion",
+			basefoodrate: 0.003156,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 0.8,
+			gestationspeed: 0.000035,
+			gestationpeedmult: 0.8,
+			weight: 800
+		},
+
 		Kentrosaurus: { //
 			birthtype: "Incubation",
 			type: "Herbivore",
@@ -1636,6 +1675,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 400.0
 		},
 
+		Pyromane: { //
+			birthtype: "Gestation",
+			type: "Carnivore",
+			basefoodrate: 0.001157,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 1.9,
+			gestationspeed: 0.000061,
+			gestationspeedmult: 1.9,
+			weight: 300.0
+		},
+
 		Quetzalcoatlus: { //
 			birthtype: "Incubation",
 			type: "Carnivore",
@@ -1972,7 +2024,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			agespeedmult: 3.7,
 			eggspeed: 0.005556,
 			eggspeedmult: 3.7,
-			weight: 50
+			weight: 50.0
 		},
 		
 		Voidwyrm: { //NEW Food Check - Mutagen 1000 Food Value - need more Tests!?
@@ -2027,6 +2079,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 300.0
 		},
 
+		"Yi Ling": { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.001543,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 2,
+			eggspeed: 0.005556,
+			eggspeedmult: 5.0,
+			weight: 140.0
+		},
+			
 		Yutyrannus: { //
 			birthtype: "Incubation",
 			type: "Carnivore",
