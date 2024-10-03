@@ -25,119 +25,42 @@ body::before {
     z-index: -1;
 }
 
-/* Wrapper styles */
-.wrapperbox {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+a {
+    color: #66ccff; /* Tek blue color for links */
 }
 
-.box {
-    background-color: rgba(0, 0, 0, 0.8); /* Dark metallic background */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 800px;
-    width: 100%;
+input {
+    width: 50px;
+}
+
+input[type=button] {
+    width: auto;
+}
+
+input, select {
+    background-color: rgba(50, 50, 50, 0.8); /* Dark metallic with slight transparency */
+    border-width: 0px;
     color: white;
-    font-family: 'Arial', sans-serif;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
+    font-size: 10pt;
 }
 
-/* Form headings */
-h3, h5 {
-    color: #00aaff;
-    margin: 10px 0;
-}
-
-/* Subheading style */
-.subheading {
-    font-size: 12px;
-    color: #d1d1d1;
-}
-
-/* Tableheader and slide styles */
-.tableheader {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.tableslide {
-    margin-top: 10px;
-    padding: 15px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-}
-
-/* Tooltip styles */
-.tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: help;
-}
-
-.tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Table styles */
-table {
-    width: 100%;
+select[ng-model="creature.name"] {
+    background-color: rgba(30, 100, 150, 1);
     color: white;
-    border-spacing: 10px;
 }
 
-table td {
-    vertical-align: middle;
+option {
+    background-color: rgba(30, 100, 150, 1); /* Tek blue */
+    text-shadow: none;
+    font-size: 10pt;
 }
 
-/* Input styles */
-input[type="number"],
-input[type="checkbox"],
-input[type="button"] {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #555;
-    background-color: #2d2d2d;
-    color: white;
-    width: 100%;
-    font-size: 14px;
+.autocomplete {
+    width: 120px;
 }
 
-input[type="button"] {
-    background-color: #00aaff;
-    cursor: pointer;
-}
-
-input[type="button"]:hover {
-    background-color: #0080cc;
-}
-
-/* Select dropdown styles */
-select {
+input.autocomplete {
     background-color: #2d2d2d; /* Dark metallic color */
     color: white;
     padding: 10px;
@@ -145,41 +68,163 @@ select {
     border: 1px solid #555;
     width: 100%;
     font-size: 14px;
-    cursor: pointer;
+    box-sizing: border-box; /* Ensures padding and border are included in the total width */
 }
 
-/* Checkbox custom styles */
-input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: #00aaff; /* Custom color for checkboxes */
+h3 {
+    margin-bottom: 0px;
 }
 
-/* Dimmed section when hidden */
-.dimmed {
-    opacity: 0.5;
-    pointer-events: none;
+p.subheading {
+    margin-top: 0px;
+    font-size: 0.7em;
 }
 
-/* Table spacing and alignment */
-table td {
-    padding: 8px;
+p.footer {
+    margin-top: 0px;
+    font-size: 0.8em;
 }
 
-/* Custom scrollbar styles (optional) */
-.box::-webkit-scrollbar {
-    width: 12px;
-}
-
-.box::-webkit-scrollbar-thumb {
-    background-color: #00aaff;
+table {
+    background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(70, 150, 200, 0.4)); /* Metallic and Tek blue theme */
     border-radius: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    min-width: 400px;
 }
 
-.box::-webkit-scrollbar-thumb:hover {
-    background-color: #007acc;
+td {
+    margin: 2px;
+    padding: 5px;
 }
 
-.box::-webkit-scrollbar-track {
-    background: #2d2d2d;
+thead {
+    font-weight: bold;
+}
+
+caption, .tableheader {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #66ccff; /* Tek blue */
+}
+
+.hiderows caption, .tableheader.dimmed {
+    color: #999999;
+}
+
+.hiderows tr {
+    display: none;
+}
+
+
+
+.label {
+    font-weight: bold;
+    color: #66ccff; /* Tek blue */
+}
+
+.box {
+    display: table;
+    text-align: center;
+    border-radius: 10px;
+    background: linear-gradient(rgba(50, 50, 50, 0.6), rgba(70, 150, 200, 0.3)); /* Semi-transparent Tek look */
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.messagebox {
+    max-width: 400px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.wrapperbox {
+    min-height: 100%;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.helpbox {
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: 50%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-shadow: none;
+}
+
+.helpbox .box {
+    background: linear-gradient(rgba(50, 50, 50, 0.7), rgba(70, 150, 200, 0.4)); /* Darker metallic theme */
+    margin-bottom: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+label {
+    background-color: rgba(40, 150, 150, 0.3);
+    padding: 2px;
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+input:checked + label {
+    background-color: rgba(70, 150, 200, 0.7); /* Tek blue when checked */
+}
+
+.fillfood {
+    font-style: italic;
+    text-shadow: -1px -1px 0 rgba(85, 85, 85, 0.8), 1px -1px 0 rgba(85, 85, 85, 0.8), -1px 1px 0 rgba(85, 85, 85, 0.8), 1px 1px 0 rgba(85, 85, 85, 0.8);
+}
+
+.red {
+    color: red;
+}
+
+.redselect {
+    background-color: red;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(50, 50, 50, 0.9); /* Tek-styled tooltip */
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    top: 0px;
+    left: 100%;
+}
+
+.tooltip .tooltiptext {
+    opacity: 0;
+    transition: opacity 1s;
+    background: rgba(50, 50, 50, 0.9);
+}
+
+.tooltip:hover .tooltiptext {
+    opacity: 1;
+}
+
+.tooltip .tooltiptext:hover {
+    opacity: 0;
+    visibility: hidden;
 }
