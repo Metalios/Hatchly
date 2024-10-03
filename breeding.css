@@ -36,6 +36,26 @@ input {
 input[type=button] {
     width: auto;
 }
+
+input, select {
+    background-color: rgba(50, 50, 50, 0.8); /* Dark metallic with slight transparency */
+    border-width: 0px;
+    color: white;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
+    font-size: 10pt;
+}
+
+select[ng-model="creature.name"] {
+    background-color: rgba(30, 100, 150, 1);
+    color: white;
+}
+
+option {
+    background-color: rgba(30, 100, 150, 1); /* Tek blue */
+    text-shadow: none;
+    font-size: 10pt;
+}
+
 .autocomplete {
     width: 120px;
 }
