@@ -14,6 +14,7 @@
             </td>
             <td>
               <select ng-show="displayconfig.showoldselects" ng-options="name as name for (name, details) in creatures" ng-model="creature.name" ng-change="switchcreature()"></select>
+              <input ng-hide="displayconfig.showoldselects" class="autocomplete" autocomplete data-source="creatures" ng-change="searchcreature()" data-default="creature.name" ng-model="creature.searchname">
             </td>
           </tr>
           <tr>
