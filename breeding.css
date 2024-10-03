@@ -45,11 +45,6 @@ input, select {
     font-size: 10pt;
 }
 
-select[ng-model="creature.name"] {
-    background-color: rgba(30, 100, 150, 1);
-    color: white;
-}
-
 option {
     background-color: rgba(30, 100, 150, 1); /* Tek blue */
     text-shadow: none;
@@ -60,15 +55,9 @@ option {
     width: 120px;
 }
 
-input.autocomplete {
+ul {
     background-color: #2d2d2d; /* Dark metallic color */
     color: white;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #555;
-    width: 100%;
-    font-size: 14px;
-    box-sizing: border-box; /* Ensures padding and border are included in the total width */
 }
 
 h3 {
