@@ -241,4 +241,19 @@
       </div>
     </form>
   </div>
+
+  <!-- New Box for Changes/Additions -->
+  <div class="box changes-box">
+    <h3>Changelog / Additions</h3>
+    <ul class="changes-list" id="changelog-list">
+      <li>Updated creature list for ASA.
+        <ul>
+          <li ng-repeat="creature in creatureChanges">
+          {{creature.name}} has been {{creature.status}}.
+          </li>
+        </ul>
+      </li>
+      <!-- The list will be dynamically populated with ASA dinos -->
+    </ul>
+  </div>
 </div>
