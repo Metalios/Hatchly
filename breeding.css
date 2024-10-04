@@ -222,6 +222,9 @@ input:checked + label {
     max-width: 300px; /* Restrict the width of the changes box */
     background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(70, 150, 200, 0.4)); /* Same theme */
     text-align: left;
+    height: 400px; /* Adjust the height of the changes box */
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
+    padding: 10px; /* Add padding for better spacing */
 }
 
 .changes-box h3 {
@@ -243,5 +246,5 @@ input:checked + label {
 
 .small-text {
   font-size: 0.8em; /* Or any size you prefer */
-  color: gray; /* Optional: Change color or any other styling */
+  color: #e0e0e0; /* Optional: Change color or any other styling */
 }
