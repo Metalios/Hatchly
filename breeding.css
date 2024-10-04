@@ -226,8 +226,6 @@ input:checked + label {
     padding: 10px; /* Add padding for better spacing */
     margin-top: 20px; /* Adjust the top margin */
     margin-bottom: 20px; /* Equal bottom margin */
-    border-radius: 10px; /* Optional: give it rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: add shadow for better visibility */
     overflow-y: auto; /* Allow scrolling if content exceeds the height */
 }
 
