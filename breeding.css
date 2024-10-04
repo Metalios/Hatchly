@@ -223,8 +223,12 @@ input:checked + label {
     background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(70, 150, 200, 0.4)); /* Same theme */
     text-align: left;
     height: 400px; /* Adjust the height of the changes box */
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
     padding: 10px; /* Add padding for better spacing */
+    margin-top: 20px; /* Adjust the top margin */
+    margin-bottom: 20px; /* Equal bottom margin */
+    border-radius: 10px; /* Optional: give it rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: add shadow for better visibility */
+    overflow-y: auto; /* Allow scrolling if content exceeds the height */
 }
 
 .changes-box h3 {
