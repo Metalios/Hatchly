@@ -6,6 +6,17 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
   		}
 	};
 
+
+	$scope.creatureChanges = [
+		{ name: 'Basilisk', status: 'added' },
+		{ name: 'Cosmo', status: 'added' },
+		{ name: 'Deinosuchus', status: 'added' },
+		{ name: 'Karkinos', status: 'added' },
+		{ name: 'Pyromane', status: 'added' },
+		{ name: 'Shastasaurus', status: 'added' },
+		{ name: 'Yi Ling', status: 'added' }
+	];
+
 	$scope.Defaultfoods={
 
 		'Raw Fish Meat': {
