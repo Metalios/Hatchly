@@ -240,3 +240,8 @@ input:checked + label {
     color: white;
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
+
+.small-text {
+  font-size: 0.8em; /* Or any size you prefer */
+  color: gray; /* Optional: Change color or any other styling */
+}
