@@ -227,6 +227,8 @@ input:checked + label {
     margin-top: 20px; /* Adjust the top margin */
     margin-bottom: 20px; /* Equal bottom margin */
     overflow-y: auto; /* Allow scrolling if content exceeds the height */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .changes-box h3 {
@@ -235,8 +237,14 @@ input:checked + label {
 }
 
 .changes-list {
-    list-style-type: disc;
+    list-style-type: square;
     padding-left: 20px;
+}
+
+.changes-list ul {
+    background-color: rgba(50, 50, 50, 0.5); /* Transparent gray */
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .changes-list li {
