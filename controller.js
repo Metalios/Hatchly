@@ -764,6 +764,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 140.0
 		},
 
+		Deinosuchus: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.01,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 1.0,
+			eggspeed: 0.005556,
+			eggspeedmult: 1.0,
+			weight: 600.0
+		},
+
 		Desmodus: { //
 			birthtype: "Gestation",
 			type: "BloodStalker",
