@@ -8,13 +8,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 
 	$scope.creatureChanges = [
-		{ name: 'Basilisk', status: 'added' },
-		{ name: 'Cosmo', status: 'added' },
-		{ name: 'Deinosuchus', status: 'added' },
-		{ name: 'Karkinos', status: 'added' },
-		{ name: 'Pyromane', status: 'added' },
-		{ name: 'Shastasaurus', status: 'added' },
-		{ name: 'Yi Ling', status: 'added' }
+		{ name: 'Dreadmare', status: 'added' },
 	];
 
 	$scope.Defaultfoods={
@@ -827,6 +821,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 250.0
 		},
 
+		Dreadmare: { //
+			birthtype: "Gestation",
+			type: "Carrion",
+			basefoodrate: 0.001929,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 0.8,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1.0,
+			weight: 450.0
+		},
+		
 		Dunkleosteus: { //
 			birthtype: "Gestation",
 			type: "Carnivore",
