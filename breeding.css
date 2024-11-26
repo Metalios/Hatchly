@@ -62,6 +62,26 @@ option {
     width: 120px;
 }
 
+.ui-autocomplete {
+    background-color: rgba(50, 50, 50, 0.9); /* Dark metallic background */
+    border: 1px solid #66ccff; /* Tek blue border */
+    color: white; /* White text */
+    font-size: 10pt; /* Match other dropdowns */
+    max-height: 200px; /* Add a max height if there are many options */
+    overflow-y: auto; /* Enable scrolling if necessary */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.ui-menu-item {
+    background-color: rgba(30, 100, 150, 1); /* Tek blue for items */
+    padding: 5px; /* Spacing for better readability */
+}
+
+.ui-menu-item:hover {
+    background-color: rgba(40, 150, 200, 1); /* Lighter Tek blue on hover */
+    cursor: pointer; /* Indicate interactivity */
+}
+
 ul {
     background-color: #2d2d2d; /* Dark metallic color */
     color: white;
