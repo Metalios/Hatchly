@@ -2508,9 +2508,9 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		}
 
 		var now=new Date();
-		$cookies.putObject('creaturelist', $scope.creaturelist, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
-		$cookies.putObject('troughdata', $scope.troughdata, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
-		$cookies.putObject('troughstacks', $scope.troughstacks, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
+		$cookies.putObject('creaturelist', $scope.creaturelist, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
+		$cookies.putObject('troughdata', $scope.troughdata, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
+		$cookies.putObject('troughstacks', $scope.troughstacks, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 
 		return output;
 	}
