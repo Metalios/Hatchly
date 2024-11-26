@@ -38,16 +38,23 @@ input[type=button] {
 }
 
 input, select {
-    background-color: rgba(50, 50, 50, 0.8); /* Dark metallic with slight transparency */
-    border-width: 0px;
-    color: white;
+    appearance: none; /* Remove native styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: rgba(50, 50, 50, 0.8); /* Consistent dark background */
+    color: white; /* Consistent text color */
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
+    border: 1px solid #66ccff; /* Add Tek blue border */
+    border-radius: 5px; /* Optional rounded corners */
     font-size: 10pt;
+    padding: 5px;
+    width: 100%; /* Ensure full width */
 }
 
 option {
-    background-color: rgba(30, 100, 150, 1); /* Tek blue */
-    text-shadow: none;
+    background-color: rgba(30, 100, 150, 1); /* Tek blue for dropdown options */
+    color: white;
+    text-shadow: none; /* Remove shadow for clear text */
     font-size: 10pt;
 }
 
