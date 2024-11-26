@@ -1891,7 +1891,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		}
 		$scope.clearcookies=true;
 		var now=new Date();
-		$cookies.putObject('settings', $scope.settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
+		$cookies.putObject('settings', $scope.settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 	}
 	
 	if($scope.settings.stackSize){
@@ -1966,7 +1966,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 	$scope.showhidetable=function(table) {
 		$scope.tablevisibility[table]=!$scope.tablevisibility[table];
 		var now=new Date();
-		$cookies.putObject('tablevisibility', $scope.tablevisibility, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
+		$cookies.putObject('tablevisibility', $scope.tablevisibility, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 	}
 
 	$scope.showhideanimations=function() {
@@ -1979,7 +1979,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 	$scope.changedisplayconfig=function() {
 		var now=new Date();
-		$cookies.putObject('displayconfig', $scope.displayconfig, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
+		$cookies.putObject('displayconfig', $scope.displayconfig, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 	}
 
 	$scope.searchcreature=function() {
@@ -2020,7 +2020,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			settings.gen2growtheffect = false
 		}
 		var now=new Date();
-		$cookies.putObject('settings', settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
+		$cookies.putObject('settings', settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 		$scope.statscalc();
 		$scope.troughcalc();
 	}
@@ -2225,7 +2225,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		//alert("Food to finish "+$scope.iterations);
 
 		var now=new Date();
-		$cookies.putObject('creature', $scope.creature, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/breeding'});
+		$cookies.putObject('creature', $scope.creature, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 	}
 
 	$scope.finalbuffercalc=function() {
