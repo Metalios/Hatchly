@@ -8,7 +8,13 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 
 	$scope.creatureChanges = [
-		{ name: 'Dreadmare', status: 'added' },
+		{ name: 'Armadoggo', status: 'added' },
+		{ name: 'Dreadnoughtus', status: 'added' },
+		{ name: 'Gacha', status: 'added' },
+		{ name: 'Gasbag', status: 'added' },
+		{ name: 'Managarmr', status: 'added' },
+		{ name: 'Snow Owl', status: 'added' },
+		{ name: 'Velonasaur', status: 'added' },
 	];
 
 	$scope.Defaultfoods={
