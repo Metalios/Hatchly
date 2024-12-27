@@ -476,6 +476,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeedmult: 1.7,
 			weight: 400.0
 		},
+
+		Armadoggo: {
+			birthtype: "Gestation",
+			type: "Carnivore",
+			basefoodrate: 0.001543,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 1.7,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1.0,
+			weight: 200.0
+		},
 		
 		Arthropluera: { //
 			birthtype: "Incubation",
@@ -833,6 +846,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gestationspeedmult: 1.0,
 			weight: 450.0
 		},
+
+		Dreadnoughtus: { //
+			birthtype: "Incubation",
+			type: "Herbivore",
+			basefoodrate: 0.01,
+			babyfoodrate: 50.0,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 0.5,
+			eggspeed: 0.005556,
+			eggspeedmult: 1.0,
+			weight: 3000.0
+		},
 		
 		Dunkleosteus: { //
 			birthtype: "Gestation",
@@ -899,6 +925,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 70.0
 		},
 
+		Gacha: {
+			birthtype: "Gestation",
+			type: "Omnivore",
+			basefoodrate: 0.01,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 0.8,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1.0,
+			weight: 550.0
+		},
+
 		Gallimimus: { //
 			birthtype: "Incubation",
 			type: "Herbivore",
@@ -910,6 +949,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeed: 0.005556,
 			eggspeedmult: 3.5,
 			weight: 270
+		},
+		
+		Gasbag: {
+			birthtype: "Gestation",
+			type: "Herbivore",
+			basefoodrate: 0.002066,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 2.0,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1.0,
+			weight: 3000.0
 		},
 
 		Giganotosaurus: { //
@@ -1131,6 +1183,18 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gestationspeed: 0.000035,
 			gestationspeedmult: 1.0,
 			weight: 500
+		},
+		Managarmr: {
+			birthtype: "Gestation",
+			type: "Carnivore",
+			basefoodrate: 0.001852,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 1.0,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 2.0,
+			weight: 300.0
 		},
 		
 		Manta: { //
@@ -1654,6 +1718,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 3000.0
 		},
 
+		"Snow Owl": { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.01,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 1.7,
+			eggspeed: 0.005556,
+			eggspeedmult: 1.7,
+			weight: 375.0
+		},
+
 		Spinosaurus: { //
 			birthtype: "Incubation",
 			type: "Carnivore",
@@ -1782,6 +1859,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeed: 0.005556,
 			eggspeedmult: 1.0,
 			weight: 800.0
+		},
+
+		Velonasaur: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.001543,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 2.0,
+			eggspeed: 0.005556,
+			eggspeedmult: 4.4,
+			weight: 320
 		},
 
 		Vulture: { //
