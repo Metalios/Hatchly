@@ -8,13 +8,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 
 	$scope.creatureChanges = [
-		{ name: 'Armadoggo', status: 'added' },
-		{ name: 'Dreadnoughtus', status: 'added' },
-		{ name: 'Gacha', status: 'added' },
-		{ name: 'Gasbag', status: 'added' },
-		{ name: 'Managarmr', status: 'added' },
-		{ name: 'Snow Owl', status: 'added' },
-		{ name: 'Velonasaur', status: 'added' },
+		{ name: 'Maeguana', status: 'added' }
 	];
 
 	$scope.Defaultfoods={
@@ -373,8 +367,9 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 	$scope.troughtypes={
 		Normal: 4,
+		Maeguana: 4,
 		Tek: 100,
-		Clicker: 1
+		"Hand Feed": 1
 	}
 
 	$scope.foodrate_time_units={
@@ -1178,6 +1173,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 90.0
 		},
 		
+		Maeguana: { //
+			birthtype: "Incubation",
+			type: "Omnivore",
+			basefoodrate: 0.01,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 2.0,
+			eggspeed: 0.005556,
+			eggspeedmult: 3.5,
+			weight: 400
+		},
+
 		Mammoth: { //
 			birthtype: "Gestation",
 			type: "Herbivore",
@@ -1218,7 +1226,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		
 		Mantis: { //
 			birthtype: "Incubation",
-			type: "Carrion_",
+			type: "Carrion",
 			basefoodrate: 0.002314,
 			babyfoodrate: 25.5,
 			extrababyfoodrate: 20.0,
