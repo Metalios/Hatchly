@@ -1,287 +1,312 @@
+/* ARK: Survival Ascended – Tek-inspired, modern, consistent UI
+   ----------------------------------------------------------------
+   Goals:
+   • Replace heavy text-shadows with crisp, readable contrast
+   • Consistent spacing scale, radius, and focus states
+   • Card-based sections, responsive grid, accessible colors
+   • Keep legacy classes/selectors used by Angular/JQuery UI
+   ---------------------------------------------------------------- */
+
+/* ===== Theme tokens ===================================================== */
+:root {
+  --asa-bg: #0f1216;
+  --asa-bg-panel: #131922;
+  --asa-bg-panel-2: #0b0f14;
+  --asa-border: #243242;
+  --asa-border-strong: #2f4a61;
+  --asa-text: #e9eef5;
+  --asa-text-muted: #a8b4c2;
+  --asa-tek: #66ccff;
+  --asa-tek-2: #3aa7e8;
+  --asa-tek-3: #1f87c9;
+  --asa-danger: #ff5b6e;
+  --asa-success: #7ceca9;
+  --asa-focus: #9be7ff;
+  --asa-shadow: 0 10px 22px rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.25);
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --radius-sm: 8px;
+  --gap-1: .5rem;
+  --gap-2: .8rem;
+  --gap-3: 1.2rem;
+  --gap-4: 1.6rem;
+  --font-base: 16px;
+}
+
+/* ===== Reset & base ===================================================== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html { font-size: var(--font-base); }
 body {
-    font-family: Arial, sans-serif;
-    font-size: 0.9em;
-    color: white;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
-    height: 100%;
-    background-attachment: fixed;
-    background-image: url(background.webp);
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 0px;
-    margin: 0px;
-    position: relative;
-    z-index: 1;
+  margin: 0;
+  color: var(--asa-text);
+  background:
+    radial-gradient(1200px 50% at 50% -10%, #142133 0%, var(--asa-bg) 60%) fixed,
+    var(--asa-bg);
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dim the wallpaper image only behind content (keep yours if present) */
 body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Dimming the background */
-    z-index: -1;
+  content: "";
+  position: fixed; inset: 0;
+  background: rgba(3, 8, 12, 0.55);
+  pointer-events: none;
+  z-index: 0;
 }
 
-a {
-    color: #66ccff; /* Tek blue color for links */
-}
+/* Links */
+a { color: var(--asa-tek); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-input {
-    width: 50px;
-}
-
-input[type=button] {
-    width: auto;
-}
-
-input, select {
-    appearance: none; /* Remove native styling */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: rgba(50, 50, 50, 0.8); /* Consistent dark background */
-    color: white; /* Consistent text color */
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
-    border: 1px solid #66ccff; /* Add Tek blue border */
-    border-radius: 5px; /* Optional rounded corners */
-    font-size: 10pt;
-    padding: 5px;
-    width: 100%; /* Ensure full width */
-}
-
-option {
-    background-color: rgba(30, 100, 150, 1); /* Tek blue for dropdown options */
-    color: white;
-    text-shadow: none; /* Remove shadow for clear text */
-    font-size: 10pt;
-}
-
-.autocomplete {
-    width: 120px;
-}
-
-.ui-autocomplete {
-    background-color: rgba(50, 50, 50, 0.9); /* Dark metallic background */
-    border: 1px solid #66ccff; /* Tek blue border */
-    color: white; /* White text */
-    font-size: 10pt; /* Match other dropdowns */
-    max-height: 200px; /* Add a max height if there are many options */
-    overflow-y: auto; /* Enable scrolling if necessary */
-    z-index: 1000; /* Ensure it appears above other elements */
-}
-
-.ui-menu-item {
-    background-color: rgba(30, 100, 150, 1); /* Tek blue for items */
-    padding: 5px; /* Spacing for better readability */
-}
-
-.ui-menu-item:hover {
-    background-color: rgba(40, 150, 200, 1); /* Lighter Tek blue on hover */
-    cursor: pointer; /* Indicate interactivity */
-}
-
-ul {
-    background-color: #2d2d2d; /* Dark metallic color */
-    color: white;
-}
-
-h3 {
-    margin-bottom: 0px;
-}
-
-p.subheading {
-    margin-top: 0px;
-    font-size: 0.7em;
-}
-
-p.footer {
-    margin-top: 0px;
-    font-size: 0.8em;
-}
-
-table {
-    background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(70, 150, 200, 0.4)); /* Metallic and Tek blue theme */
-    border-radius: 10px;
-    margin-bottom: 15px;
-    width: 100%;
-    min-width: 400px;
-}
-
-td {
-    margin: 2px;
-    padding: 5px;
-}
-
-thead {
-    font-weight: bold;
-}
-
-caption, .tableheader {
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #66ccff; /* Tek blue */
-}
-
-.hiderows caption, .tableheader.dimmed {
-    color: #999999;
-}
-
-.hiderows tr {
-    display: none;
-}
-
-
-
-.label {
-    font-weight: bold;
-    color: #66ccff; /* Tek blue */
+/* ===== Layout wrappers ================================================== */
+.wrapperbox {
+  min-height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(280px, 980px);
+  justify-content: center;
+  gap: var(--gap-3);
+  padding: var(--gap-4) var(--gap-2);
+  position: relative;
+  z-index: 1;
 }
 
 .box {
-    display: table;
-    text-align: center;
-    border-radius: 10px;
-    background: linear-gradient(rgba(50, 50, 50, 0.6), rgba(70, 150, 200, 0.3)); /* Semi-transparent Tek look */
-    padding: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+  background: linear-gradient(180deg, var(--asa-bg-panel), var(--asa-bg-panel-2));
+  border: 1px solid var(--asa-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--asa-shadow);
+  padding: var(--gap-3);
 }
 
-.messagebox {
-    max-width: 400px;
-    display: inline-block;
-    margin-bottom: 5px;
+/* A compact message container (unchanged behavior) */
+.messagebox { max-width: 42rem; display: inline-block; margin-bottom: var(--gap-2); }
+
+/* Side-by-side “main + changelog” on wide screens */
+@media (min-width: 1100px) {
+  .wrapperbox {
+    grid-template-columns: 1fr 340px;
+    align-items: start;
+  }
 }
 
-.wrapperbox {
-    min-height: 100%;
-    width: 100%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+/* ===== Headings & text ================================================== */
+h1, h2, h3 {
+  margin: 0 0 .5rem 0;
+  letter-spacing: .2px;
+}
+h3 { font-weight: 700; }
+p.subheading {
+  margin-top: 0;
+  color: var(--asa-text-muted);
+  font-size: .9rem;
 }
 
-.helpbox {
-    margin-left: 10px;
-    margin-right: 10px;
-    max-width: 50%;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-shadow: none;
+/* Footer note */
+p.footer { margin-top: 0; font-size: .95rem; color: var(--asa-text-muted); }
+
+/* Small helper text */
+.small-text { font-size: .85rem; color: var(--asa-text-muted); }
+
+/* ===== Tables (card-table style) ======================================= */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: linear-gradient(180deg, #141b24, #10161d);
+  border: 1px solid var(--asa-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--gap-3);
 }
 
-.helpbox .box {
-    background: linear-gradient(rgba(50, 50, 50, 0.7), rgba(70, 150, 200, 0.4)); /* Darker metallic theme */
-    margin-bottom: 10px;
+thead th, thead td {
+  text-align: left;
+  color: var(--asa-text-muted);
+  font-weight: 600;
+  background: #0f1720;
+  border-bottom: 1px solid var(--asa-border);
+  padding: .7rem 1rem;
 }
 
-.hidden {
-    display: none;
+td {
+  padding: .6rem 1rem;
+  border-bottom: 1px dashed #1f2a36;
+  vertical-align: middle;
 }
 
-label {
-    background-color: rgba(40, 150, 150, 0.3);
-    padding: 2px;
-    margin-left: 5px;
-    font-size: 0.8em;
+tr:last-child td { border-bottom: 0; }
+
+/* Two-column label/value layout w/o inline styles */
+td.col-label { width: 46%; }
+td.col-value { width: 54%; }
+
+/* Section captions */
+caption, .tableheader {
+  display: block;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--asa-tek);
+  padding: .25rem 0 .75rem;
 }
 
-input:checked + label {
-    background-color: rgba(70, 150, 200, 0.7); /* Tek blue when checked */
+/* Collapsible “headers” that you click */
+.tableheader.slide {
+  margin: var(--gap-2) 0 var(--gap-1);
+  padding: .6rem .9rem;
+  background: linear-gradient(180deg, #0f1924, #0e1620);
+  border: 1px solid var(--asa-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+.tableheader.slide::after {
+  content: "▾";
+  position: absolute; right: .8rem; top: 50%;
+  transform: translateY(-50%);
+  color: var(--asa-tek);
+  transition: transform .2s ease;
+}
+.hiderows .tableheader.slide::after,
+.tableheader.slide.dimmed::after { transform: translateY(-50%) rotate(-90deg); }
+
+.tableheader.dimmed { color: var(--asa-text-muted); }
+
+/* When hidden via ng-show, keep spacing consistent */
+.hiderows tr { display: none; }
+
+/* ===== Labels =========================================================== */
+.label {
+  font-weight: 600;
+  color: var(--asa-tek);
 }
 
-.fillfood {
-    font-style: italic;
-    text-shadow: -1px -1px 0 rgba(85, 85, 85, 0.8), 1px -1px 0 rgba(85, 85, 85, 0.8), -1px 1px 0 rgba(85, 85, 85, 0.8), 1px 1px 0 rgba(85, 85, 85, 0.8);
+/* ===== Forms & controls ================================================ */
+input, select {
+  width: 100%;
+  appearance: none;
+  background-color: #0d141c;
+  color: var(--asa-text);
+  border: 1px solid var(--asa-border-strong);
+  border-radius: var(--radius-sm);
+  padding: .5rem .65rem;
+  font-size: .95rem;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+input[type="number"] { max-width: 220px; }
+input[type="button"], button {
+  width: auto;
+  padding: .5rem .8rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, #0f2a3c, #0d2332);
+  border: 1px solid var(--asa-tek-3);
+  color: #e9f7ff;
+  cursor: pointer;
+}
+button:hover, input[type="button"]:hover { filter: brightness(1.06); }
+input:focus, select:focus, button:focus {
+  outline: none;
+  border-color: var(--asa-focus);
+  box-shadow: 0 0 0 3px rgba(102, 204, 255, .25);
 }
 
-.red {
-    color: red;
+/* Dropdown options */
+option { background-color: #0f141b; color: var(--asa-text); }
+
+/* Toggle labels for checkboxes/radios (if used with + label) */
+label.toggle {
+  display: inline-block;
+  background-color: rgba(40, 150, 150, 0.18);
+  padding: .25rem .45rem;
+  margin-left: .4rem;
+  border-radius: var(--radius-sm);
+  font-size: .85rem;
+}
+input:checked + label.toggle {
+  background-color: rgba(70, 150, 200, .35);
+  border: 1px solid var(--asa-tek-2);
 }
 
-.redselect {
-    background-color: red;
-}
-
-.tooltip {
-    position: relative;
-}
-
+/* ===== Tooltip ========================================================== */
+.tooltip { position: relative; }
 .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: rgba(50, 50, 50, 0.9); /* Tek-styled tooltip */
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    font-size: 0.9em;
-    font-weight: normal;
+  pointer-events: none;
+  position: absolute;
+  z-index: 10;
+  left: 100%;
+  top: 50%;
+  transform: translate(.75rem, -50%);
+  min-width: 220px;
+  max-width: 280px;
+  background: #0f1720;
+  color: var(--asa-text);
+  border: 1px solid var(--asa-border);
+  border-radius: var(--radius-sm);
+  padding: .5rem .6rem;
+  font-weight: 400;
+  font-size: .9rem;
+  box-shadow: var(--asa-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .12s ease, visibility .12s ease;
 }
+.tooltip:hover .tooltiptext { opacity: 1; visibility: visible; }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    top: 0px;
-    left: 100%;
+/* ===== jQuery UI Autocomplete theming ================================== */
+.autocomplete { max-width: 320px; }
+.ui-autocomplete {
+  background-color: #0f141b;
+  border: 1px solid var(--asa-tek-3);
+  color: var(--asa-text);
+  font-size: .95rem;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 1000;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--asa-shadow);
 }
+.ui-menu-item { padding: .45rem .6rem; }
+.ui-menu-item:hover,
+.ui-state-active { background-color: #122538; }
 
-.tooltip .tooltiptext {
-    opacity: 0;
-    transition: opacity 1s;
-    background: rgba(50, 50, 50, 0.9);
-}
-
-.tooltip:hover .tooltiptext {
-    opacity: 1;
-}
-
-.tooltip .tooltiptext:hover {
-    opacity: 0;
-    visibility: hidden;
-}
-
+/* ===== Changelog side card ============================================= */
 .changes-box {
-    max-width: 300px; /* Restrict the width of the changes box */
-    background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(70, 150, 200, 0.4)); /* Same theme */
-    text-align: left;
-    height: 400px; /* Adjust the height of the changes box */
-    padding: 10px; /* Add padding for better spacing */
-    margin-top: 20px; /* Adjust the top margin */
-    margin-bottom: 20px; /* Equal bottom margin */
-    overflow-y: auto; /* Allow scrolling if content exceeds the height */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, #131a23, #101720);
+  border: 1px solid var(--asa-border);
+  border-radius: var(--radius-lg);
+  padding: var(--gap-3);
+  box-shadow: var(--asa-shadow);
+  max-height: 70vh;
+  overflow: auto;
 }
-
-.changes-box h3 {
-    margin-bottom: 10px;
-    color: #66ccff; /* Tek blue */
-}
-
-.changes-list {
-    list-style-type: square;
-    padding-left: 20px;
-}
-
+.changes-box h3 { color: var(--asa-tek); margin-bottom: .6rem; }
+.changes-list { list-style: square; padding-left: 1.2rem; }
 .changes-list ul {
-    background-color: rgba(50, 50, 50, 0.5); /* Transparent gray */
-    padding: 5px;
-    border-radius: 5px;
+  margin-top: .35rem;
+  background: #0e141b;
+  padding: .5rem .6rem;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--asa-border);
+}
+.changes-list li { margin-bottom: .4rem; }
+
+/* ===== Utility colors =================================================== */
+.red { color: var(--asa-danger); }
+.redselect { background-color: var(--asa-danger); color: #0b0f14; }
+
+/* ===== Helper: visually hide but keep for screen readers =============== */
+.hidden { display: none !important; }
+
+/* ===== Accessibility focus ring for clickable section headers ========== */
+.tableheader.slide:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102,204,255,.25);
+  border-color: var(--asa-focus);
 }
 
-.changes-list li {
-    margin-bottom: 5px;
-    font-size: 0.9em;
-    color: white;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
-}
-
-.small-text {
-  font-size: 0.8em; /* Or any size you prefer */
-  color: #e0e0e0; /* Optional: Change color or any other styling */
-}
+/* ===== Micro spacing adjustments ======================================= */
+h3 + h3 { margin-top: .25rem; }
