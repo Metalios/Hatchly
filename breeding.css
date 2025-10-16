@@ -21,7 +21,50 @@
   --gap: 14px;
   --gap-lg: 22px;
   --font: "Inter", "Segoe UI", Roboto, system-ui, Arial, sans-serif;
+  --logo-size: clamp(64px, 9vw, 112px);   /* grow/shrink responsively */
 }
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;                         /* keeps layout tidy on narrow screens */
+}
+
+/* Frame + glow that matches the ASA theme */
+.app-logo{
+  width: var(--logo-size);
+  height: var(--logo-size);
+  margin: 0;                               /* <figure> default margins off */
+  padding: 0;
+  border-radius: 14px;
+  background:
+    radial-gradient(50% 50% at 30% 30%, rgba(102,204,255,.18), transparent 72%),
+    linear-gradient(135deg, var(--panel-2), var(--panel));
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 0 1px rgba(102,204,255,.14);
+  display: grid;
+  place-items: center;
+}
+
+/* The image itself */
+.app-logo img{
+  width: calc(var(--logo-size) - 14px);
+  height: calc(var(--logo-size) - 14px);
+  display: block;
+  object-fit: contain;                     /* preserve aspect ratio */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;            /* keep edges sharp on PNG */
+}
+
+/* Optional: scale title a touch when logo is larger */
+.app-title h1{
+  font-size: clamp(1.1rem, 1.3rem + 0.3vw, 1.7rem);
+  margin: 0;
+}
+.app-title .sub{ margin-top: 2px }
 
 /* Global reset-ish */
 *{box-sizing:border-box}
