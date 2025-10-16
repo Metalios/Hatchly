@@ -217,3 +217,85 @@ input.autocomplete:focus{
   border-color:var(--tek-2);
   box-shadow:0 0 0 4px var(--ring);
 }
+
+/* Menu container (already themed, repeat here to be safe) */
+.ui-autocomplete,
+.ui-menu.ui-widget.ui-widget-content,
+.ui-widget.ui-widget-content.ui-autocomplete,
+.ui-menu.ui-widget.ui-widget-content.ui-autocomplete {
+  background: linear-gradient(180deg, #0d141a, #0f151c) !important;
+  border: 1px solid rgba(102,204,255,.25) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.55) !important;
+  color: var(--text) !important;
+  z-index: 10000 !important;
+  max-height: 260px !important;
+  overflow: auto !important;
+  padding: 6px 0 !important;
+}
+
+/* Some builds style the <ul> via .ui-menu alone */
+.ui-menu {
+  background: linear-gradient(180deg, #0d141a, #0f151c) !important;
+  border: 1px solid rgba(102,204,255,.25) !important;
+  border-radius: 8px !important;
+}
+
+/* Reset *every* item type to be transparent by default */
+.ui-menu .ui-menu-item,
+.ui-menu .ui-menu-item > a,
+.ui-menu .ui-menu-item > div,
+.ui-menu .ui-menu-item-wrapper {
+  background: transparent !important;
+  color: var(--text) !important;
+  font: 500 0.95rem/1.2 var(--font) !important;
+  padding: 10px 12px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  display: block !important;       /* ensure anchors stretch full width */
+}
+
+/* Hover/active states (all variations jQuery-UI applies) */
+.ui-menu .ui-state-active,
+.ui-menu .ui-state-focus,
+.ui-menu .ui-menu-item > a.ui-state-active,
+.ui-menu .ui-menu-item > a.ui-state-focus,
+.ui-menu .ui-menu-item > div.ui-state-active,
+.ui-menu .ui-menu-item > div.ui-state-focus,
+.ui-state-active {
+  background: linear-gradient(180deg, rgba(102,204,255,.20), rgba(102,204,255,.08)) !important;
+  color: var(--text) !important;
+  border: 0 !important;
+  margin: 0 !important;
+}
+
+/* Make sure generic jQuery-UI “widget content” doesn’t push its palette */
+.ui-widget-content {
+  background: transparent !important;  /* container already themed above */
+  color: var(--text) !important;
+}
+
+/* Scrollbar (optional—keeps it from looking “OS default” teal) */
+.ui-autocomplete::-webkit-scrollbar { width: 10px }
+.ui-autocomplete::-webkit-scrollbar-track { background: #0e161d }
+.ui-autocomplete::-webkit-scrollbar-thumb { background: #2b99df; border-radius: 8px }
+.ui-autocomplete { scrollbar-color: #2b99df #0e161d } /* Firefox */
+
+/* Trigger input should match all other controls */
+input.autocomplete {
+  width: 100%;
+  font: 500 0.95rem/1.2 var(--font);
+  color: var(--text);
+  background: linear-gradient(180deg, #0c1319 0%, #0e161d 100%);
+  border: 1px solid rgba(102,204,255,.22);
+  border-radius: 6px;
+  padding: 10px 12px;
+  outline: none;
+}
+input.autocomplete:focus {
+  border-color: var(--tek-2);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+/* Accessibility helper spans (offscreen) */
+.ui-helper-hidden-accessible { display: none !important; }
