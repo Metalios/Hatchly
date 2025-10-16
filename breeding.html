@@ -154,16 +154,55 @@
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Food Per Day']}" ng-click="showhidetable('Food Per Day')">Food Per Day</div>
-      <div class="tableslide" ng-show="tablevisibility['Food Per Day']">
-        <table>
-          <tr>
-            <td style="width: 50%" class="label">Food per day (E):
-            </td>
-            <td>{{creature.foodperday| number:0}} {{foodunit}}</td>
-          </tr>
-        </table>
-      </div>
+
+      <!-- Baby Phase -->
+<div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Baby']}" ng-click="showhidetable('Baby')">Baby Phase</div>
+<div class="tableslide" ng-show="tablevisibility['Baby']">
+  <table>
+    <tr>
+      <td style="width: 50%" class="label tooltip">Current Buffer: <span class="tooltiptext">How long the baby will last with a full inventory of {{foodunit}}</span></td>
+      <td>{{creature.currentbabybuffer | secondsToDateTime}}</td>
+    </tr>
+    <tr>
+      <td style="width: 50%" class="label tooltip">Food to Fill: <span class="tooltiptext">The amount of {{foodunit}} the baby's inventory can currently hold</span></td>
+      <td>{{creature.foodtofill | number:0}}</td>
+    </tr>
+    <tr>
+      <td style="width: 50%" class="label tooltip">Hand Feed For: <span class="tooltiptext">How long from now until the baby can survive to juvenile on a full inventory, and the maturation at which this occurs</span></td>
+      <td>{{creature.lasthandfeed | secondsToDateTime}} ({{creature.lasthandfeedmaturation | percentage}}%)</td>
+    </tr>
+    <tr>
+      <td style="width: 50%" class="label tooltip">Food to Finish: <span class="tooltiptext">Amount of food required in the baby's inventory to reach juvenile</span></td>
+      <td>{{creature.foodtofinishbaby}}</td>
+    </tr>
+    <tr>
+      <td style="width: 50%" class="label tooltip">Desired Buffer: <span class="tooltiptext">How long you would like between feedings</span></td>
+      <td>
+        <input ng-model="creature.desiredbabybuffer" ng-change="desiredbuffercalc()" type="number" min="1"> Minutes
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 50%" class="label tooltip">Time Until Buffer: <span class="tooltiptext">How long until the baby's inventory is big enough to provide your desired buffer, and the maturation at which this occurs</span></td>
+      <td>{{creature.timeuntildesiredbabybuffer | secondsToDateTime}} ({{creature.timeuntildesiredbabybuffermaturation | percentage}}%)</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Food Per Day -->
+<div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Food']}" ng-click="showhidetable('Food')">Food Per Day</div>
+<div class="tableslide" ng-show="tablevisibility['Food']">
+  <table>
+    <tr>
+      <td style="width: 50%" class="label tooltip">Loss Factor: <span class="tooltiptext">Percentage of food you assume will be lost to spoilage</span></td>
+      <td><input ng-model="settings.lossfactor" ng-change="totalfoodcalc()" type="number"></td>
+    </tr>
+    <tr ng-repeat="(day,food) in creature.fooditemsforday">
+      <td style="width: 50%" class="label tooltip">Day {{day}} Food <span class="tooltiptext">{{foodunit}} required on day {{day}} of maturation</span></td>
+      <td>{{food | number:0}}</td>
+    </tr>
+  </table>
+</div>
+      
       <!-- Trough Calculator - Food -->
 <div class="tableheader slide"
      ng-class="{'dimmed': !tablevisibility['Trough']}"
