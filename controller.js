@@ -8,7 +8,8 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 
 	$scope.creatureChanges = [
-		{ name: 'Maeguana', status: 'added' }
+		{ name: 'Elderclaw', status: 'added' },
+		{ name: 'Megaraptor', status: 'added' }
 	];
 
 	$scope.Defaultfoods={
@@ -887,6 +888,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 150.0
 		},
 
+		Elderclaw: { //
+			birthtype: "Gestation",
+			type: "Omnivore",
+			basefoodrate: 0.003156,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 1.0,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1.0,
+			weight: 650.0
+		},
+
 		Equus: { //
 			birthtype: "Gestation",
 			type: "Herbivore",
@@ -1287,6 +1301,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeed: 0.005556,
 			eggspeedmult: 3.0,
 			weight: 300.0
+		},
+
+		Megaraptor: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.001852,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 2.0,
+			eggspeed: 0.005556,
+			eggspeedmult: 3.0,
+			weight: 325.0
 		},
 
 		Megatherium: { //
