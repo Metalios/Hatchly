@@ -118,43 +118,6 @@
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Baby Phase']}" ng-click="showhidetable('Baby Phase')">{{creature.babylabel}} Phase</div>
-      <div class="tableslide" ng-show="tablevisibility['Baby Phase']">
-        <table>
-          <tr ng-class="{'hidden': !creature.babytime}"><td class="red">When this timer expires the baby will need food placed into its inventory or it will starve.</td></tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Time to Juvenile: <span class="tooltiptext">Time until creature hits juvenile</span>
-            </td>
-            <td>{{creature.babytime | secondsToDateTime}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Food to fill from birth:
-            </td>
-            <td>{{creature.babyfoodneeded| number:0}} pts</td>
-          </tr>
-          <tr ng-if="foods[foodunit].waste">
-            <td style="width: 50%" class="label tooltip">Food to be wasted by spoilage: <span class="tooltiptext">The {{foodunit}} that the baby will eat would spoil before reaching juvenile, so this food is wasted, so you can reduce the fill amount accordingly.</span>
-            </td>
-            <td>{{creature.babyfoodwasted| number:0}} pts</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Slots required for fill: <span class="tooltiptext">Slots, in the baby inventory, required to safely fill from birth without wasting food. Reduce if you provide less food to avoid waste.</span>
-            </td>
-            <td>{{creature.babyslotsrequired | number:0}}</td>
-          </tr>
-          <tr ng-if="foods[foodunit].waste">
-            <td style="width: 50%" class="label tooltip">Food not required due to spoilage: <span class="tooltiptext">Due to spoilage, the baby will not eat this much food. You can remove this amount from the baby's inventory to avoid waste.</span>
-            </td>
-            <td>{{creature.babyslotsnowaste| number:0}} pts</td>
-          </tr>
-          <tr ng-if="foods[foodunit].waste">
-            <td style="width: 50%" class="label tooltip">Slots required to avoid waste: <span class="tooltiptext">Slots required to avoid wasting food.</span>
-            </td>
-            <td>{{creature.babyslotsrequirednowaste| number:0}}</td>
-          </tr>
-        </table>
-      </div>
-
       <!-- Baby Phase -->
 <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Baby']}" ng-click="showhidetable('Baby')">Baby Phase</div>
 <div class="tableslide" ng-show="tablevisibility['Baby']">
