@@ -21,7 +21,8 @@
   --gap: 14px;
   --gap-lg: 22px;
   --font: "Inter", "Segoe UI", Roboto, system-ui, Arial, sans-serif;
-  --logo-size: clamp(64px, 9vw, 112px);   /* grow/shrink responsively */
+  --logo-size: 112px;
+  --logo-inset: 10px;
 }
 
 .app-header {
@@ -45,8 +46,7 @@
     0 12px 32px rgba(0,0,0,.35),
     inset 0 1px 0 rgba(255,255,255,.04),
     0 0 0 1px rgba(102,204,255,.14);
-  display: grid;
-  place-items: center;
+  overflow: hidden;
 }
 
 /* The image itself */
@@ -55,6 +55,7 @@
   height: calc(var(--logo-size) - 14px);
   display: block;
   object-fit: contain;                     /* preserve aspect ratio */
+  object-position: center;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;            /* keep edges sharp on PNG */
 }
