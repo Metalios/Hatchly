@@ -164,96 +164,99 @@
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Feeding']}" ng-click="showhidetable('Feeding')">Feeding</div>
-      <div class="tableslide" ng-show="tablevisibility['Feeding']">
-        <table>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Food Spoil Time: <span class="tooltiptext">Time until one item of {{foodunit}} spoils in a {{kibbletable[settings.foodcontainer].name}}. If multiple items spoil at the same time this is indicated with a multiplier.</span>
-            </td>
-            <td>{{kibbletable[settings.foodcontainer].spoil}} × {{foods[foodunit].spoil | secondsToDateTime}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Food Weight Per Slot: <span class="tooltiptext">Weight of {{foodunit}} items that fit into a single slot in a {{kibbletable[settings.foodcontainer].name}}.</span>
-            </td>
-            <td>{{foods[foodunit].stack * foods[foodunit].weight}} Weight ({{foods[foodunit].weight}} × {{foods[foodunit].stack}})</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Inventory: <span class="tooltiptext">Storage in a {{kibbletable[settings.foodcontainer].name}}</span>
-            </td>
-            <td>
-              <select ng-model="settings.foodcontainer" ng-options="unit as kibbletable[unit].name for unit in foodcontainers" ng-change="totalfoodcalc()"></select>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Slots (each):
-            </td>
-            <td>
-              <input type="number" min="0" ng-model="slots" ng-change="totalfoodcalc()">
-            </td>
-          </tr>
-          <tr ng-if="foods[foodunit].waste">
-            <td style="width: 50%" class="label tooltip">Food Wasted by Spoil: <span class="tooltiptext">Because {{foodunit}} spoils, this much food will be wasted if you fill slots.</span>
-            </td>
-            <td>{{wastedfood| number:0}} pts</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Total Food Stored:
-            </td>
-            <td>{{totalfoodstored| number:0}} pts</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Total {{foodunit}} Stored:
-            </td>
-            <td>{{totalfoodstoreditems| number:0}} {{foodunit}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Total FoodEaten During Spoil Cycle:
-            </td>
-            <td>{{totaleatenfood| number:0}} pts ({{totaleatenfooditems| number:0}} {{foodunit}})</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Time Until Food Runs Out:
-            </td>
-            <td>{{totaltimefoodstored | secondsToDateTime}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Slots Needed for 24h:
-            </td>
-            <td>{{dayprovisions| number:0}}</td>
-          </tr>
-          <tr>
-            <td class="fillfood">Fill your {{kibbletable[settings.foodcontainer].name}} with {{foodunit}} to keep your baby fed.</td>
-          </tr>
-        </table>
-      </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Imprinting']}" ng-click="showhidetable('Imprinting')">Imprinting</div>
-      <div class="tableslide" ng-show="tablevisibility['Imprinting']">
-        <table>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Imprint Multiplier: <span class="tooltiptext">Imprinting multiplier (vanilla = 1)</span>
-            </td>
-            <td><input type="number" min="0" ng-model="settings.imprintmult" ng-change="selectsettings()"></td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Care Interval:
-            </td>
-            <td>
-              <select ng-model="settings.careinterval" ng-change="selectsettings()">
-                <option value="1h">1 hour</option>
-                <option value="1h30">1 hour 30</option>
-                <option value="2h">2 hours</option>
-                <option value="3h">3 hours</option>
-                <option value="4h">4 hours</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Max Possible Imprint: <span class="tooltiptext">Calculated maximum imprint percent</span>
-            </td>
-            <td>{{maximprint| number:1}}%</td>
-          </tr>
-        </table>
-      </div>
+      <!-- Trough Calculator - Food -->
+<div class="tableheader slide"
+     ng-class="{'dimmed': !tablevisibility['Trough']}"
+     ng-click="showhidetable('Trough')">
+  Trough Calculator - Food
+</div>
+<div class="tableslide" ng-show="tablevisibility['Trough']">
+  <table>
+    <tr>
+      <td style="width: 50%" class="label tooltip">
+        Trough Type:
+        <span class="tooltiptext">
+          Sets the spoil rate of the food based on the container you will use, Tek=100x, Normal=4x, Clicker=1x
+        </span>
+      </td>
+      <td>
+        <select ng-options="type as type for (type, multi) in troughtypes"
+                ng-model="settings.troughtype"
+                ng-change="troughcalc()"></select>
+      </td>
+    </tr>
+
+    <tr ng-repeat="(food, stacks) in troughstacks">
+      <td style="width: 50%" class="label tooltip">
+        {{food}}
+        <span class="tooltiptext">Stacks of {{foods[food].stack}} {{food}} in troughs</span>
+      </td>
+      <td>
+        <input ng-model="troughstacks[food]" ng-change="troughcalc()" type="number"> Stacks
+      </td>
+    </tr>
+
+    <tr ng-repeat="(type, time) in troughdata.times">
+      <td style="width: 50%" class="label tooltip">
+        {{type}}:
+        <span class="tooltiptext">How long {{type}}s will have food in the current configuration</span>
+      </td>
+      <td>{{time | secondsToDateTime}}</td>
+    </tr>
+
+    <tr>
+      <td style="width: 50%" class="label tooltip">
+        Loss
+        <span class="tooltiptext">
+          Amount of food points to spoilage, cooking meat is automatic 50% loss
+        </span>
+      </td>
+      <td>{{(troughdata.spoiledpoints+troughdata.wastedpoints)/troughdata.totalpoints*100}}%</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Trough Calculator - Creatures -->
+<div class="tableheader slide"
+     ng-class="{'dimmed': !tablevisibility['TroughCreatures']}"
+     ng-click="showhidetable('TroughCreatures')">
+  Trough Calculator - Creatures
+</div>
+<div class="tableslide" ng-show="tablevisibility['TroughCreatures']">
+  <table>
+    <thead>
+      <td>Creature</td>
+      <td>Maturation</td>
+      <td>Quantity</td>
+      <td>Remove</td>
+    </thead>
+
+    <tr>
+      <td>
+        <input type="button" ng-click="troughaddcreature()" value="Add Creature">
+      </td>
+    </tr>
+
+    <tr ng-repeat="(index, troughcreature) in creaturelist">
+      <td>
+        <select ng-options="name as name for (name, details) in creatures"
+                ng-model="troughcreature.name"
+                ng-change="troughupdatefoodtypes(); troughcalc();"></select>
+      </td>
+      <td>
+        <input ng-model="troughcreature.maturation" type="number" min="0" max="1" step="0.01"
+               ng-change="troughcalc()"> (0–1)
+      </td>
+      <td>
+        <input ng-model="troughcreature.quantity" type="number" min="1" step="1"
+               ng-change="troughcalc()">
+      </td>
+      <td>
+        <input type="button" value="X" ng-click="troughremovecreature(index); troughcalc();">
+      </td>
+    </tr>
+  </table>
+</div>
       <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Changelog']}" ng-click="showhidetable('Changelog')">Changelog</div>
       <div class="tableslide" ng-show="tablevisibility['Changelog']">
         <ul class="changes-list" id="changelog-list">
