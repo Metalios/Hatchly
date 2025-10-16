@@ -3,216 +3,357 @@
     <form>
       <h3>ARK Breeding Calculator</h3>
       <h3>(Updated for ASA - Forked from Crumplecorn)</h3>
-      <p class="subheading">Hover over labels for tooltips <br> Updated to v56.7
-      </p>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Creature']}" ng-click="showhidetable('Creature')">Creature Details</div>
+      <p class="subheading">Hover over labels for tooltips<br>Updated to v56.7</p>
+
+      <div class="tableheader slide"
+           ng-class="{'dimmed': !tablevisibility['Creature']}"
+           ng-click="showhidetable('Creature')"
+           tabindex="0"
+           aria-expanded="{{!!tablevisibility['Creature']}}">
+        Creature Details
+      </div>
       <div class="tableslide" ng-show="tablevisibility['Creature']">
-        <table>
+        <table role="table" aria-label="Creature details">
           <tr>
-            <td style="width: 50%" class="label tooltip">Creature: <span class="tooltiptext">Creature type</span>
+            <td class="label col-label tooltip">
+              <span>Creature:</span>
+              <span class="tooltiptext">Creature type</span>
             </td>
-            <td>
-              <select ng-show="displayconfig.showoldselects" ng-options="name as name for (name, details) in creatures" ng-model="creature.name" ng-change="switchcreature()"></select>
-              <input ng-hide="displayconfig.showoldselects" class="autocomplete" autocomplete data-source="creatures" ng-change="searchcreature()" data-default="creature.name" ng-model="creature.searchname">
+            <td class="col-value">
+              <select ng-show="displayconfig.showoldselects"
+                      ng-options="name as name for (name, details) in creatures"
+                      ng-model="creature.name"
+                      ng-change="switchcreature()"
+                      aria-label="Creature selection"></select>
+
+              <input ng-hide="displayconfig.showoldselects"
+                     class="autocomplete"
+                     autocomplete
+                     data-source="creatures"
+                     data-default="creature.name"
+                     ng-model="creature.searchname"
+                     ng-change="searchcreature()"
+                     placeholder="Search creature…"
+                     aria-label="Search creature">
             </td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Weight: <span class="tooltiptext">Weight stat of creature</span>
+            <td class="label col-label tooltip">
+              <span>Weight:</span>
+              <span class="tooltiptext">Weight stat of creature</span>
             </td>
-            <td>
-              <input ng-model="creature.finalweight" ng-change="selectweight()" type="number">
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Food Type: <span class="tooltiptext">Type of food used in all food stats below</span>
-            </td>
-            <td>
-              <select ng-options="food for food in foodlists[creatures[creature.name].type]" ng-model="foodunit" ng-change="selectweight()"></select>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Hatch Multiplier: </td>
-            <td>
-              <input ng-model="settings.hatchspeed" ng-change="selectsettings()" type="number" min="0">
+            <td class="col-value">
+              <input ng-model="creature.finalweight"
+                     ng-change="selectweight()"
+                     type="number"
+                     inputmode="decimal"
+                     aria-label="Weight">
             </td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label">Mature Multiplier: </td>
-            <td>
-              <input ng-model="settings.maturationspeed" ng-change="selectsettings()" type="number" min="0">
+            <td class="label col-label tooltip">
+              <span>Food Type:</span>
+              <span class="tooltiptext">Type of food used in all food stats below</span>
+            </td>
+            <td class="col-value">
+              <select ng-options="food for food in foodlists[creatures[creature.name].type]"
+                      ng-model="foodunit"
+                      ng-change="selectweight()"
+                      aria-label="Food type"></select>
             </td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label">Consume Multiplier: </td>
-            <td>
-              <input ng-model="settings.consumptionspeed" ng-change="selectsettings()" type="number" min="0">
+            <td class="label col-label">Hatch Multiplier:</td>
+            <td class="col-value">
+              <input ng-model="settings.hatchspeed"
+                     ng-change="selectsettings()"
+                     type="number" min="0" step="0.1"
+                     aria-label="Hatch multiplier">
+            </td>
+          </tr>
+          <tr>
+            <td class="label col-label">Mature Multiplier:</td>
+            <td class="col-value">
+              <input ng-model="settings.maturationspeed"
+                     ng-change="selectsettings()"
+                     type="number" min="0" step="0.1"
+                     aria-label="Mature multiplier">
+            </td>
+          </tr>
+          <tr>
+            <td class="label col-label">Consume Multiplier:</td>
+            <td class="col-value">
+              <input ng-model="settings.consumptionspeed"
+                     ng-change="selectsettings()"
+                     type="number" min="0" step="0.1"
+                     aria-label="Consume multiplier">
             </td>
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Maturation']}" ng-click="showhidetable('Maturation')">Maturation</div>
+
+      <div class="tableheader slide"
+           ng-class="{'dimmed': !tablevisibility['Maturation']}"
+           ng-click="showhidetable('Maturation')"
+           tabindex="0"
+           aria-expanded="{{!!tablevisibility['Maturation']}}">
+        Maturation
+      </div>
       <div class="tableslide" ng-show="tablevisibility['Maturation']">
-        <table>
+        <table role="table" aria-label="Maturation">
           <tr>
-            <td style="width: 50%" class="label tooltip">{{creature.birthlabel}}: <span class="tooltiptext">Time taken for {{creature.birthlabel}}</span>
+            <td class="label col-label tooltip">
+              <span>{{creature.birthlabel}}:</span>
+              <span class="tooltiptext">Time taken for {{creature.birthlabel}}</span>
             </td>
-            <td>{{creature.birthtime | secondsToDateTime}}</td>
+            <td class="col-value">{{creature.birthtime | secondsToDateTime}}</td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Maturation: <span class="tooltiptext">Maturation progress of creature you want stats for</span>
+            <td class="label col-label tooltip">
+              <span>Maturation:</span>
+              <span class="tooltiptext">Maturation progress of creature you want stats for</span>
             </td>
-            <td>
-              <input ng-model="creature.maturationprogress" ng-change="selectmaturation()" percentage type="number" step="0.1" min="0" max="100">%
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Elapsed Time: <span class="tooltiptext">Time elapsed since birth</span>
-            </td>
-            <td>{{creature.maturationtimecomplete | secondsToDateTime}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Time to Juvenile: <span class="tooltiptext">Time until creature hits juvenile</span>
-            </td>
-            <td>{{creature.babytimeremaining | secondsToDateTime}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Time to Adult: <span class="tooltiptext">Time until creature hits adult</span>
-            </td>
-            <td>{{creature.maturationtimeremaining | secondsToDateTime}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Food to Juvenile (E): <span class="tooltiptext">{{foodunit}} the creature will actually eat (i.e. no spoilage) between now and reaching juvenile</span>
-            </td>
-            <td>{{creature.tojuvfooditems | number:0}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Food to Adult (E): <span class="tooltiptext">{{foodunit}} the creature will actually eat (i.e. no spoilage) between now and reaching adult</span>
-            </td>
-            <td>{{creature.toadultfooditems | number:0}}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label tooltip">Food Rate (E): <span class="tooltiptext">Food point the creature will currently eat every {{settings.foodrate_time_units}}</span>
-            </td>
-            <td>{{creature.nextminfood}} pt / <select ng-options="unit as unit for (unit, multi) in foodrate_time_units" ng-model="settings.foodrate_time_units" ng-change="totalfoodcalc()"></select>
+            <td class="col-value">
+              <input ng-model="creature.maturationprogress"
+                     ng-change="selectmaturation()"
+                     percentage type="number" step="0.1" min="0" max="100" aria-label="Maturation">%
             </td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Food per period (E): <span class="tooltiptext">{{foodunit}} the creature will actually eat (i.e. no spoilage) during the next {{settings.foodrate_time_units}}</span>
+            <td class="label col-label tooltip">
+              <span>Elapsed Time:</span>
+              <span class="tooltiptext">Time elapsed since birth</span>
             </td>
-            <td>{{creature.nextfoodpertimeunit}} per {{settings.foodrate_time_units}}</td>
+            <td class="col-value">{{creature.maturationtimecomplete | secondsToDateTime}}</td>
+          </tr>
+          <tr>
+            <td class="label col-label tooltip">
+              <span>Time to Juvenile:</span>
+              <span class="tooltiptext">Time until creature hits juvenile</span>
+            </td>
+            <td class="col-value">{{creature.babytimeremaining | secondsToDateTime}}</td>
+          </tr>
+          <tr>
+            <td class="label col-label tooltip">
+              <span>Time to Adult:</span>
+              <span class="tooltiptext">Time until creature hits adult</span>
+            </td>
+            <td class="col-value">{{creature.maturationtimeremaining | secondsToDateTime}}</td>
+          </tr>
+          <tr>
+            <td class="label col-label tooltip">
+              <span>Food to Juvenile (E):</span>
+              <span class="tooltiptext">{{foodunit}} the creature will actually eat (i.e. no spoilage) between now and reaching juvenile</span>
+            </td>
+            <td class="col-value">{{creature.tojuvfooditems | number:0}}</td>
+          </tr>
+          <tr>
+            <td class="label col-label tooltip">
+              <span>Food to Adult (E):</span>
+              <span class="tooltiptext">{{foodunit}} the creature will actually eat (i.e. no spoilage) between now and reaching adult</span>
+            </td>
+            <td class="col-value">{{creature.toadultfooditems | number:0}}</td>
+          </tr>
+          <tr>
+            <td class="label col-label tooltip">
+              <span>Food Rate (E):</span>
+              <span class="tooltiptext">Food point the creature will currently eat every {{settings.foodrate_time_units}}</span>
+            </td>
+            <td class="col-value">
+              {{creature.nextminfood}} pt /
+              <select ng-options="unit as unit for (unit, multi) in foodrate_time_units"
+                      ng-model="settings.foodrate_time_units"
+                      ng-change="totalfoodcalc()" aria-label="Food rate unit"></select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label col-label tooltip">
+              <span>Food per period (E):</span>
+              <span class="tooltiptext">{{foodunit}} the creature will actually eat (i.e. no spoilage) during the next {{settings.foodrate_time_units}}</span>
+            </td>
+            <td class="col-value">{{creature.nextfoodpertimeunit}} per {{settings.foodrate_time_units}}</td>
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Baby']}" ng-click="showhidetable('Baby')">Baby Phase</div>
+
+      <div class="tableheader slide"
+           ng-class="{'dimmed': !tablevisibility['Baby']}"
+           ng-click="showhidetable('Baby')"
+           tabindex="0"
+           aria-expanded="{{!!tablevisibility['Baby']}}">
+        Baby Phase
+      </div>
       <div class="tableslide" ng-show="tablevisibility['Baby']">
-        <table>
+        <table role="table" aria-label="Baby phase">
           <tr>
-            <td style="width: 50%" class="label tooltip">Current Buffer: <span class="tooltiptext">How long the baby will last with a full inventory of {{foodunit}}</span>
+            <td class="label col-label tooltip">
+              <span>Current Buffer:</span>
+              <span class="tooltiptext">How long the baby will last with a full inventory of {{foodunit}}</span>
             </td>
-            <td>{{creature.currentbabybuffer | secondsToDateTime}}</td>
+            <td class="col-value">{{creature.currentbabybuffer | secondsToDateTime}}</td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Food to Fill: <span class="tooltiptext">The amount of {{foodunit}} the baby's inventory can currently hold</span>
+            <td class="label col-label tooltip">
+              <span>Food to Fill:</span>
+              <span class="tooltiptext">The amount of {{foodunit}} the baby's inventory can currently hold</span>
             </td>
-            <td>{{creature.foodtofill | number:0}}</td>
+            <td class="col-value">{{creature.foodtofill | number:0}}</td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Hand Feed For: <span class="tooltiptext">How long from now until the baby can survive to juvenile on a full inventory, and the maturation at which this occurs</span>
+            <td class="label col-label tooltip">
+              <span>Hand Feed For:</span>
+              <span class="tooltiptext">How long from now until the baby can survive to juvenile on a full inventory, and the maturation at which this occurs</span>
             </td>
-            <td>{{creature.lasthandfeed | secondsToDateTime}} ({{creature.lasthandfeedmaturation | percentage}}%)</td>
+            <td class="col-value">{{creature.lasthandfeed | secondsToDateTime}} ({{creature.lasthandfeedmaturation | percentage}}%)</td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Food to Finish: <span class="tooltiptext">Amount of food required in the baby's inventory to reach juvenile</span>
+            <td class="label col-label tooltip">
+              <span>Food to Finish:</span>
+              <span class="tooltiptext">Amount of food required in the baby's inventory to reach juvenile</span>
             </td>
-            <td>{{creature.foodtofinishbaby}}</td>
+            <td class="col-value">{{creature.foodtofinishbaby}}</td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Desired Buffer: <span class="tooltiptext">How long you would like between feedings</span>
+            <td class="label col-label tooltip">
+              <span>Desired Buffer:</span>
+              <span class="tooltiptext">How long you would like between feedings</span>
             </td>
-            <td>
-              <input ng-model="creature.desiredbabybuffer" ng-change="desiredbuffercalc()" type="number" min="1"> Minutes
+            <td class="col-value">
+              <input ng-model="creature.desiredbabybuffer"
+                     ng-change="desiredbuffercalc()"
+                     type="number" min="1" step="1" aria-label="Desired buffer minutes"> Minutes
             </td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Time Until Buffer: <span class="tooltiptext">How long until the baby's inventory is big enough to provide your desired buffer, and the maturation at which this occurs</span>
+            <td class="label col-label tooltip">
+              <span>Time Until Buffer:</span>
+              <span class="tooltiptext">How long until the baby's inventory is big enough to provide your desired buffer, and the maturation at which this occurs</span>
             </td>
-            <td>{{creature.timeuntildesiredbabybuffer | secondsToDateTime}} ({{creature.timeuntildesiredbabybuffermaturation | percentage}}%)</td>
+            <td class="col-value">{{creature.timeuntildesiredbabybuffer | secondsToDateTime}} ({{creature.timeuntildesiredbabybuffermaturation | percentage}}%)</td>
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Food']}" ng-click="showhidetable('Food')">Food Per Day</div>
+
+      <div class="tableheader slide"
+           ng-class="{'dimmed': !tablevisibility['Food']}"
+           ng-click="showhidetable('Food')"
+           tabindex="0"
+           aria-expanded="{{!!tablevisibility['Food']}}">
+        Food Per Day
+      </div>
       <div class="tableslide" ng-show="tablevisibility['Food']">
-        <table>
+        <table role="table" aria-label="Food per day">
           <tr>
-            <td style="width: 50%" class="label tooltip">Loss Factor: <span class="tooltiptext">Percentage of food you assume will be lost to spoilage</span>
+            <td class="label col-label tooltip">
+              <span>Loss Factor:</span>
+              <span class="tooltiptext">Percentage of food you assume will be lost to spoilage</span>
             </td>
-            <td>
-              <input ng-model="settings.lossfactor" ng-change="totalfoodcalc()" type="number">
+            <td class="col-value">
+              <input ng-model="settings.lossfactor"
+                     ng-change="totalfoodcalc()"
+                     type="number" step="1" min="0" max="100"
+                     aria-label="Loss factor percentage">% 
             </td>
           </tr>
           <tr ng-repeat="(day,food) in creature.fooditemsforday">
-            <td style="width: 50%" class="label tooltip">Day {{day}} Food <span class="tooltiptext">{{foodunit}} required on day {{day}} of maturation</span>
+            <td class="label col-label tooltip">
+              <span>Day {{day}} Food</span>
+              <span class="tooltiptext">{{foodunit}} required on day {{day}} of maturation</span>
             </td>
-            <td>{{food | number:0}}</td>
+            <td class="col-value">{{food | number:0}}</td>
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Trough']}" ng-click="showhidetable('Trough')">Trough Calculator - Food</div>
+
+      <div class="tableheader slide"
+           ng-class="{'dimmed': !tablevisibility['Trough']}"
+           ng-click="showhidetable('Trough')"
+           tabindex="0"
+           aria-expanded="{{!!tablevisibility['Trough']}}">
+        Trough Calculator - Food
+      </div>
       <div class="tableslide" ng-show="tablevisibility['Trough']">
-        <table>
+        <table role="table" aria-label="Trough calculator - food">
           <tr>
-            <td style="width: 50%" class="label tooltip">Trough Type: <span class="tooltiptext">Sets the spoil rate of the food based on the container you will use, Tek=100x, Normal=4x, Clicker=1x</span>
+            <td class="label col-label tooltip">
+              <span>Trough Type:</span>
+              <span class="tooltiptext">Sets the spoil rate of the food based on the container you will use, Tek=100x, Normal=4x, Clicker=1x</span>
             </td>
-            <td>
-              <select ng-options="type as type for (type, multi) in troughtypes" ng-model="settings.troughtype" ng-change="troughcalc()"></select>
+            <td class="col-value">
+              <select ng-options="type as type for (type, multi) in troughtypes"
+                      ng-model="settings.troughtype"
+                      ng-change="troughcalc()" aria-label="Trough type"></select>
             </td>
           </tr>
           <tr ng-repeat="(food, stacks) in troughstacks">
-            <td style="width: 50%" class="label tooltip">{{food}}
+            <td class="label col-label tooltip">
+              <span>{{food}}</span>
               <span class="tooltiptext">Stacks of {{foods[food].stack}} {{food}} in troughs</span>
             </td>
-            <td>
-              <input ng-model="troughstacks[food]" ng-change="troughcalc()" type="number"> Stacks
+            <td class="col-value">
+              <input ng-model="troughstacks[food]"
+                     ng-change="troughcalc()"
+                     type="number" min="0" step="1" aria-label="Stacks"> Stacks
             </td>
           </tr>
           <tr ng-repeat="(type, time) in troughdata.times">
-            <td style="width: 50%" class="label tooltip">{{type}}: <span class="tooltiptext">How long {{type}}s will have food in the current configuration</span>
+            <td class="label col-label tooltip">
+              <span>{{type}}:</span>
+              <span class="tooltiptext">How long {{type}}s will have food in the current configuration</span>
             </td>
-            <td>{{time | secondsToDateTime}}</td>
+            <td class="col-value">{{time | secondsToDateTime}}</td>
           </tr>
           <tr>
-            <td style="width: 50%" class="label tooltip">Loss <span class="tooltiptext">Amount of food points to spoilage, cooking meat is automatic 50% loss</span>
+            <td class="label col-label tooltip">
+              <span>Loss</span>
+              <span class="tooltiptext">Amount of food points to spoilage, cooking meat is automatic 50% loss</span>
             </td>
-            <td>{{(troughdata.spoiledpoints+troughdata.wastedpoints)/troughdata.totalpoints*100}}%</td>
+            <td class="col-value">{{(troughdata.spoiledpoints+troughdata.wastedpoints)/troughdata.totalpoints*100}}%</td>
           </tr>
         </table>
       </div>
-      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['TroughCreatures']}" ng-click="showhidetable('TroughCreatures')">Trough Calculator - Creatures</div>
+
+      <div class="tableheader slide"
+           ng-class="{'dimmed': !tablevisibility['TroughCreatures']}"
+           ng-click="showhidetable('TroughCreatures')"
+           tabindex="0"
+           aria-expanded="{{!!tablevisibility['TroughCreatures']}}">
+        Trough Calculator - Creatures
+      </div>
       <div class="tableslide" ng-show="tablevisibility['TroughCreatures']">
-        <table>
+        <table role="table" aria-label="Trough calculator - creatures">
           <thead>
-            <td>Creature</td>
-            <td>Maturation</td>
-            <td>Quantity</td>
-            <td>Remove</td>
+            <tr>
+              <th>Creature</th>
+              <th>Maturation</th>
+              <th>Quantity</th>
+              <th>Remove</th>
+            </tr>
           </thead>
           <tr>
-            <td>
-              <input type="button" ng-click="troughaddcreature()" value="Add Creature">
+            <td class="col-label">
+              <input type="button" ng-click="troughaddcreature()" value="Add Creature" aria-label="Add creature">
             </td>
           </tr>
           <tr ng-repeat="(index, troughcreature) in creaturelist">
             <td>
-              <select ng-options="name as name for (name, details) in creatures" ng-model="troughcreature.name" ng-change="troughupdatefoodtypes();troughcalc()"></select>
+              <select ng-options="name as name for (name, details) in creatures"
+                      ng-model="troughcreature.name"
+                      ng-change="troughupdatefoodtypes();troughcalc()"
+                      aria-label="Trough creature"></select>
             </td>
             <td>
-              <input ng-model="troughcreature.maturation" ng-change="troughcalc()" percentage type="number">
+              <input ng-model="troughcreature.maturation"
+                     ng-change="troughcalc()"
+                     percentage type="number" min="0" max="100" step="0.1" aria-label="Maturation">
             </td>
             <td>
-              <input ng-model="troughcreature.quantity" ng-change="troughcalc()" type="number">
+              <input ng-model="troughcreature.quantity"
+                     ng-change="troughcalc()"
+                     type="number" min="1" step="1" aria-label="Quantity">
             </td>
             <td>
-              <input type="button" ng-click="troughremovecreature(index)" value="Remove">
+              <input type="button" ng-click="troughremovecreature(index)" value="Remove" aria-label="Remove creature">
             </td>
           </tr>
         </table>
@@ -220,18 +361,19 @@
     </form>
   </div>
 
-  <!-- New Box for Changes/Additions -->
-  <div class="box changes-box">
+  <!-- Changelog / Additions -->
+  <aside class="box changes-box" aria-label="Changelog and additions">
     <h3>Changelog / Additions</h3>
     <ul class="changes-list" id="changelog-list">
-      Updated creature list.<br />
+      <li>Fixed an issue with site cookie generation.</li>
+      <li>
+        Updated creature list.
         <ul>
           <li ng-repeat="creature in creatureChanges">
-          {{creature.name}} has been {{creature.status}}.
+            {{creature.name}} has been {{creature.status}}.
           </li>
         </ul>
       </li>
-      <!-- The list will be dynamically populated with ASA dinos -->
     </ul>
-  </div>
+  </aside>
 </div>
