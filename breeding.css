@@ -37,7 +37,6 @@ body{
     linear-gradient(180deg, #091015 0%, #0b0f14 30%, #0b0f14 100%);
 }
 
-/* Dim the photo backdrop if you keep background.webp via your original file */
 body::before{
   content:"";
   position:fixed; inset:0;
@@ -96,7 +95,7 @@ a:hover{color:var(--tek-2)}
 .panel-head h3{margin:0; font-size:1rem; font-weight:650; color:var(--tek)}
 .panel-body{padding:16px}
 
-/* ============= SECTION TOGGLES (your .tableheader/.tableslide) ============= */
+/* ============= SECTION TOGGLES ============= */
 .tableheader{
   cursor:pointer;
   user-select:none;
@@ -180,7 +179,7 @@ select:focus{
   box-shadow:0 0 0 4px var(--ring);
 }
 
-/* Numeric inputs consistent width when needed (your original had width:50px) */
+/* Consistent compact width when used */
 input[type="number"].w-compact{width:120px}
 
 /* ============= CUSTOM SELECT (no native chrome) ============= */
@@ -203,7 +202,7 @@ option{
   background:#0c1319; color:var(--text);
 }
 
-/* jQuery UI autocomplete list (you already use it) */
+/* jQuery UI autocomplete list */
 .ui-autocomplete{
   z-index:10000 !important;
   max-height:260px; overflow:auto;
@@ -221,7 +220,7 @@ option{
   color:var(--text) !important;
 }
 
-/* ============= TOOLTIP (kept your semantics, modern style) ============= */
+/* ============= TOOLTIP ============= */
 .tooltip{position:relative}
 .tooltip .tooltiptext{
   position:absolute;
@@ -248,7 +247,6 @@ option{
 }
 .wrapperbox > *{grid-column:2}
 
-/* Your .box and .messagebox refined */
 .box{
   background:linear-gradient(180deg, var(--panel) 0%, var(--bg-elev-2) 100%);
   border:1px solid rgba(102,204,255,.12);
@@ -258,7 +256,6 @@ option{
 }
 .messagebox{max-width:520px}
 
-/* Changes list */
 .changes-box{
   max-width:480px;
   background:linear-gradient(180deg, var(--panel) 0%, var(--bg-elev-2) 100%);
@@ -267,19 +264,15 @@ option{
   height:420px; padding:14px; overflow:auto;
 }
 
-/* Status text colors */
 .red{color:var(--err)}
 .fillfood{font-style:italic; color:var(--muted)}
-
-/* Hide helpers */
 .hidden{display:none}
 
-/* Dismiss noisy default labels */
 label{
   background:none; padding:0; margin-left:0; font-size:inherit; font-weight:600; color:var(--text);
 }
 
-/* Animations: keep your Angular classes but smooth them */
+/* Angular slide animations */
 .tableslide.ng-hide-add,
 .tableslide.ng-hide-remove{display:block!important}
 .tableslide.ng-hide-add .panel-body,
