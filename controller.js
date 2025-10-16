@@ -8,8 +8,14 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 
 	$scope.creatureChanges = [
+		{ name: 'Bison', status: 'added' },
+		{ name: 'Cat', status: 'added' },
+		{ name: 'Deinotherium', status: 'added' },
+		{ name: 'Drakeling', status: 'added' },
 		{ name: 'Elderclaw', status: 'added' },
-		{ name: 'Megaraptor', status: 'added' }
+		{ name: 'Helicoprion', status: 'added' },
+		{ name: 'Megaraptor', status: 'added' },
+		{ name: 'Veilwyn', status: 'added' },
 	];
 
 	$scope.Defaultfoods={
@@ -557,6 +563,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 160.0
 		},
 
+		Bison: { //
+			birthtype: "Gestation",
+			type: "Herbivore",
+			basefoodrate: 0.003556,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 2.2,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 2.2,
+			weight: 650.0
+		},
+
 		Brontosaurus: { //
 			birthtype: "Incubation",
 			type: "Herbivore",
@@ -633,6 +652,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gestationspeed: 0.000035,
 			gestationspeedmult: 1.0,
 			weight: 300
+		},
+
+		Cat: { //
+			birthtype: "Gestation",
+			type: "Carnivore",
+			basefoodrate: 0.0008,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 3.0,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 3.0,
+			weight: 60.0
 		},
 
 		Ceratosaurus: { //
@@ -717,6 +749,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeed: 0.005556,
 			eggspeedmult: 1.0,
 			weight: 600.0
+		},
+
+		Deinotherium: { //
+			birthtype: "Gestation",
+			type: "Herbivore",
+			basefoodrate: 0.002314,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 0.5,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1,
+			weight: 800.0
 		},
 
 		Dilophosaurus: { //
@@ -847,6 +892,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gestationspeed: 0.000035,
 			gestationspeedmult: 1.0,
 			weight: 450.0
+		},
+
+		Drakeling: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.001302,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 3.7,
+			eggspeed: 0.005556,
+			eggspeedmult: 4.0,
+			weight: 65.0
 		},
 
 		Dreadnoughtus: { //
@@ -1029,6 +1087,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeed: 0.005556,
 			eggspeedmult: 2.0,
 			weight: 70.0
+		},
+
+		Helicoprion: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.001852,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 0.9,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1.0,
+			weight: 500.0
 		},
 		
 		Hesperornis: { //
@@ -1900,6 +1971,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			eggspeed: 0.005556,
 			eggspeedmult: 1.0,
 			weight: 800.0
+		},
+
+		Veilwyn: { //
+			birthtype: "Gestation",
+			type: "Carnivore",
+			basefoodrate: 0.001543,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 2.0,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1.0,
+			weight: 200.0
 		},
 
 		Velonasaur: { //
