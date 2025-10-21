@@ -2141,6 +2141,10 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		$cookies.putObject('settings', $scope.settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 	}
 
+	if ($scope.tablevisibility && $scope.tablevisibility["ServerRates"] === undefined) {
+  		$scope.tablevisibility["ServerRates"] = true;
+	}
+
 	if ($scope.settings && $scope.settings.version === $scope.settings_version) {
   		if ($scope.settings.greenhousePercent === undefined) $scope.settings.greenhousePercent = 300;
   		if ($scope.settings.shovelTilled === undefined)     $scope.settings.shovelTilled     = false;
@@ -2163,6 +2167,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 	$scope.tablevisibility=$cookies.getObject('tablevisibility');
 	if ($scope.tablevisibility==undefined) {
 		$scope.tablevisibility={
+			"ServerRates": true,
 			"Creature": true,
 			"Maturation": true,
 			"Baby": true,
