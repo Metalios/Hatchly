@@ -2119,7 +2119,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 	$scope.clearcookies=false; //Some of these data structures don't really allow version numbering
 
 	$scope.settings_version = "171114";
-
+	
 	$scope.settings=$cookies.getObject('settings');
 	if ($scope.settings==undefined || $scope.settings.version!=$scope.settings_version) {
 		$scope.settings={
@@ -2139,6 +2139,11 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		$scope.clearcookies=true;
 		var now=new Date();
 		$cookies.putObject('settings', $scope.settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
+	}
+
+	if ($scope.settings && $scope.settings.version === $scope.settings_version) {
+  		if ($scope.settings.greenhousePercent === undefined) $scope.settings.greenhousePercent = 300;
+  		if ($scope.settings.shovelTilled === undefined)     $scope.settings.shovelTilled     = false;
 	}
 	
 	if($scope.settings.stackSize){
@@ -2230,7 +2235,6 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 	}
 
 	$scope.searchcreature=function() {
-		//alert("searchdino");
 		var creature=$scope.creature;
 		var creatures=$scope.creatures;
 
@@ -2266,8 +2270,10 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		if (settings.gen2growtheffect==undefined) {
 			settings.gen2growtheffect = false
 		}
-		if (isNan(settings.greenhousePercent)) settings.greenhousePercent=0;
-		settings.greenhousePercent = Math.min(300, Math.max(0, Number(settings.greenhousePercent)));
+
+		var gh = parseFloat(settings.greenhousePercent);
+		if (!isFinite(gh)) gh = 0;
+		settings.greenhousePercent = Math.min(300, Math.max(0, gh));
 		settings.shovelTilled = !!settings.shovelTilled;
 		
 		var now=new Date();
@@ -2276,38 +2282,13 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		$scope.troughcalc();
 	}
 
-	/*$scope.selectcreature=function() {
-		creature=$scope.creature;
-		creaturedata=$scope.creatures[creature.name];
-		creature.searchname=creature.name; //Ensure the searchname is kept up to date
-		creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/$scope.settings.maturationspeed;
-		creature.babytime=creature.maturationtime/10;
-		if (creaturedata.birthtype=="Incubation") {
-			creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/$scope.settings.hatchspeed;
-			creature.birthlabel="Incubation";
-		}
-		if (creaturedata.birthtype=="Gestation") {
-			creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/$scope.settings.hatchspeed;
-			creature.birthlabel="Gestation";
-		}
-		creature.finalweight=creaturedata.weight;
-		creature.currentweight=0;
-		creature.maxfoodrate=creaturedata.basefoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.settings.consumptionspeed;
-		creature.minfoodrate=$scope.settings.baseminfoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.settings.consumptionspeed;
-		creature.foodratedecay=(creature.maxfoodrate-creature.minfoodrate)/creature.maturationtime;
-		creature.desiredbabybuffer=1;
-		$scope.foodunit=$scope.foodlists[creaturedata.type][0];
-		$scope.selectweight();
-		$scope.totalfoodcalc();
-		$scope.babybuffercalc();
-	}*/
-
-	// Elderclaw crop-plot growth speed scalar (>= 0.01 to avoid div-by-zero)
-	$scope.getElderclawGrowthRate = function() {
-  		var gh = Math.max(0, Number($scope.settings.greenhousePercent)) / 100; // e.g., 300% => 3.0x
-  		var shovel = $scope.settings.shovelTilled ? 1.30 : 1.00;               // +30% speed if tilled
-  		var rate = gh * shovel;
-  		return Math.max(0.01, rate); // safety floor
+	// Elderclaw crop-plot growth speed scalar (never NaN/0)
+	$scope.getElderclawGrowthRate = function () {
+  		var ghRaw  = +$scope.settings.greenhousePercent;              // coerce
+  		var gh     = isFinite(ghRaw) && ghRaw > 0 ? ghRaw / 100 : 0;  // 300 -> 3.0
+  		var shovel = $scope.settings.shovelTilled ? 1.30 : 1.00;      // +30% if tilled
+  		var rate   = gh * shovel;
+  		return rate > 0 ? rate : 1; // floor at 1x (so division is safe)
 	};
 
 	$scope.switchcreature=function() {
@@ -2349,7 +2330,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		// NEW: Elderclaw is “incubated” in a crop plot -> apply greenhouse + shovel growth speed
   		if (creature.name === 'Elderclaw') {
     		var growthRate = $scope.getElderclawGrowthRate(); // e.g., 3.0 * 1.3 = 3.9x
-    		creature.birthtime = creature.birthtime / growthRate; // faster growth => shorter time
+    		creature.birthtime = creature.birthtime / (growthRate || 1); // faster growth => shorter time
     		creature.birthlabel = "Crop Plot Incubation";         // optional: clearer label
   		}
 
