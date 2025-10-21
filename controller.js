@@ -8,12 +8,16 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 
 	$scope.creatureChanges = [
+		{ name: 'Archelon', status: 'added' },
 		{ name: 'Bison', status: 'added' },
 		{ name: 'Cat', status: 'added' },
+		{ name: 'Deinonychus', status: 'added' },
+		{ name: 'Deinotherium', status: 'added' },
 		{ name: 'Deinotherium', status: 'added' },
 		{ name: 'Drakeling', status: 'added' },
-		{ name: 'Elderclaw', status: 'added' },
-		{ name: 'Helicoprion', status: 'added' },
+		{ name: 'Elderclaw', status: 'fixed' },
+		{ name: 'Helicoprion', status: 'fixed' },
+		{ name: 'Karkinos', status: 'fixed' },
 		{ name: 'Megaraptor', status: 'added' },
 		{ name: 'Veilwyn', status: 'added' },
 	];
@@ -472,6 +476,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			weight: 30.0
 		},
 
+		Archelon: { //
+			birthtype: "Incubation",
+			type: "Omnivore",
+			basefoodrate: 0.007716,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 5.0,
+			eggspeed: 0.005556,
+			eggspeedmult: 1.0,
+			weight: 1000.0
+		},
+
 		Argentavis: { //
 			birthtype: "Incubation",
 			type: "Carnivore",
@@ -736,6 +753,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			wastemultipliers: {
 				"Cooked Meat": 0
 			}
+		},
+
+		Deinonychus: { //
+			birthtype: "Incubation",
+			type: "Carnivore",
+			basefoodrate: 0.001543,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 2.5,
+			eggspeed: 0.005556,
+			eggspeedmult: 2.5,
+			weight: 140.0
 		},
 
 		Deinosuchus: { //
@@ -1097,8 +1127,8 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			extrababyfoodrate: 20.0,
 			agespeed: 0.000003,
 			agespeedmult: 0.9,
-			gestationspeed: 0.000035,
-			gestationspeedmult: 1.0,
+			eggspeed: 0.005556,
+			eggspeedmult: 1.0,
 			weight: 500.0
 		},
 		
@@ -1215,7 +1245,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			agespeed: 0.000003,
 			agespeedmult: 0.8,
 			gestationspeed: 0.000035,
-			gestationpeedmult: 0.8,
+			gestationspeedmult: 0.8,
 			weight: 800
 		},
 
@@ -2101,6 +2131,8 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			lossfactor: 0,
 			troughtype: "Normal",
 			foodrate_time_units: "Minute",
+			greenhousePercent: 300,
+			shovelTilled: false,
 			gen2hatcheffect: false,
 			gen2growtheffect: false
 		}
@@ -2234,6 +2266,10 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		if (settings.gen2growtheffect==undefined) {
 			settings.gen2growtheffect = false
 		}
+		if (isNan(settings.greenhousePercent)) settings.greenhousePercent=0;
+		settings.greenhousePercent = Math.min(300, Math.max(0, Number(settings.greenhousePercent)));
+		settings.shovelTilled = !!settings.shovelTilled;
+		
 		var now=new Date();
 		$cookies.putObject('settings', settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 		$scope.statscalc();
@@ -2265,6 +2301,14 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		$scope.totalfoodcalc();
 		$scope.babybuffercalc();
 	}*/
+
+	// Elderclaw crop-plot growth speed scalar (>= 0.01 to avoid div-by-zero)
+	$scope.getElderclawGrowthRate = function() {
+  		var gh = Math.max(0, Number($scope.settings.greenhousePercent)) / 100; // e.g., 300% => 3.0x
+  		var shovel = $scope.settings.shovelTilled ? 1.30 : 1.00;               // +30% speed if tilled
+  		var rate = gh * shovel;
+  		return Math.max(0.01, rate); // safety floor
+	};
 
 	$scope.switchcreature=function() {
 		creature=$scope.creature;
@@ -2301,6 +2345,13 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			}
 			creature.birthlabel="Gestation";
 		}
+
+		// NEW: Elderclaw is “incubated” in a crop plot -> apply greenhouse + shovel growth speed
+  		if (creature.name === 'Elderclaw') {
+    		var growthRate = $scope.getElderclawGrowthRate(); // e.g., 3.0 * 1.3 = 3.9x
+    		creature.birthtime = creature.birthtime / growthRate; // faster growth => shorter time
+    		creature.birthlabel = "Crop Plot Incubation";         // optional: clearer label
+  		}
 
 		creature.maxfoodrate=creaturedata.basefoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.settings.consumptionspeed;
 		creature.minfoodrate=$scope.settings.baseminfoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.settings.consumptionspeed;
