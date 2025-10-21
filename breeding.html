@@ -17,6 +17,31 @@
 <div class="wrapperbox">
   <div class="box">
     <form>
+      <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['ServerRates']}" ng-click="showhidetable('ServerRates')">Server Rates</div>
+      <div class="tableslide" ng-show="tablevisibility['ServerRates']">
+        <table>
+          <tr>
+            <td style="width: 50%" class="label">Hatch Multiplier:
+            </td>
+            <td>
+              <input ng-model="settings.hatchspeed" type="number" min="0" ng-change="selectsettings()">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 50%" class="label">Mature Multiplier:
+            </td>
+            <td>
+              <input ng-model="settings.maturationspeed" type="number" min="0" ng-change="selectsettings()">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 50%" class="label">Consume Multiplier:
+            </td>
+            <td>
+              <input ng-model="settings.consumptionspeed" type="number" min="0" ng-change="selectsettings()">
+            </td>
+          </tr>
+        </table>
       <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Creature']}" ng-click="showhidetable('Creature')">Creature Details</div>
       <div class="tableslide" ng-show="tablevisibility['Creature']">
         <table>
@@ -40,27 +65,6 @@
             </td>
             <td>
               <select ng-options="food for food in foodlists[creatures[creature.name].type]" ng-model="foodunit" ng-change="selectweight()"></select>
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Hatch Multiplier:
-            </td>
-            <td>
-              <input ng-model="settings.hatchspeed" type="number" min="0" ng-change="selectsettings()">
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Mature Multiplier:
-            </td>
-            <td>
-              <input ng-model="settings.maturationspeed" type="number" min="0" ng-change="selectsettings()">
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 50%" class="label">Consume Multiplier:
-            </td>
-            <td>
-              <input ng-model="settings.consumptionspeed" type="number" min="0" ng-change="selectsettings()">
             </td>
           </tr>
           <tr ng-if="creature.name === 'Elderclaw'">
