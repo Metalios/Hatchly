@@ -8,18 +8,8 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 
 	$scope.creatureChanges = [
-		{ name: 'Archelon', status: 'added' },
-		{ name: 'Bison', status: 'added' },
-		{ name: 'Cat', status: 'added' },
-		{ name: 'Deinonychus', status: 'added' },
-		{ name: 'Deinotherium', status: 'added' },
-		{ name: 'Deinotherium', status: 'added' },
-		{ name: 'Drakeling', status: 'added' },
-		{ name: 'Elderclaw', status: 'fixed' },
-		{ name: 'Helicoprion', status: 'fixed' },
-		{ name: 'Karkinos', status: 'fixed' },
-		{ name: 'Megaraptor', status: 'added' },
-		{ name: 'Veilwyn', status: 'added' },
+		{ name: 'Desmodus', status: 'added' },
+		{ name: 'Ossidon', status: 'added-cs' },
 	];
 
 	$scope.Defaultfoods={
@@ -185,175 +175,8 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		}
 	}
 	
-	$scope.Primfoods={
-		//Prim Plus Stacksize is only 20 for fish meat!
-		'Raw Fish Meat': {
-			food: 25,
-			stack: 20,
-			spoil: 20*60,
-			weight: 0.1,
-			waste: 0
-		},
-		
-		'Raw Fish Meat (Carrion)': {
-			food: 5,
-			stack: 40,
-			spoil: 20*60,
-			weight: 0.1,
-			waste: 0
-		},
-
-		'Cooked Fish Meat': {
-			food: 12.5,
-			stack: 50,
-			spoil: 30*60,
-			weight: 0.1,
-			waste: 0
-		},
-		
-		//Prim Plus Stacksize is only 20 for meat!
-		'Raw Meat': {
-			food: 50,
-			stack: 20,
-			spoil: 10*60,
-			weight: 0.1,
-			waste: 0
-		},
-		
-		'Raw Meat (Carrion)': {
-			food: 10,
-			stack: 40,
-			spoil: 10*60,
-			weight: 0.1,
-			waste: 0
-		},
-
-		'Cooked Meat': {
-			food: 25,
-			stack: 50,
-			spoil: 20*60,
-			weight: 0.1,
-			waste: 25
-		},
-
-		'Spoiled Meat': {
-			food: 50,
-			stack: 100,
-			spoil: 60*60,
-			weight: 0.1,
-			waste: 0
-		},
-
-		'Mejoberry': {
-			food: 30,
-			stack: 100,
-			spoil: 10*60,
-			weight: 0.1,
-			waste: 0
-		},
-
-		'Berry': {
-			food: 20,
-			stack: 100,
-			spoil: 10*60,
-			weight: 0.1,
-			waste: 0
-		},
-
-		'Vegetables': {
-			food: 40,
-			stack: 100,
-			spoil: 5*60,
-			weight: 0.1,
-			waste: 0
-		},
-
-		'Rare Flower': {
-			food: 60,
-			stack: 100,
-			spoil: 3*24*60*60,
-			weight: 0.15,
-			waste: 0
-		},
-
-		'Chitin': {
-			food: 50,
-			stack: 100,
-			spoil: 9001*9001,
-			weight: 0.01,
-			waste: 0
-		},
-
-		'Kibble': {
-			food: 60,
-			stack: 100,
-			spoil: 3*24*60*60,
-			weight: 0.1,
-			waste: 0
-		},
-		
-		'Wyvern Milk': {
-			food: 1200,
-			stack: 1,
-			spoil: 10*60*3,
-			weight: 0.1,
-			waste: 0
-		},
-		
-		'Mutagen': {
-			food: 1000,
-			stack: 1,
-			spoil: 10*60*3,
-			weight: 0.1,
-			waste: 0
-		},
-		
-		'Primal Crystal': {
-			food: 350,
-			stack: 1,
-			spoil: 10800,
-			weight: 1,
-			waste: 0
-		},
-				
-		'Ambergris': {
-			food: 500,
-			stack: 1,
-			spoil: 10*60*2,
-			weight: 5,
-			waste: 0
-		},
-		
-		'Nameless Venom': {
-			food: 400,
-			stack: 1,
-			spoil: 10*60*3,
-			weight: 0.1,
-			waste: 0
-		},
-		
-		'Blood Pack': {
-			food: 200,
-			stack: 100,
-			spoil: 10*60*3,
-			weight: 0.05,
-			waste: 0
-		},
-
-		'Sulfur': {
-			food: 50,
-			stack: 100,
-			spoil: 9001*9001,
-			weight: 0.05,
-			waste: 0
-		}
-
-	}
-	
 	$scope.foods=$scope.Defaultfoods;
 	
-	
-
 	$scope.foodlists={
 		Carnivore: ['Raw Meat', 'Cooked Meat', 'Raw Fish Meat', 'Kibble'],
 		Herbivore: ['Mejoberry', 'Berry', 'Vegetables', 'Kibble'],
@@ -792,6 +615,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gestationspeed: 0.000035,
 			gestationspeedmult: 1,
 			weight: 800.0
+		},
+
+		Desmodus: { //
+			birthtype: "Gestation",
+			type: "BloodStalker",
+			basefoodrate: 0.001543,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20.0,
+			agespeed: 0.000003,
+			agespeedmult: 1.3,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 1,
+			weight: 350.0
 		},
 
 		Dilophosaurus: { //
@@ -1506,6 +1342,19 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gestationspeed: 0.000035,
 			gestationspeedmult: 2.0,
 			weight: 50.0
+		},
+
+		Ossidon: {
+			birthtype: "Gestation",
+			type: "Carnivore",
+			basefoodrate: 0.001852,
+			babyfoodrate: 25.5,
+			extrababyfoodrate: 20,
+			agespeed: 0.000003,
+			agespeedmult: 1.0,
+			gestationspeed: 0.000035,
+			gestationspeedmult: 2.0,
+			weight: 574.0
 		},
 
 		Otter: { //
