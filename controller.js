@@ -9,7 +9,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 
 	$scope.creatureChanges = [
 		{ name: 'Desmodus', status: 'added' },
-		{ name: 'Ossidon', status: 'added-cs' },
+		{ name: 'Ossidon', status: 'added* (crowd-sourced)' },
 	];
 
 	$scope.Defaultfoods={
