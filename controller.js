@@ -1354,7 +1354,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			agespeedmult: 1.0,
 			gestationspeed: 0.000035,
 			gestationspeedmult: 2.0,
-			weight: 574.0
+			weight: 500.0
 		},
 
 		Otter: { //
