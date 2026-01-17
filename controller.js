@@ -2276,24 +2276,24 @@ $scope.getConsumeMultiplier = function () {
 	}
 
 	$scope.statscalc=function() {
-		creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/getMatureMultiplier();
+		creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/$scope.getMatureMultiplier();
 		if ($scope.settings.gen2growtheffect === true) {
-			creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/getMatureMultiplier()/2;
+			creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/$scope.getMatureMultiplier()/2;
 		}
 		creature.babytime=creature.maturationtime/10;
 
 		if (creaturedata.birthtype=="Incubation") {
-			creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/getHatchMultiplier();
+			creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/$scope.getHatchMultiplier();
 			if ($scope.settings.gen2hatcheffect === true) {
-				creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/getHatchMultiplier()/1.5;
+				creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/$scope.getHatchMultiplier()/1.5;
 			}
 			creature.birthlabel="Incubation";
 		}
 
 		if (creaturedata.birthtype=="Gestation") {
-			creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/getHatchMultiplier();
+			creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/$scope.getHatchMultiplier();
 			if ($scope.settings.gen2hatcheffect === true) {
-				creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/getHatchMultiplier()/1.5;
+				creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/$scope.getHatchMultiplier()/1.5;
 			}
 			creature.birthlabel="Gestation";
 		}
@@ -2305,8 +2305,8 @@ $scope.getConsumeMultiplier = function () {
     		creature.birthlabel = "Crop Plot Incubation";         // optional: clearer label
   		}
 
-		creature.maxfoodrate=creaturedata.basefoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*getConsumeMultiplier();
-		creature.minfoodrate=$scope.settings.baseminfoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*getConsumeMultiplier();
+		creature.maxfoodrate=creaturedata.basefoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.getConsumeMultiplier();
+		creature.minfoodrate=$scope.settings.baseminfoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.getConsumeMultiplier();
 		creature.foodratedecay=(creature.maxfoodrate-creature.minfoodrate)/creature.maturationtime;
 		creature.foodratedecay=(creature.maxfoodrate-creature.minfoodrate)/creature.maturationtime;
 
