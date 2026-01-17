@@ -2025,6 +2025,8 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 	$scope.settings_version = "171114";
 	
 	$scope.settings=$cookies.getObject('settings');
+	$scope.officialRates = $scope.officialRates || { hatchspeed: 1, maturationspeed: 1 };
+	$scope.officialRatesLoaded = !!$scope.officialRatesLoaded;
 	if ($scope.settings==undefined || $scope.settings.version!=$scope.settings_version) {
 		$scope.settings={
 			version: $scope.settings_version,
