@@ -20,19 +20,19 @@
             <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['ServerRates']}" ng-click="showhidetable('ServerRates')">Server Rates</div>
             <div class="tableslide" ng-show="tablevisibility['ServerRates']">
               <table>
-                <tr>
+                <tr ng-if="settings.isUnofficial">
                   <td style="width: 50%" class="label">Hatch Multiplier: </td>
                   <td>
                     <input ng-model="settings.hatchspeed" type="number" min="0" ng-change="selectsettings()">
                   </td>
                 </tr>
-                <tr>
+                <tr ng-if="settings.isUnofficial">
                   <td style="width: 50%" class="label">Mature Multiplier: </td>
                   <td>
                     <input ng-model="settings.maturationspeed" type="number" min="0" ng-change="selectsettings()">
                   </td>
                 </tr>
-                <tr>
+                <tr ng-if="settings.isUnofficial">
                   <td style="width: 50%" class="label">Consume Multiplier: </td>
                   <td>
                     <input ng-model="settings.consumptionspeed" type="number" min="0" ng-change="selectsettings()">
