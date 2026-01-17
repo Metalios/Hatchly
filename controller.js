@@ -2173,31 +2173,49 @@ function readIniFloat(text, key, fallback) {
 }
 
 $scope.loadOfficialRates = function () {
-	// IMPORTANT: use a relative path so it works on your custom domain and gh-pages
-	// ALSO: add cache-busting so Cloudflare / browser cache can’t serve stale content.
-	var url = "dynamicconfig.ini?v=" + Date.now();
+	var url = "/dynamicconfig.ini?v=" + Date.now();
 
 	return $http.get(url, {
 		cache: false,
-		transformResponse: function (data) { return data; } // force raw text
+		headers: {
+			"Cache-Control": "no-cache, no-store, must-revalidate",
+			"Pragma": "no-cache",
+			"Expires": "0"
+		},
+		transformResponse: function (data) { return data; }
 	})
 	.then(function (resp) {
-		var text = resp.data;
+		var text = resp.data || "";
 
-		// Prove you got the INI (open console and look at first 200 chars)
-		console.log("dynamicconfig.ini (first 200 chars):", String(text).slice(0, 200));
-
-		var hatch = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
+		var hatch  = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
 		var mature = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
 
 		$scope.officialRates.hatchspeed = hatch;
 		$scope.officialRates.maturationspeed = mature;
 		$scope.officialRatesLoaded = true;
 
-		console.log("Official rates parsed:", $scope.officialRates);
+		// persist so refresh doesn't depend on network
+		try {
+			localStorage.setItem("officialRates", JSON.stringify({
+				hatchspeed: hatch,
+				maturationspeed: mature,
+				ts: Date.now()
+			}));
+		} catch (_) {}
 	})
 	.catch(function (err) {
-		console.warn("Failed to load official ASA rates; defaulting to 1x.", err);
+		console.warn("Failed to load official rates.", err);
+
+		// Restore last known good values on refresh
+		var saved = null;
+		try { saved = JSON.parse(localStorage.getItem("officialRates") || "null"); } catch (_) {}
+		if (saved && isFinite(saved.hatchspeed) && isFinite(saved.maturationspeed)) {
+			$scope.officialRates.hatchspeed = saved.hatchspeed;
+			$scope.officialRates.maturationspeed = saved.maturationspeed;
+			$scope.officialRatesLoaded = true;
+			return;
+		}
+
 		$scope.officialRates.hatchspeed = 1;
 		$scope.officialRates.maturationspeed = 1;
 		$scope.officialRatesLoaded = false;
