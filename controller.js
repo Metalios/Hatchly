@@ -2236,7 +2236,7 @@ $scope.getConsumeMultiplier = function () {
 	}
 
 	$scope.loadOfficialRates=function() {
-		var url = "https://cdn2.arkdedicated.com/asa/dynamicconfig.ini";
+		var url = "./dynamicconfig.ini";
 
 		return $http.get(url, { cache: true, responseType: "text" })
 			.then(function (resp) {
