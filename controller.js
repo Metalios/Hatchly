@@ -2041,10 +2041,12 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gen2hatcheffect: false,
 			gen2growtheffect: false
 		}
-		$scope.officialRates = {
+		
+		$scope.officialRates={
 			hatchspeed: 1,
 			maturationspeed: 1
 		};
+		
 		$scope.officialRatesLoaded = false;
 		
 		$scope.clearcookies=true;
