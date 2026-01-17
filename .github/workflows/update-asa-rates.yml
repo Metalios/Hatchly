@@ -1,87 +1,19 @@
-name: Update Official ASA Rates
-
+name: Sync ARK Config
 on:
   schedule:
-    - cron: "0 */1 * * *"   # every 6 hours (UTC)
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-concurrency:
-  group: update-official-rates
-  cancel-in-progress: true
-
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows manual run
 jobs:
-  update:
+  get-config:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch INI and generate JSON
-        shell: bash
+      - uses: actions/checkout@v3
+      - name: Download file
+        run: curl -o dynamicconfig.ini https://cdn2.arkdedicated.com/asa/dynamicconfig.ini
+      - name: Commit and Push
         run: |
-          set -euo pipefail
-
-          URL="https://cdn2.arkdedicated.com/asa/dynamicconfig.ini"
-          OUT_DIR="data"
-          OUT_FILE="$OUT_DIR/officialRates.json"
-
-          mkdir -p "$OUT_DIR"
-
-          ini="$(curl -fsSL "$URL")"
-
-          # Extract first matching numeric value for each key (handles whitespace, comments, etc.)
-          get_val() {
-            local key="$1"
-            echo "$ini" | awk -F= -v k="$key" '
-              BEGIN{IGNORECASE=1}
-              $1 ~ "^[[:space:]]*"k"[[:space:]]*$" {
-                gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)
-                # strip trailing comments if any
-                sub(/[;#].*$/, "", $2)
-                gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)
-                if ($2 ~ /^[0-9]*\.?[0-9]+$/) { print $2; exit }
-              }
-            '
-          }
-
-          hatch="$(get_val "EggHatchSpeedMultiplier")"
-          mature="$(get_val "BabyMatureSpeedMultiplier")"
-
-          # Fallback to 1 if missing for any reason
-          hatch="${hatch:-1}"
-          mature="${mature:-1}"
-
-          # Write deterministic JSON
-          cat > "$OUT_FILE" <<EOF
-          {
-            "hatchspeed": $hatch,
-            "maturationspeed": $mature,
-            "consumptionspeed": 1
-          }
-          EOF
-
-          echo "Wrote $OUT_FILE:"
-          cat "$OUT_FILE"
-
-      - name: Commit & push if changed
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          if git diff --quiet -- data/officialRates.json; then
-            echo "No changes to official rates; nothing to commit."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add data/officialRates.json
-          git commit -m "Update official ASA breeding rates"
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add dynamicconfig.ini
+          git commit -m "Update config" || exit 0
           git push
