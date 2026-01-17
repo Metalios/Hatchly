@@ -2196,14 +2196,16 @@ $scope.getConsumeMultiplier = function () {
 
 	$scope.selectsettings=function() {
 		settings=$scope.settings;
-		if (isNaN(settings.consumptionspeed) || settings.consumptionspeed<=0) {
-			return;
-		}
-		if (isNaN(settings.maturationspeed) || settings.maturationspeed<=0) {
-			return;
-		}
-		if (isNaN(settings.hatchspeed) || settings.hatchspeed<=0) {
-			return;
+		if ($scope.settings.unofficial) {
+			if (isNaN(settings.consumptionspeed) || settings.consumptionspeed<=0) {
+				return;
+			}
+			if (isNaN(settings.maturationspeed) || settings.maturationspeed<=0) {
+				return;
+			}
+			if (isNaN(settings.hatchspeed) || settings.hatchspeed<=0) {
+				return;
+			}
 		}
 		if (settings.gen2hatcheffect==undefined) {
 			settings.gen2hatcheffect = false
@@ -2240,14 +2242,14 @@ $scope.getConsumeMultiplier = function () {
 			.then(function (resp) {
 				var text = (typeof resp.data === "string") ? resp.data : "";
 
-				$scope.officialRates.hatch = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
-				$scope.officialRates.mature = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
+				$scope.officialRates.hatchspeed = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
+				$scope.officialRates.maturationspeed = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
 			})
 			.catch(function (err) {
 				// If anything goes wrong (CORS/network), fall back to 1x
 				console.warn("Failed to load official ASA rates; defaulting to 1x.", err);
-				$scope.officialRates.hatch = 1;
-				$scope.officialRates.mature = 1;
+				$scope.officialRates.hatchspeed = 1;
+				$scope.officialRates.maturationspeed = 1;
 			});
 	}
 
@@ -2274,24 +2276,24 @@ $scope.getConsumeMultiplier = function () {
 	}
 
 	$scope.statscalc=function() {
-		creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/$scope.settings.maturationspeed;
+		creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/getMatureMultiplier();
 		if ($scope.settings.gen2growtheffect === true) {
-			creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/$scope.settings.maturationspeed/2;
+			creature.maturationtime=1/creaturedata.agespeed/creaturedata.agespeedmult/getMatureMultiplier()/2;
 		}
 		creature.babytime=creature.maturationtime/10;
 
 		if (creaturedata.birthtype=="Incubation") {
-			creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/$scope.settings.hatchspeed;
+			creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/getHatchMultiplier();
 			if ($scope.settings.gen2hatcheffect === true) {
-				creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/$scope.settings.hatchspeed/1.5;
+				creature.birthtime=100/creaturedata.eggspeed/creaturedata.eggspeedmult/getHatchMultiplier()/1.5;
 			}
 			creature.birthlabel="Incubation";
 		}
 
 		if (creaturedata.birthtype=="Gestation") {
-			creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/$scope.settings.hatchspeed;
+			creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/getHatchMultiplier();
 			if ($scope.settings.gen2hatcheffect === true) {
-				creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/$scope.settings.hatchspeed/1.5;
+				creature.birthtime=1/creaturedata.gestationspeed/creaturedata.gestationspeedmult/getHatchMultiplier()/1.5;
 			}
 			creature.birthlabel="Gestation";
 		}
@@ -2303,8 +2305,8 @@ $scope.getConsumeMultiplier = function () {
     		creature.birthlabel = "Crop Plot Incubation";         // optional: clearer label
   		}
 
-		creature.maxfoodrate=creaturedata.basefoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.settings.consumptionspeed;
-		creature.minfoodrate=$scope.settings.baseminfoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*$scope.settings.consumptionspeed;
+		creature.maxfoodrate=creaturedata.basefoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*getConsumeMultiplier();
+		creature.minfoodrate=$scope.settings.baseminfoodrate*creaturedata.babyfoodrate*creaturedata.extrababyfoodrate*getConsumeMultiplier();
 		creature.foodratedecay=(creature.maxfoodrate-creature.minfoodrate)/creature.maturationtime;
 		creature.foodratedecay=(creature.maxfoodrate-creature.minfoodrate)/creature.maturationtime;
 
@@ -2630,13 +2632,13 @@ $scope.getConsumeMultiplier = function () {
 				newcreature={};
 				newcreature.name=name;
 				newcreature.maturation=creaturelist[i].maturation;
-				newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/$scope.settings.maturationspeed;
+				newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/getMatureMultiplier();
 				if ($scope.settings.gen2hatcheffect === true) {
-					newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/$scope.settings.maturationspeed/1.5;
+					newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/getMatureMultiplier()/1.5;
 				}
 				newcreature.maturationtimecomplete=newcreature.maturationtime*newcreature.maturation;
-				newcreature.maxfoodrate=$scope.creatures[name].basefoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*$scope.settings.consumptionspeed;
-				newcreature.minfoodrate=$scope.settings.baseminfoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*$scope.settings.consumptionspeed;
+				newcreature.maxfoodrate=$scope.creatures[name].basefoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*getConsumeMultiplier();
+				newcreature.minfoodrate=$scope.settings.baseminfoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*getConsumeMultiplier();
 				newcreature.foodratedecay=(newcreature.maxfoodrate-newcreature.minfoodrate)/newcreature.maturationtime;
 				newcreature.foodrate=newcreature.maxfoodrate-newcreature.foodratedecay*newcreature.maturation*newcreature.maturationtime;
 				newcreature.hunger=0;
