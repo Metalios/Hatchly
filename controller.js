@@ -2028,6 +2028,11 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 	if ($scope.settings==undefined || $scope.settings.version!=$scope.settings_version) {
 		$scope.settings={
 			version: $scope.settings_version,
+			officialRates: {
+				hatchspeed: 1,
+				matururationspeed: 1
+			},
+			officialRatesLoaded: false,
 			consumptionspeed: 1,
 			maturationspeed: 1,
 			hatchspeed: 1,
