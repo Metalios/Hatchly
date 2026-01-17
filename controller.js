@@ -2236,7 +2236,7 @@ $scope.getConsumeMultiplier = function () {
 	}
 
 	$scope.loadOfficialRates=function() {
-		var url = "./dynamicconfig.ini";
+		var url = "/dynamicconfig.ini";
 
 		return $http.get(url, { cache: true, responseType: "text" })
 			.then(function (resp) {
