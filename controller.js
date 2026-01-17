@@ -2149,6 +2149,62 @@ $scope.getConsumeMultiplier = function () {
 		: 1;
 };
 
+	function escapeRegExp(s) {
+	return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function readIniFloat(text, key, fallback) {
+	if (typeof text !== "string" || !text.length) return fallback;
+
+	// Match: Key = 1.0  (supports +/- , decimals, scientific notation, ignores trailing comments)
+	// Also works even if file has \r\n or \n
+	var re = new RegExp(
+		"(^|\\r?\\n)\\s*" + escapeRegExp(key) + "\\s*=\\s*" +
+		"([+-]?(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][+-]?\\d+)?)" +
+		"(?:\\s*(?:;|#).*)?(?=\\r?\\n|$)",
+		"i"
+	);
+
+	var m = re.exec(text);
+	if (!m) return fallback;
+
+	var v = parseFloat(m[2]);
+	return isFinite(v) ? v : fallback;
+}
+
+$scope.loadOfficialRates = function () {
+	// IMPORTANT: use a relative path so it works on your custom domain and gh-pages
+	// ALSO: add cache-busting so Cloudflare / browser cache can’t serve stale content.
+	var url = "dynamicconfig.ini?v=" + Date.now();
+
+	return $http.get(url, {
+		cache: false,
+		transformResponse: function (data) { return data; } // force raw text
+	})
+	.then(function (resp) {
+		var text = resp.data;
+
+		// Prove you got the INI (open console and look at first 200 chars)
+		console.log("dynamicconfig.ini (first 200 chars):", String(text).slice(0, 200));
+
+		var hatch = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
+		var mature = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
+
+		$scope.officialRates.hatchspeed = hatch;
+		$scope.officialRates.maturationspeed = mature;
+		$scope.officialRatesLoaded = true;
+
+		console.log("Official rates parsed:", $scope.officialRates);
+	})
+	.catch(function (err) {
+		console.warn("Failed to load official ASA rates; defaulting to 1x.", err);
+		$scope.officialRates.hatchspeed = 1;
+		$scope.officialRates.maturationspeed = 1;
+		$scope.officialRatesLoaded = false;
+	});
+};
+
+
 	function validatenumber(number, min, max) {
 		if (isNaN(number)) {
 			return min;
@@ -2224,48 +2280,6 @@ $scope.getConsumeMultiplier = function () {
 		$scope.statscalc();
 		$scope.troughcalc();
 	}
-
-	function readIniFloat(text, key, fallback) {
-		// Matches lines like: Key=Value (case-insensitive, supports whitespace)
-		var re = new RegExp("^\\s*" + key + "\\s*=\\s*([0-9]*\\.?[0-9]+)\\s*$", "im");
-		var match = text.match(re);
-		if (!match) return fallback;
-
-		var v = parseFloat(match[1]);
-		return isFinite(v) ? v : fallback;
-	}
-
-	$scope.loadOfficialRates = function () {
-  // IMPORTANT:
-  // - Use a RELATIVE path so it works on custom domain + GH Pages subpaths
-  // - Cache-bust so you don't get a stale INI after your workflow updates it
-  var url = "dynamicconfig.ini?v=" + Date.now();
-
-  return $http.get(url, {
-    cache: false,
-    // Force "treat as raw text"
-    transformResponse: [function (data) { return data; }]
-  })
-  .then(function (resp) {
-    var text = (typeof resp.data === "string") ? resp.data : "";
-
-    $scope.officialRates.hatchspeed = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
-    $scope.officialRates.maturationspeed = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
-
-    $scope.officialRatesLoaded = true;
-
-    // If the UI is already showing results, recompute now that we have real rates:
-    // (If you use the .finally init approach above, this is still useful for manual reloads)
-    $scope.statscalc();
-    $scope.troughcalc();
-  })
-  .catch(function (err) {
-    console.warn("Failed to load official ASA rates; defaulting to 1x.", err);
-    $scope.officialRates.hatchspeed = 1;
-    $scope.officialRates.maturationspeed = 1;
-    $scope.officialRatesLoaded = false;
-  });
-};
 
 	// Elderclaw crop-plot growth speed scalar (never NaN/0)
 	$scope.getElderclawGrowthRate = function () {
