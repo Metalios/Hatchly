@@ -38,6 +38,17 @@
                     <input ng-model="settings.consumptionspeed" type="number" min="0" ng-change="selectsettings()">
                   </td>
                 </tr>
+                <tr>
+	                <td class="label">Server Type:</td>
+	                <td>
+		                <label>
+			                <input type="checkbox"
+				               ng-model="settings.isUnofficial"
+				               ng-change="selectsettings()">
+			                  Unofficial
+		                </label>
+	                </td>
+                </tr>
               </table>
             </div>
             <div class="tableheader slide" ng-class="{'dimmed': !tablevisibility['Creature']}" ng-click="showhidetable('Creature')">Creature Details</div>
