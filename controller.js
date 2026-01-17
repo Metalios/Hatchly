@@ -1,4 +1,4 @@
-var breedingController=angular.module('breedingControllers', []).controller('breedingController', ['$scope', '$interval', '$cookies', '$animate', function($scope, $interval, $cookies, $animate) {
+var breedingController=angular.module('breedingControllers', []).controller('breedingController', ['$scope', '$interval', '$cookies', '$animate', '$http', function($scope, $interval, $cookies, $animate, $http) {
 
 	var defaultmult = {
   		get: function(target, name) {
