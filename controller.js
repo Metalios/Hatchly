@@ -2235,23 +2235,37 @@ $scope.getConsumeMultiplier = function () {
 		return isFinite(v) ? v : fallback;
 	}
 
-	$scope.loadOfficialRates=function() {
-		var url = "/dynamicconfig.ini";
+	$scope.loadOfficialRates = function () {
+  // IMPORTANT:
+  // - Use a RELATIVE path so it works on custom domain + GH Pages subpaths
+  // - Cache-bust so you don't get a stale INI after your workflow updates it
+  var url = "dynamicconfig.ini?v=" + Date.now();
 
-		return $http.get(url, { cache: true, responseType: "text" })
-			.then(function (resp) {
-				var text = (typeof resp.data === "string") ? resp.data : "";
+  return $http.get(url, {
+    cache: false,
+    // Force "treat as raw text"
+    transformResponse: [function (data) { return data; }]
+  })
+  .then(function (resp) {
+    var text = (typeof resp.data === "string") ? resp.data : "";
 
-				$scope.officialRates.hatchspeed = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
-				$scope.officialRates.maturationspeed = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
-			})
-			.catch(function (err) {
-				// If anything goes wrong (CORS/network), fall back to 1x
-				console.warn("Failed to load official ASA rates; defaulting to 1x.", err);
-				$scope.officialRates.hatchspeed = 1;
-				$scope.officialRates.maturationspeed = 1;
-			});
-	}
+    $scope.officialRates.hatchspeed = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
+    $scope.officialRates.maturationspeed = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
+
+    $scope.officialRatesLoaded = true;
+
+    // If the UI is already showing results, recompute now that we have real rates:
+    // (If you use the .finally init approach above, this is still useful for manual reloads)
+    $scope.statscalc();
+    $scope.troughcalc();
+  })
+  .catch(function (err) {
+    console.warn("Failed to load official ASA rates; defaulting to 1x.", err);
+    $scope.officialRates.hatchspeed = 1;
+    $scope.officialRates.maturationspeed = 1;
+    $scope.officialRatesLoaded = false;
+  });
+};
 
 	// Elderclaw crop-plot growth speed scalar (never NaN/0)
 	$scope.getElderclawGrowthRate = function () {
@@ -2632,13 +2646,13 @@ $scope.getConsumeMultiplier = function () {
 				newcreature={};
 				newcreature.name=name;
 				newcreature.maturation=creaturelist[i].maturation;
-				newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/getMatureMultiplier();
+				newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/$scope.getMatureMultiplier();
 				if ($scope.settings.gen2hatcheffect === true) {
-					newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/getMatureMultiplier()/1.5;
+					newcreature.maturationtime=1/$scope.creatures[name].agespeed/$scope.creatures[name].agespeedmult/$scope.getMatureMultiplier()/1.5;
 				}
 				newcreature.maturationtimecomplete=newcreature.maturationtime*newcreature.maturation;
-				newcreature.maxfoodrate=$scope.creatures[name].basefoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*getConsumeMultiplier();
-				newcreature.minfoodrate=$scope.settings.baseminfoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*getConsumeMultiplier();
+				newcreature.maxfoodrate=$scope.creatures[name].basefoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*$scope.getConsumeMultiplier();
+				newcreature.minfoodrate=$scope.settings.baseminfoodrate*$scope.creatures[name].babyfoodrate*$scope.creatures[name].extrababyfoodrate*$scope.getConsumeMultiplier();
 				newcreature.foodratedecay=(newcreature.maxfoodrate-newcreature.minfoodrate)/newcreature.maturationtime;
 				newcreature.foodrate=newcreature.maxfoodrate-newcreature.foodratedecay*newcreature.maturation*newcreature.maturationtime;
 				newcreature.hunger=0;
