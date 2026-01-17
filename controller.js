@@ -2131,6 +2131,24 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		}
 	}
 
+	$scope.getHatchMultiplier = function () {
+	return $scope.settings.isUnofficial
+		? $scope.settings.hatchspeed
+		: $scope.officialRates.hatchspeed;
+};
+
+$scope.getMatureMultiplier = function () {
+	return $scope.settings.isUnofficial
+		? $scope.settings.maturationspeed
+		: $scope.officialRates.maturationspeed;
+};
+
+$scope.getConsumeMultiplier = function () {
+	return $scope.settings.isUnofficial
+		? $scope.settings.consumptionspeed
+		: 1;
+};
+
 	function validatenumber(number, min, max) {
 		if (isNaN(number)) {
 			return min;
@@ -2203,6 +2221,34 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		$cookies.putObject('settings', settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
 		$scope.statscalc();
 		$scope.troughcalc();
+	}
+
+	function readIniFloat(text, key, fallback) {
+		// Matches lines like: Key=Value (case-insensitive, supports whitespace)
+		var re = new RegExp("^\\s*" + key + "\\s*=\\s*([0-9]*\\.?[0-9]+)\\s*$", "im");
+		var match = text.match(re);
+		if (!match) return fallback;
+
+		var v = parseFloat(match[1]);
+		return isFinite(v) ? v : fallback;
+	}
+
+	$scope.loadOfficialRates=function() {
+		var url = "https://cdn2.arkdedicated.com/asa/dynamicconfig.ini";
+
+		return $http.get(url, { cache: true, responseType: "text" })
+			.then(function (resp) {
+				var text = (typeof resp.data === "string") ? resp.data : "";
+
+				$scope.officialRates.hatch = readIniFloat(text, "EggHatchSpeedMultiplier", 1);
+				$scope.officialRates.mature = readIniFloat(text, "BabyMatureSpeedMultiplier", 1);
+			})
+			.catch(function (err) {
+				// If anything goes wrong (CORS/network), fall back to 1x
+				console.warn("Failed to load official ASA rates; defaulting to 1x.", err);
+				$scope.officialRates.hatch = 1;
+				$scope.officialRates.mature = 1;
+			});
 	}
 
 	// Elderclaw crop-plot growth speed scalar (never NaN/0)
@@ -2685,6 +2731,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 		return output;
 	}
 
+	$scope.loadOfficialRates();
 	$scope.switchcreature();
 	$scope.troughupdatefoodtypes();
 
