@@ -2761,11 +2761,8 @@ $scope.loadOfficialRates = function () {
 		return output;
 	}
 
-	$scope.loadOfficialRates()
-  .finally(function () {
-    $scope.switchcreature();
-    $scope.troughupdatefoodtypes();
-    $scope.troughcalc(); // optional: ensures trough reflects new multipliers too
-  });
+	$scope.loadOfficialRates();
+	$scope.switchcreature();
+	$scope.troughupdatefoodtypes();
 
 }]);
