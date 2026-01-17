@@ -2196,7 +2196,7 @@ $scope.getConsumeMultiplier = function () {
 
 	$scope.selectsettings=function() {
 		settings=$scope.settings;
-		if ($scope.settings.unofficial) {
+		if ($scope.settings.isUnofficial) {
 			if (isNaN(settings.consumptionspeed) || settings.consumptionspeed<=0) {
 				return;
 			}
