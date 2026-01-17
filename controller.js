@@ -2028,11 +2028,7 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 	if ($scope.settings==undefined || $scope.settings.version!=$scope.settings_version) {
 		$scope.settings={
 			version: $scope.settings_version,
-			officialRates: {
-				hatchspeed: 1,
-				matururationspeed: 1
-			},
-			officialRatesLoaded: false,
+			isUnofficial: false,
 			consumptionspeed: 1,
 			maturationspeed: 1,
 			hatchspeed: 1,
@@ -2045,6 +2041,12 @@ var breedingController=angular.module('breedingControllers', []).controller('bre
 			gen2hatcheffect: false,
 			gen2growtheffect: false
 		}
+		$scope.officialRates = {
+			hatchspeed: 1,
+			maturationspeed: 1
+		};
+		$scope.officialRatesLoaded = false;
+		
 		$scope.clearcookies=true;
 		var now=new Date();
 		$cookies.putObject('settings', $scope.settings, {expires: new Date(now.getFullYear(), now.getMonth()+6, now.getDate()), path: '/'});
