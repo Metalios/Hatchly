@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Hatchly">
+  <rect width="128" height="128" rx="28" fill="#071512"/>
+  <path d="M64 15c-22 0-38 32-38 61 0 24 16 37 38 37s38-13 38-37C102 47 86 15 64 15Z" fill="#102824" stroke="#58d6bd" stroke-width="7"/>
+  <path d="m68 35-9 18 12 8-15 12 10 20" fill="none" stroke="#9de46f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

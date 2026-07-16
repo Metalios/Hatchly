@@ -1,0 +1,424 @@
+@page "/troughs"
+@inject CatalogService Catalog
+@inject RateService Rates
+@inject TroughCalculator Calculator
+@implements IDisposable
+
+<PageTitle>Trough Planner - Hatchly</PageTitle>
+
+<header class="page-heading">
+    <div>
+        <span class="eyebrow">ASA trough planner</span>
+        <h1>Provision the whole group</h1>
+        <p>Combine creatures, maturity levels, and whole or partial stacks to estimate shared food coverage.</p>
+    </div>
+    <div class="rate-summary">
+        <span>@TroughLabel</span>
+        <strong>@FormatRate(SpoilMultiplier) spoil time</strong>
+    </div>
+</header>
+
+@if (Catalog.Error is not null)
+{
+    <section class="card empty-state" role="alert">
+        <h2>Creature data could not be loaded</h2>
+        <p>@Catalog.Error</p>
+    </section>
+}
+else if (Catalog.Catalog is null)
+{
+    <section class="card loading-card" aria-live="polite">
+        <span class="loading-dot"></span>
+        <p>Loading trough data...</p>
+    </section>
+}
+else if (Rates.CurrentRates is null)
+{
+    <section class="card empty-state error" role="alert">
+        <h2>Official calculations are unavailable</h2>
+        <p>@Rates.Error Select Unofficial in the header to enter rates manually, or reload to try the bundled file again.</p>
+    </section>
+}
+else
+{
+    <div class="trough-grid">
+        <div class="trough-inputs">
+            <section class="card">
+                <div class="section-title">
+                    <span class="section-icon" aria-hidden="true">&#9632;</span>
+                    <div>
+                        <h2>Container</h2>
+                        <p>The container changes food spoil time, not consumption.</p>
+                    </div>
+                </div>
+
+                <div class="choice-grid" role="radiogroup" aria-label="Container type">
+                    @foreach (var type in Enum.GetValues<TroughType>())
+                    {
+                        <label class="choice-card">
+                            <input type="radio"
+                                   name="trough-type"
+                                   value="@type"
+                                   checked="@(selectedTrough == type)"
+                                   @onchange="() => SelectTrough(type)" />
+                            <span>
+                                <strong>@DisplayTrough(type)</strong>
+                                <small>@FormatRate(GetSpoilMultiplier(type)) spoil time</small>
+                            </span>
+                        </label>
+                    }
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="section-title row-title">
+                    <span class="section-icon" aria-hidden="true">&#9673;</span>
+                    <div>
+                        <h2>Creatures</h2>
+                        <p>Add each group eating from this container.</p>
+                    </div>
+                    <button class="button secondary compact-button" @onclick="AddCreature">Add creature</button>
+                </div>
+
+                <div class="editor-list">
+                    @foreach (var row in creatureRows)
+                    {
+                        <div class="editor-row creature-editor" @key="row">
+                            <label>
+                                <span>Creature</span>
+                                <select @bind="row.CreatureId" @bind:after="Recalculate">
+                                    @foreach (var creature in Catalog.Catalog.Creatures)
+                                    {
+                                        <option value="@creature.Id">@creature.Name</option>
+                                    }
+                                </select>
+                            </label>
+                            <label>
+                                <span>Maturity</span>
+                                <div class="input-with-suffix">
+                                    <input type="number" min="10" max="100" step="0.1"
+                                           @bind="row.MaturityPercent"
+                                           @bind:event="oninput"
+                                           @bind:after="Recalculate" />
+                                    <span>%</span>
+                                </div>
+                            </label>
+                            <label>
+                                <span>Quantity</span>
+                                <input type="number" min="1" max="500" step="1"
+                                       @bind="row.Quantity"
+                                       @bind:event="oninput"
+                                       @bind:after="Recalculate" />
+                            </label>
+                            <button class="icon-button danger"
+                                    title="Remove creature"
+                                    aria-label="Remove creature"
+                                    disabled="@(creatureRows.Count == 1)"
+                                    @onclick="() => RemoveCreature(row)">&#215;</button>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="section-title row-title">
+                    <span class="section-icon" aria-hidden="true">&#9670;</span>
+                    <div>
+                        <h2>Food stacks</h2>
+                        <p>Fractional stacks are converted to whole items.</p>
+                    </div>
+                    <button class="button secondary compact-button" @onclick="AddFood">Add food</button>
+                </div>
+
+                <div class="editor-list">
+                    @foreach (var row in foodRows)
+                    {
+                        <div class="editor-row food-editor" @key="row">
+                            <label>
+                                <span>Food</span>
+                                <select @bind="row.FoodId" @bind:after="Recalculate">
+                                    @foreach (var food in Catalog.Catalog.Foods)
+                                    {
+                                        <option value="@food.Id">@food.Name</option>
+                                    }
+                                </select>
+                            </label>
+                            <label>
+                                <span>Stacks</span>
+                                <input type="number" min="0" max="1000" step="0.1"
+                                       @bind="row.Stacks"
+                                       @bind:event="oninput"
+                                       @bind:after="Recalculate" />
+                            </label>
+                            <div class="row-readout">
+                                <span>Whole items</span>
+                                <strong>@WholeItems(row)</strong>
+                            </div>
+                            <button class="icon-button danger"
+                                    title="Remove food"
+                                    aria-label="Remove food"
+                                    disabled="@(foodRows.Count == 1)"
+                                    @onclick="() => RemoveFood(row)">&#215;</button>
+                        </div>
+                    }
+                </div>
+            </section>
+        </div>
+
+        <aside class="trough-results">
+            @if (calculationError is not null)
+            {
+                <section class="card empty-state error" role="alert">
+                    <h2>Simulation unavailable</h2>
+                    <p>@calculationError</p>
+                </section>
+            }
+            else if (result is not null)
+            {
+                <section class="card trough-hero">
+                    <span class="eyebrow">Estimated coverage</span>
+                    <strong class="coverage-value">@FormatCoverage(result.Coverage)</strong>
+                    <p>@result.TotalItems whole food items across @foodRows.Count food type@(foodRows.Count == 1 ? "" : "s").</p>
+                    @if (result.Coverage >= MaximumSimulation)
+                    {
+                        <div class="global-notice warning inline-notice">Simulation is capped at three days.</div>
+                    }
+                </section>
+
+                <section class="card">
+                    <div class="section-title compact">
+                        <span class="section-icon" aria-hidden="true">&#9678;</span>
+                        <div>
+                            <h2>Coverage by diet</h2>
+                            <p>The last successful feeding time for each diet.</p>
+                        </div>
+                    </div>
+                    <dl class="timeline-list">
+                        @foreach (var entry in result.CoverageByDiet.OrderBy(item => DietName(item.Key)))
+                        {
+                            <div>
+                                <dt>@DietName(entry.Key)</dt>
+                                <dd>@FormatCoverage(entry.Value)</dd>
+                            </div>
+                        }
+                    </dl>
+                </section>
+
+                <section class="card">
+                    <div class="section-title compact">
+                        <span class="section-icon" aria-hidden="true">&#9672;</span>
+                        <div>
+                            <h2>Food outcome</h2>
+                            <p>Consumed, spoiled, and effective food points.</p>
+                        </div>
+                    </div>
+                    <div class="food-totals">
+                        <div>
+                            <span>Eaten</span>
+                            <strong>@result.EatenItems</strong>
+                        </div>
+                        <div>
+                            <span>Spoiled</span>
+                            <strong>@result.SpoiledItems</strong>
+                        </div>
+                        <div>
+                            <span>Loss</span>
+                            <strong>@LossPercent</strong>
+                        </div>
+                    </div>
+                    <details class="details-panel">
+                        <summary>Food-point details</summary>
+                        <dl class="detail-grid">
+                            <div>
+                                <dt>Eaten food points</dt>
+                                <dd>@result.EatenFoodPoints.ToString("0")</dd>
+                            </div>
+                            <div>
+                                <dt>Spoiled food points</dt>
+                                <dd>@result.SpoiledFoodPoints.ToString("0")</dd>
+                            </div>
+                            <div>
+                                <dt>Waste food points</dt>
+                                <dd>@result.WastedFoodPoints.ToString("0")</dd>
+                            </div>
+                            <div>
+                                <dt>Total modeled points</dt>
+                                <dd>@result.TotalFoodPoints.ToString("0")</dd>
+                            </div>
+                        </dl>
+                    </details>
+                </section>
+            }
+        </aside>
+    </div>
+}
+
+@code {
+    private static readonly TimeSpan MaximumSimulation = TimeSpan.FromDays(3);
+    private readonly List<CreatureRow> creatureRows = [];
+    private readonly List<FoodRow> foodRows = [];
+    private TroughType selectedTrough = TroughType.Normal;
+    private TroughResult? result;
+    private string? calculationError;
+
+    private double SpoilMultiplier => GetSpoilMultiplier(selectedTrough);
+    private string TroughLabel => DisplayTrough(selectedTrough);
+    private string LossPercent => result is null || result.TotalFoodPoints <= 0
+        ? "0%"
+        : $"{(result.SpoiledFoodPoints + result.WastedFoodPoints) * 100 / result.TotalFoodPoints:0.#}%";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Rates.Changed += RatesChanged;
+        await Task.WhenAll(Catalog.EnsureLoadedAsync(), Rates.EnsureLoadedAsync());
+        if (Catalog.Catalog is null)
+        {
+            return;
+        }
+
+        var argentavis = Catalog.Catalog.Creatures.FirstOrDefault(item => item.Id == "argentavis")
+            ?? Catalog.Catalog.Creatures[0];
+        var rawMeat = Catalog.Catalog.Foods.FirstOrDefault(item => item.Id == "raw-meat")
+            ?? Catalog.Catalog.Foods[0];
+        creatureRows.Add(new CreatureRow(argentavis.Id, 10, 1));
+        foodRows.Add(new FoodRow(rawMeat.Id, 5));
+        Recalculate();
+    }
+
+    private void AddCreature()
+    {
+        var id = Catalog.Catalog!.Creatures[0].Id;
+        creatureRows.Add(new CreatureRow(id, 10, 1));
+        Recalculate();
+    }
+
+    private void RemoveCreature(CreatureRow row)
+    {
+        if (creatureRows.Count > 1)
+        {
+            creatureRows.Remove(row);
+            Recalculate();
+        }
+    }
+
+    private void AddFood()
+    {
+        var id = Catalog.Catalog!.Foods[0].Id;
+        foodRows.Add(new FoodRow(id, 1));
+        Recalculate();
+    }
+
+    private void RemoveFood(FoodRow row)
+    {
+        if (foodRows.Count > 1)
+        {
+            foodRows.Remove(row);
+            Recalculate();
+        }
+    }
+
+    private void SelectTrough(TroughType type)
+    {
+        selectedTrough = type;
+        Recalculate();
+    }
+
+    private void Recalculate()
+    {
+        calculationError = null;
+        if (Catalog.Catalog is null || Rates.CurrentRates is null)
+        {
+            result = null;
+            return;
+        }
+
+        try
+        {
+            var creatures = creatureRows.Select(row => new TroughCreatureRequest(
+                Catalog.Catalog.Creatures.First(item => item.Id == row.CreatureId),
+                Math.Clamp(row.MaturityPercent, 0, 100),
+                Math.Clamp(row.Quantity, 1, 500))).ToArray();
+            var foods = foodRows.Select(row => new TroughFoodRequest(
+                Catalog.Catalog.Foods.First(item => item.Id == row.FoodId),
+                Math.Max(0, row.Stacks))).ToArray();
+
+            result = Calculator.Calculate(new TroughRequest
+            {
+                Creatures = creatures,
+                Foods = foods,
+                Diets = Catalog.Catalog.Diets.ToDictionary(
+                    item => item.Id,
+                    StringComparer.OrdinalIgnoreCase),
+                Rates = Rates.CurrentRates,
+                SpoilMultiplier = SpoilMultiplier,
+                MaximumSimulation = MaximumSimulation
+            });
+        }
+        catch (Exception exception)
+        {
+            result = null;
+            calculationError = exception.Message;
+        }
+    }
+
+    private int WholeItems(FoodRow row)
+    {
+        var food = Catalog.Catalog!.Foods.First(item => item.Id == row.FoodId);
+        return Math.Max(0, (int)Math.Floor(row.Stacks * food.StackSize));
+    }
+
+    private string DietName(string id) =>
+        Catalog.Catalog!.Diets.FirstOrDefault(
+            item => item.Id.Equals(id, StringComparison.OrdinalIgnoreCase))?.Name.Trim()
+        ?? id;
+
+    private void RatesChanged() => InvokeAsync(() =>
+    {
+        Recalculate();
+        StateHasChanged();
+    });
+
+    private static double GetSpoilMultiplier(TroughType type) => type switch
+    {
+        TroughType.Tek => 100,
+        TroughType.HandFeed => 1,
+        _ => 4
+    };
+
+    private static string DisplayTrough(TroughType type) => type switch
+    {
+        TroughType.HandFeed => "Hand feed",
+        _ => type.ToString()
+    };
+
+    private static string FormatRate(double value) => $"{value:0.##}x";
+
+    private static string FormatCoverage(TimeSpan duration)
+    {
+        if (duration <= TimeSpan.Zero)
+        {
+            return "0m";
+        }
+
+        var parts = new List<string>();
+        if (duration.Days > 0) parts.Add($"{duration.Days}d");
+        if (duration.Hours > 0) parts.Add($"{duration.Hours}h");
+        if (duration.Minutes > 0 || parts.Count == 0) parts.Add($"{duration.Minutes}m");
+        return string.Join(" ", parts.Take(2));
+    }
+
+    public void Dispose() => Rates.Changed -= RatesChanged;
+
+    private sealed class CreatureRow(string creatureId, double maturityPercent, int quantity)
+    {
+        public string CreatureId { get; set; } = creatureId;
+        public double MaturityPercent { get; set; } = maturityPercent;
+        public int Quantity { get; set; } = quantity;
+    }
+
+    private sealed class FoodRow(string foodId, double stacks)
+    {
+        public string FoodId { get; set; } = foodId;
+        public double Stacks { get; set; } = stacks;
+    }
+}

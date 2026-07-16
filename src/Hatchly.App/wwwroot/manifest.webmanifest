@@ -1,0 +1,19 @@
+{
+  "name": "Hatchly ASA Raise Planner",
+  "short_name": "Hatchly",
+  "id": "./",
+  "start_url": "./",
+  "display": "standalone",
+  "description": "Capacity-based creature raising and trough planning for ARK: Survival Ascended.",
+  "background_color": "#071512",
+  "theme_color": "#071512",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

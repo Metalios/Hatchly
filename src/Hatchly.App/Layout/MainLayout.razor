@@ -1,0 +1,76 @@
+@inherits LayoutComponentBase
+@inject RateService Rates
+@implements IDisposable
+
+<div class="app-frame">
+    <header class="app-header">
+        <a class="brand" href="/" aria-label="Hatchly planner home">
+            <span class="brand-mark" aria-hidden="true">
+                <span class="brand-crack"></span>
+            </span>
+            <span>Hatchly</span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Primary navigation">
+            <NavLink href="" Match="NavLinkMatch.All">Planner</NavLink>
+            <NavLink href="troughs">Troughs</NavLink>
+        </nav>
+
+        <div class="server-picker">
+            <label for="server-selection">Server</label>
+            <select id="server-selection"
+                    value="@Rates.SelectedServer"
+                    @onchange="ChangeServerAsync">
+                <option value="@ServerSelection.Standard">Standard</option>
+                <option value="@ServerSelection.Apocalypse">Apocalypse</option>
+                <option value="@ServerSelection.SmallTribes">Small Tribes</option>
+                <option value="@ServerSelection.Conquest">Conquest</option>
+                <option value="@ServerSelection.Unofficial">Unofficial</option>
+            </select>
+        </div>
+    </header>
+
+    @if (Rates.UsingCachedOfficialRates)
+    {
+        <div class="global-notice warning" role="status">Using cached official rates.</div>
+    }
+    else if (Rates.Error is not null)
+    {
+        <div class="global-notice error" role="alert">@Rates.Error</div>
+    }
+
+    <main class="app-main">
+        @Body
+    </main>
+
+    <nav class="mobile-nav" aria-label="Primary navigation">
+        <NavLink href="" Match="NavLinkMatch.All">
+            <span class="mobile-nav-icon" aria-hidden="true">◉</span>
+            Planner
+        </NavLink>
+        <NavLink href="troughs">
+            <span class="mobile-nav-icon" aria-hidden="true">▰</span>
+            Troughs
+        </NavLink>
+    </nav>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        Rates.Changed += OnRatesChanged;
+        await Rates.EnsureLoadedAsync();
+    }
+
+    private async Task ChangeServerAsync(ChangeEventArgs args)
+    {
+        if (Enum.TryParse<ServerSelection>(args.Value?.ToString(), out var selection))
+        {
+            await Rates.SelectAsync(selection);
+        }
+    }
+
+    private void OnRatesChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Rates.Changed -= OnRatesChanged;
+}

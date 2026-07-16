@@ -1,0 +1,93 @@
+name: Sync official rates and deploy Pages
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: hatchly-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore Hatchly.slnx
+
+      - name: Synchronize official ASA rates
+        run: >
+          dotnet run --project tools/Hatchly.Tools --no-restore --
+          sync-rates
+          --output src/Hatchly.App/wwwroot/data/official-rates.json
+
+      - name: Commit changed rate values
+        shell: bash
+        run: |
+          if git diff --quiet -- src/Hatchly.App/wwwroot/data/official-rates.json; then
+            echo "Official rates are unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- src/Hatchly.App/wwwroot/data/official-rates.json
+          git commit -m "chore(data): sync official ASA rates"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Merge and validate application data
+        run: >
+          dotnet run --project tools/Hatchly.Tools --no-restore --
+          merge-data
+          --data-dir src/Hatchly.App/wwwroot/data
+          --output src/Hatchly.App/wwwroot/data/catalog.json
+
+      - name: Test
+        run: dotnet test Hatchly.slnx --no-restore --configuration Release
+
+      - name: Publish Blazor WebAssembly
+        run: dotnet publish src/Hatchly.App/Hatchly.App.csproj --no-restore --configuration Release --output publish
+
+      - name: Prepare GitHub Pages files
+        shell: bash
+        run: |
+          touch publish/wwwroot/.nojekyll
+          cp publish/wwwroot/index.html publish/wwwroot/404.html
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: publish/wwwroot
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "diets": [
+    {
+      "id": "archaeopteryx",
+      "name": "Archaeopteryx",
+      "foodIds": [
+        "chitin"
+      ]
+    },
+    {
+      "id": "bloodstalker",
+      "name": "BloodStalker",
+      "foodIds": [
+        "blood-pack",
+        "raw-meat-carrion",
+        "raw-fish-meat-carrion"
+      ]
+    },
+    {
+      "id": "carnivore",
+      "name": "Carnivore",
+      "foodIds": [
+        "raw-meat",
+        "cooked-meat",
+        "raw-fish-meat",
+        "cooked-fish-meat",
+        "kibble"
+      ]
+    },
+    {
+      "id": "carrion",
+      "name": "Carrion ",
+      "foodIds": [
+        "spoiled-meat",
+        "raw-meat-carrion",
+        "raw-fish-meat-carrion"
+      ]
+    },
+    {
+      "id": "crystalwyvern",
+      "name": "CrystalWyvern",
+      "foodIds": [
+        "primal-crystal"
+      ]
+    },
+    {
+      "id": "herbivore",
+      "name": "Herbivore",
+      "foodIds": [
+        "mejoberry",
+        "berry",
+        "vegetables",
+        "kibble"
+      ]
+    },
+    {
+      "id": "magmasaur",
+      "name": "Magmasaur",
+      "foodIds": [
+        "ambergris",
+        "sulfur"
+      ]
+    },
+    {
+      "id": "microraptor",
+      "name": "Microraptor",
+      "foodIds": [
+        "raw-meat",
+        "cooked-meat",
+        "rare-flower"
+      ]
+    },
+    {
+      "id": "omnivore",
+      "name": "Omnivore",
+      "foodIds": [
+        "raw-meat",
+        "cooked-meat",
+        "raw-fish-meat",
+        "cooked-fish-meat",
+        "mejoberry",
+        "berry",
+        "kibble"
+      ]
+    },
+    {
+      "id": "piscivore",
+      "name": "Piscivore",
+      "foodIds": [
+        "raw-fish-meat",
+        "cooked-fish-meat"
+      ]
+    },
+    {
+      "id": "rockdrake",
+      "name": "RockDrake",
+      "foodIds": [
+        "nameless-venom"
+      ]
+    },
+    {
+      "id": "sinomacrops",
+      "name": "Sinomacrops",
+      "foodIds": [
+        "chitin"
+      ]
+    },
+    {
+      "id": "wyvern",
+      "name": "Wyvern",
+      "foodIds": [
+        "wyvern-milk",
+        "bison-milk"
+      ]
+    }
+  ]
+}

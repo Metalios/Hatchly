@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Hatchly.App/Hatchly.App.csproj" />
+    <Project Path="src/Hatchly.Core/Hatchly.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Hatchly.Core.Tests/Hatchly.Core.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/Hatchly.Tools/Hatchly.Tools.csproj" />
+  </Folder>
+</Solution>
