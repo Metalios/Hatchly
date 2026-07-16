@@ -99,54 +99,17 @@ p {
 .brand {
     display: inline-flex;
     align-items: center;
-    gap: .7rem;
     width: max-content;
     color: var(--text);
-    font-size: 1.22rem;
-    font-weight: 850;
-    letter-spacing: -.03em;
     text-decoration: none;
 }
 
-.brand-mark {
-    position: relative;
-    display: inline-block;
-    width: 31px;
-    height: 39px;
-    overflow: hidden;
-    border: 2px solid var(--teal);
-    border-radius: 52% 48% 50% 50% / 63% 63% 37% 37%;
-    background: linear-gradient(145deg, rgba(88, 214, 189, .22), transparent);
-    transform: rotate(7deg);
-}
-
-.brand-crack,
-.brand-crack::before,
-.brand-crack::after {
-    position: absolute;
+.brand img {
     display: block;
-    width: 2px;
-    height: 11px;
-    background: var(--teal);
-    content: "";
-}
-
-.brand-crack {
-    top: 9px;
-    left: 14px;
-    transform: rotate(32deg);
-}
-
-.brand-crack::before {
-    top: 6px;
-    left: -3px;
-    transform: rotate(48deg);
-}
-
-.brand-crack::after {
-    top: 8px;
-    left: 4px;
-    transform: rotate(-40deg);
+    width: 112px;
+    height: 72px;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 11px rgba(0, 0, 0, .38));
 }
 
 .desktop-nav {
@@ -1281,8 +1244,9 @@ dd {
 }
 
 @media (max-width: 410px) {
-    .brand > span:last-child {
-        display: none;
+    .brand img {
+        width: 86px;
+        height: 58px;
     }
 
     .server-picker select {

@@ -10,9 +10,9 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "favicon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any",
+      "src": "images/hatchly-logo.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
       "purpose": "any maskable"
     }
   ]
