@@ -12,14 +12,6 @@
         <h1>Plan your next raise</h1>
         <p>Know what a full inventory can hold, when the baby reaches juvenile, and how much food the full raise needs.</p>
     </div>
-    @if (Rates.CurrentOfficialProfile is not null)
-    {
-        <div class="rate-summary" aria-label="Current official breeding rates">
-            <span>@Rates.CurrentOfficialProfile.DisplayName</span>
-            <strong>@FormatRate(Rates.CurrentOfficialProfile.EggHatchSpeedMultiplier) hatch</strong>
-            <strong>@FormatRate(Rates.CurrentOfficialProfile.BabyMatureSpeedMultiplier) mature</strong>
-        </div>
-    }
 </header>
 
 @if (Catalog.Error is not null)
@@ -45,6 +37,122 @@ else if (Rates.CurrentRates is null)
 }
 else
 {
+    <section class="mobile-quick-setup" aria-label="Raise setup">
+        <div class="mobile-creature-card">
+            <span class="mobile-creature-icon" aria-hidden="true">◆</span>
+            <label>
+                <span>Creature</span>
+                <select @bind="selectedCreatureId" @bind:after="CreatureChanged">
+                    @foreach (var creature in Catalog.Catalog.Creatures)
+                    {
+                        <option value="@creature.Id">@creature.Name</option>
+                    }
+                </select>
+            </label>
+            <span class="mobile-creature-meta">@FormatPercent(maturityPercent) maturity · @adultWeight.ToString("0") weight</span>
+        </div>
+
+        @if (maturityPercent < CurrentCreature.JuvenileThreshold * 100)
+        {
+            <fieldset class="mobile-buffer-card">
+                <legend>Desired feeding buffer</legend>
+                <div class="duration-fields">
+                    <label>
+                        <span>Hours</span>
+                        <input type="number" min="0" max="168" step="1"
+                               @bind="bufferHours"
+                               @bind:event="oninput"
+                               @bind:after="Recalculate" />
+                    </label>
+                    <label>
+                        <span>Minutes</span>
+                        <input type="number" min="0" max="59" step="1"
+                               @bind="bufferMinutes"
+                               @bind:event="oninput"
+                               @bind:after="Recalculate" />
+                    </label>
+                </div>
+            </fieldset>
+        }
+
+        <details class="mobile-settings">
+            <summary>Raise settings</summary>
+            <div class="form-stack">
+                <label>
+                    <span>Current maturity</span>
+                    <div class="input-with-suffix">
+                        <input type="number" min="0" max="100" step="0.1"
+                               @bind="maturityPercent"
+                               @bind:event="oninput"
+                               @bind:after="Recalculate" />
+                        <span>%</span>
+                    </div>
+                </label>
+                <label>
+                    <span>Adult Weight stat</span>
+                    <input type="number" min="1" step="1"
+                           @bind="adultWeight"
+                           @bind:event="oninput"
+                           @bind:after="Recalculate" />
+                </label>
+                <label>
+                    <span>Food</span>
+                    <select @bind="selectedFoodId" @bind:after="Recalculate">
+                        @foreach (var food in AvailableFoods)
+                        {
+                            <option value="@food.Id">@food.Name</option>
+                        }
+                    </select>
+                </label>
+                @if (Rates.SelectedServer == ServerSelection.Unofficial)
+                {
+                    <div class="three-column-fields">
+                        <label>
+                            <span>Hatch</span>
+                            <input type="number" min="0.01" step="0.01"
+                                   @bind="unofficialHatch"
+                                   @bind:after="SaveUnofficialAsync" />
+                        </label>
+                        <label>
+                            <span>Mature</span>
+                            <input type="number" min="0.01" step="0.01"
+                                   @bind="unofficialMature"
+                                   @bind:after="SaveUnofficialAsync" />
+                        </label>
+                        <label>
+                            <span>Consume</span>
+                            <input type="number" min="0.01" step="0.01"
+                                   @bind="unofficialConsume"
+                                   @bind:after="SaveUnofficialAsync" />
+                        </label>
+                    </div>
+                }
+                @if (CurrentCreature.SpecialBehavior == "elderclaw-crop-plot")
+                {
+                    <fieldset class="special-settings">
+                        <legend>Elderclaw growth conditions</legend>
+                        <label>
+                            <span>Greenhouse effect</span>
+                            <div class="input-with-suffix">
+                                <input type="number" min="0" max="300" step="1"
+                                       @bind="greenhousePercent"
+                                       @bind:event="oninput"
+                                       @bind:after="Recalculate" />
+                                <span>%</span>
+                            </div>
+                        </label>
+                        <label class="check-row">
+                            <input type="checkbox"
+                                   @bind="shovelTilled"
+                                   @bind:after="Recalculate" />
+                            <span>Apply the 30% shovel tilling bonus</span>
+                        </label>
+                    </fieldset>
+                }
+            </div>
+        </details>
+    </section>
+
     <div class="planner-grid">
         <section class="card setup-card">
             <div class="section-title">
@@ -171,7 +279,7 @@ else
             }
         </section>
 
-        <div class="results-column">
+        <div class="results-column dashboard-grid">
             @if (calculationError is not null)
             {
                 <section class="card empty-state error" role="alert">
@@ -207,58 +315,19 @@ else
 
                         <div class="hero-metrics">
                             <div>
-                                <span>Full inventory</span>
-                                <strong>@plan.Feeding.FullItemQuantity</strong>
-                                <small>@CurrentFood.Name</small>
-                            </div>
-                            <div>
-                                <span>Full inventory lasts</span>
-                                <strong>@FormatDuration(plan.Feeding.FullInventoryDuration)</strong>
-                                <small>Until @plan.Feeding.IfFilledUntil.ToString("h:mm tt")</small>
-                            </div>
-                            <div>
                                 <span>Juvenile in</span>
                                 <strong>@FormatDuration(plan.Lifecycle.TimeToJuvenile)</strong>
                                 <small>At @FormatPercent(CurrentCreature.JuvenileThreshold * 100)</small>
                             </div>
-                        </div>
-
-                        <dl class="feeding-facts">
                             <div>
-                                <dt>Desired buffer</dt>
-                                <dd>@FormatDuration(DesiredBuffer)</dd>
+                                <span>Adult in</span>
+                                <strong>@FormatDuration(plan.Lifecycle.TimeToAdult)</strong>
+                                <small>Remaining maturation</small>
                             </div>
                             <div>
-                                <dt>Current full-inventory duration</dt>
-                                <dd>@FormatDuration(plan.Feeding.FullInventoryDuration)</dd>
-                            </div>
-                            <div>
-                                <dt>Target possible in</dt>
-                                <dd>@FormatDuration(plan.Feeding.TimeUntilTargetAvailable)</dd>
-                            </div>
-                            <div>
-                                <dt>Target maturity</dt>
-                                <dd>@FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)</dd>
-                            </div>
-                            <div>
-                                <dt>Full quantity at target</dt>
-                                <dd>@plan.Feeding.TargetAvailableItemQuantity @CurrentFood.Name</dd>
-                            </div>
-                            <div>
-                                <dt>Food consumed before juvenile</dt>
-                                <dd>@plan.Feeding.FoodConsumedBeforeJuvenile @CurrentFood.Name</dd>
-                            </div>
-                        </dl>
-                    }
-                </section>
-
-                <div class="result-cards">
-                    <section class="card lifecycle-card">
-                        <div class="section-title compact">
-                            <span class="section-icon" aria-hidden="true">◷</span>
-                            <div>
-                                <h2>Raise timeline</h2>
-                                <p>Durations are kept distinct.</p>
+                                <span>Full inventory</span>
+                                <strong>@plan.Feeding.FullItemQuantity</strong>
+                                <small>@CurrentFood.Name · @FormatDuration(plan.Feeding.FullInventoryDuration)</small>
                             </div>
                         </div>
 
@@ -269,115 +338,132 @@ else
                             <span class="track-point adult">Adult</span>
                         </div>
 
-                        <dl class="timeline-list">
-                            <div>
-                                <dt>@plan.Lifecycle.BirthLabel</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.BirthDuration)</dd>
-                            </div>
-                            <div>
-                                <dt>Baby phase</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.BabyPhaseDuration)</dd>
-                            </div>
-                            <div>
-                                <dt>Juvenile to adult</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.JuvenileToAdultDuration)</dd>
-                            </div>
-                            <div class="emphasis">
-                                <dt>Birth to adult</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.BirthToAdultDuration)</dd>
-                            </div>
-                            <div>
-                                <dt>Egg/conception to adult</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.EggOrConceptionToAdultDuration)</dd>
-                            </div>
-                            <div>
-                                <dt>Elapsed maturation</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.ElapsedMaturation)</dd>
-                            </div>
-                            <div class="emphasis">
-                                <dt>Remaining</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.RemainingMaturation)</dd>
-                            </div>
-                        </dl>
-                    </section>
-
-                    <section class="card next-actions">
-                        <div class="section-title compact">
-                            <span class="section-icon" aria-hidden="true">◎</span>
-                            <div>
-                                <h2>Feeding milestones</h2>
-                                <p>Based on a full inventory.</p>
-                            </div>
-                        </div>
-
-                        @if (plan.Feeding.Status != FeedingBufferStatus.Juvenile)
-                        {
-                            <div class="action-item">
-                                <span class="action-icon amber" aria-hidden="true">◷</span>
+                        <details class="feeding-details">
+                            <summary>Feeding capacity details</summary>
+                            <dl class="feeding-facts">
                                 <div>
-                                    <strong>Fill with @plan.Feeding.FullItemQuantity @CurrentFood.Name</strong>
-                                    <span>Capacity: @plan.Feeding.CapacityWeight.ToString("0.##") weight</span>
+                                    <dt>Desired buffer</dt>
+                                    <dd>@FormatDuration(DesiredBuffer)</dd>
                                 </div>
-                            </div>
-
-                            @if (plan.Feeding.Status == FeedingBufferStatus.TargetAvailableLater)
-                            {
-                                <div class="action-item">
-                                    <span class="action-icon green" aria-hidden="true">✓</span>
-                                    <div>
-                                        <strong>@FormatDuration(DesiredBuffer) buffer available in @FormatDuration(plan.Feeding.TimeUntilTargetAvailable)</strong>
-                                        <span>At @FormatPercent(plan.Feeding.TargetAvailableMaturityPercent), capacity holds @plan.Feeding.TargetAvailableItemQuantity items</span>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="action-item">
-                                    <span class="action-icon green" aria-hidden="true">✓</span>
-                                    <div>
-                                        <strong>@FormatDuration(DesiredBuffer) target covered</strong>
-                                        <span>@FeedingSupportingText</span>
-                                    </div>
-                                </div>
-                            }
-
-                            <div class="action-item">
-                                <span class="action-icon teal" aria-hidden="true">▰</span>
                                 <div>
-                                    <strong>Last full inventory at @FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</strong>
-                                    <span>In @FormatDuration(plan.Feeding.TimeUntilLastFullInventory), it can carry the baby to juvenile</span>
+                                    <dt>Lasts until</dt>
+                                    <dd>@plan.Feeding.IfFilledUntil.ToString("h:mm tt")</dd>
                                 </div>
-                            </div>
-                        }
-                    </section>
-                </div>
+                                <div>
+                                    <dt>Target possible in</dt>
+                                    <dd>@FormatDuration(plan.Feeding.TimeUntilTargetAvailable)</dd>
+                                </div>
+                                <div>
+                                    <dt>Target maturity</dt>
+                                    <dd>@FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)</dd>
+                                </div>
+                                <div>
+                                    <dt>Full quantity at target</dt>
+                                    <dd>@plan.Feeding.TargetAvailableItemQuantity @CurrentFood.Name</dd>
+                                </div>
+                                <div>
+                                    <dt>Consumed before juvenile</dt>
+                                    <dd>@plan.Feeding.FoodConsumedBeforeJuvenile @CurrentFood.Name</dd>
+                                </div>
+                            </dl>
+                        </details>
+                    }
+                </section>
 
-                <section class="card food-summary">
+                <section class="card lifecycle-card">
                     <div class="section-title compact">
-                        <span class="section-icon" aria-hidden="true">◫</span>
+                        <span class="section-icon" aria-hidden="true">◷</span>
                         <div>
-                            <h2>Food provisioning</h2>
-                            <p>Whole @CurrentFood.Name items, before optional safety loss.</p>
+                            <h2>Raise timeline</h2>
+                            <p>From birth through adulthood.</p>
                         </div>
                     </div>
 
-                    <div class="food-totals">
+                    <dl class="timeline-list">
                         <div>
-                            <span>To juvenile</span>
-                            <strong>@plan.FoodToJuvenile</strong>
+                            <dt>@plan.Lifecycle.BirthLabel</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.BirthDuration)</dd>
                         </div>
                         <div>
-                            <span>To adult</span>
-                            <strong>@plan.FoodToAdult</strong>
+                            <dt>Baby phase</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.BabyPhaseDuration)</dd>
                         </div>
                         <div>
-                            <span>Full raise</span>
-                            <strong>@plan.TotalFoodFromBirth</strong>
+                            <dt>Juvenile to adult</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.JuvenileToAdultDuration)</dd>
+                        </div>
+                        <div class="timeline-total">
+                            <dt>Total raise time</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.BirthToAdultDuration)</dd>
+                        </div>
+                        <div class="emphasis">
+                            <dt>Remaining</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.RemainingMaturation)</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="card next-actions">
+                    <div class="section-title compact">
+                        <span class="section-icon" aria-hidden="true">◎</span>
+                        <div>
+                            <h2>Next actions</h2>
+                            <p>Based on a full inventory.</p>
+                        </div>
+                    </div>
+
+                    @if (plan.Feeding.Status != FeedingBufferStatus.Juvenile)
+                    {
+                        <div class="action-item">
+                            <span class="action-icon amber" aria-hidden="true">◷</span>
+                            <div>
+                                <strong>Fill with @plan.Feeding.FullItemQuantity @CurrentFood.Name</strong>
+                                <span>It lasts until @plan.Feeding.IfFilledUntil.ToString("h:mm tt")</span>
+                            </div>
+                        </div>
+
+                        @if (plan.Feeding.Status == FeedingBufferStatus.TargetAvailableLater)
+                        {
+                            <div class="action-item">
+                                <span class="action-icon green" aria-hidden="true">✓</span>
+                                <div>
+                                    <strong>@FormatDuration(DesiredBuffer) buffer at @FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)</strong>
+                                    <span>Available in @FormatDuration(plan.Feeding.TimeUntilTargetAvailable)</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="action-item">
+                                <span class="action-icon green" aria-hidden="true">✓</span>
+                                <div>
+                                    <strong>@FormatDuration(DesiredBuffer) target covered</strong>
+                                    <span>@FeedingSupportingText</span>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="action-item">
+                            <span class="action-icon teal" aria-hidden="true">▰</span>
+                            <div>
+                                <strong>Move to trough at @FormatPercent(CurrentCreature.JuvenileThreshold * 100)</strong>
+                                <span>Last full inventory at @FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</span>
+                            </div>
+                        </div>
+                    }
+                </section>
+
+                <section class="card food-summary daily-food-card">
+                    <div class="section-title compact">
+                        <span class="section-icon" aria-hidden="true">◫</span>
+                        <div>
+                            <h2>Daily food <small>(@CurrentFood.Name)</small></h2>
+                            <p><strong>@plan.TotalFoodFromBirth</strong> total needed for the full raise.</p>
                         </div>
                     </div>
 
                     <div class="daily-bars" aria-label="Daily food provisioning">
-                        @foreach (var day in plan.DailyProvisioning.Take(7))
+                        @foreach (var day in plan.DailyProvisioning.Take(5))
                         {
                             <div class="daily-bar-row">
                                 <span>Day @day.Day</span>
@@ -388,7 +474,31 @@ else
                             </div>
                         }
                     </div>
+                </section>
 
+                <section class="card summary-card">
+                    <div class="section-title compact">
+                        <span class="section-icon" aria-hidden="true">▤</span>
+                        <div>
+                            <h2>Summary</h2>
+                            <p>The essentials at a glance.</p>
+                        </div>
+                    </div>
+
+                    <dl class="timeline-list">
+                        <div>
+                            <dt>Juvenile in</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.TimeToJuvenile)</dd>
+                        </div>
+                        <div>
+                            <dt>Adult in</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.TimeToAdult)</dd>
+                        </div>
+                        <div class="summary-food">
+                            <dt>@CurrentFood.Name needed</dt>
+                            <dd>@plan.FoodToAdult</dd>
+                        </div>
+                    </dl>
                     <details class="details-panel">
                         <summary>Calculation details</summary>
                         <dl class="detail-grid">
@@ -411,6 +521,14 @@ else
                             <div>
                                 <dt>Time to adult</dt>
                                 <dd>@FormatDuration(plan.Lifecycle.TimeToAdult)</dd>
+                            </div>
+                            <div>
+                                <dt>Egg/conception to adult</dt>
+                                <dd>@FormatDuration(plan.Lifecycle.EggOrConceptionToAdultDuration)</dd>
+                            </div>
+                            <div>
+                                <dt>Elapsed maturation</dt>
+                                <dd>@FormatDuration(plan.Lifecycle.ElapsedMaturation)</dd>
                             </div>
                         </dl>
                         <label class="loss-field">

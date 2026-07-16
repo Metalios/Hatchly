@@ -5,10 +5,8 @@
 <div class="app-frame">
     <header class="app-header">
         <a class="brand" href="/" aria-label="Hatchly planner home">
-            <img src="images/hatchly-logo.png"
-                 alt=""
-                 width="112"
-                 height="76" />
+            <span class="brand-emblem" aria-hidden="true"></span>
+            <span class="brand-name">Hatchly</span>
         </a>
 
         <nav class="desktop-nav" aria-label="Primary navigation">
@@ -21,10 +19,10 @@
             <select id="server-selection"
                     value="@Rates.SelectedServer"
                     @onchange="ChangeServerAsync">
-                <option value="@ServerSelection.Standard">Standard</option>
-                <option value="@ServerSelection.Apocalypse">Apocalypse</option>
-                <option value="@ServerSelection.SmallTribes">Small Tribes</option>
-                <option value="@ServerSelection.Conquest">Conquest</option>
+                <option value="@ServerSelection.Standard">@OfficialOption("standard", "Standard")</option>
+                <option value="@ServerSelection.Apocalypse">@OfficialOption("apocalypse", "Apocalypse")</option>
+                <option value="@ServerSelection.SmallTribes">@OfficialOption("small-tribes", "Small Tribes")</option>
+                <option value="@ServerSelection.Conquest">@OfficialOption("conquest", "Conquest")</option>
                 <option value="@ServerSelection.Unofficial">Unofficial</option>
             </select>
         </div>
@@ -71,6 +69,15 @@
     }
 
     private void OnRatesChanged() => InvokeAsync(StateHasChanged);
+
+    private string OfficialOption(string id, string fallback)
+    {
+        var profile = Rates.OfficialRates?.Profiles.FirstOrDefault(
+            item => item.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        return profile is null
+            ? fallback
+            : $"{profile.DisplayName} · {profile.BabyMatureSpeedMultiplier:0.##}×";
+    }
 
     public void Dispose() => Rates.Changed -= OnRatesChanged;
 }
