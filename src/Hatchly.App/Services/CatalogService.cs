@@ -7,17 +7,19 @@ namespace Hatchly.App.Services;
 public sealed class CatalogService(HttpClient http)
 {
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+    private Task? loadingTask;
 
     public DataCatalog? Catalog { get; private set; }
     public string? Error { get; private set; }
 
-    public async Task EnsureLoadedAsync()
+    public Task EnsureLoadedAsync()
     {
-        if (Catalog is not null || Error is not null)
-        {
-            return;
-        }
+        loadingTask ??= LoadAsync();
+        return loadingTask;
+    }
 
+    private async Task LoadAsync()
+    {
         try
         {
             Catalog = await http.GetFromJsonAsync<DataCatalog>(

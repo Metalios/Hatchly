@@ -9,6 +9,7 @@ public sealed class RateService(HttpClient http, IJSRuntime js)
     private const string OfficialCacheKey = "hatchly.official-rates";
     private const string UnofficialKey = "hatchly.unofficial-rates";
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+    private Task? initializationTask;
 
     public event Action? Changed;
 
@@ -29,13 +30,14 @@ public sealed class RateService(HttpClient http, IJSRuntime js)
             ? null
             : FindProfile(SelectedServer);
 
-    public async Task EnsureLoadedAsync()
+    public Task EnsureLoadedAsync()
     {
-        if (IsInitialized)
-        {
-            return;
-        }
+        initializationTask ??= LoadAsync();
+        return initializationTask;
+    }
 
+    private async Task LoadAsync()
+    {
         IsInitialized = true;
         await LoadPreferencesAsync();
 

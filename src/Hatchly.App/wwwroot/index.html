@@ -33,8 +33,38 @@
         <span class="dismiss">&#215;</span>
     </div>
     <script src="js/app-storage.js"></script>
-    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
-    <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+    <script src="_framework/blazor.webassembly#[.{fingerprint}].js" autostart="false"></script>
+    <script>
+        (async () => {
+            try {
+                if ("serviceWorker" in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(registrations.map(registration => registration.unregister()));
+                }
+
+                if ("caches" in window) {
+                    const keys = await caches.keys();
+                    await Promise.all(
+                        keys
+                            .filter(key => key.startsWith("offline-cache-"))
+                            .map(key => caches.delete(key)));
+                }
+            } finally {
+                await Blazor.start();
+            }
+        })().catch(error => {
+            console.error("Hatchly failed to start.", error);
+            const app = document.getElementById("app");
+            if (app) {
+                app.innerHTML = `
+                    <main style="max-width:42rem;margin:12vh auto;padding:1.5rem;color:#f4f6f7;font-family:system-ui">
+                        <h1>Hatchly could not start</h1>
+                        <p style="color:#aab4be">Reload the page. If this continues, clear this site's stored data and try again.</p>
+                        <pre style="white-space:pre-wrap;color:#ffb85c">${String(error)}</pre>
+                    </main>`;
+            }
+        });
+    </script>
 </body>
 
 </html>

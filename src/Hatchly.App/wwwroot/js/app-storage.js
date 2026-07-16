@@ -1,5 +1,25 @@
 window.hatchlyStorage = {
-    get: key => window.localStorage.getItem(key),
-    set: (key, value) => window.localStorage.setItem(key, value),
-    remove: key => window.localStorage.removeItem(key)
+    get: key => {
+        try {
+            return window.localStorage.getItem(key);
+        } catch {
+            return null;
+        }
+    },
+    set: (key, value) => {
+        try {
+            window.localStorage.setItem(key, value);
+            return true;
+        } catch {
+            return false;
+        }
+    },
+    remove: key => {
+        try {
+            window.localStorage.removeItem(key);
+            return true;
+        } catch {
+            return false;
+        }
+    }
 };
