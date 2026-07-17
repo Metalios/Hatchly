@@ -165,7 +165,7 @@ public sealed class OfficialRateSynchronizer
             try
             {
                 using var request = new HttpRequestMessage(HttpMethod.Get, url);
-                request.Headers.UserAgent.ParseAdd("HatchlyApp-RateSync/1.0");
+                request.Headers.UserAgent.ParseAdd("Hatchly-RateSync/1.0");
                 using var response = await http.SendAsync(
                     request,
                     HttpCompletionOption.ResponseHeadersRead,

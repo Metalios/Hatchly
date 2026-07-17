@@ -1,15 +1,19 @@
 # Hatchly
 
-Hatchly is a standalone Blazor WebAssembly planner for raising creatures in
-ARK: Survival Ascended. It is a fresh implementation designed for static
-hosting on GitHub Pages and does not include AngularJS, jQuery, or code from the
-legacy Crumplecorn controller.
+Hatchly is an independent raise planner for ARK: Survival Ascended. It helps
+players plan creature maturation, baby feeding windows, food provisioning, and
+trough coverage from a fast static site hosted on GitHub Pages.
+
+The project began years ago as a fork of Crumplecorn's ARK breeding calculator.
+The current Hatchly has since been completely remade as its own standalone
+application with its own interface, calculation core, data pipeline, tooling,
+and deployment workflow.
 
 ## Included
 
 - Capacity-based baby feeding using a completely filled creature inventory
 - Desired refill buffer with current/later/juvenile status
-- Incubation, gestation, baby, juvenile, and adult lifecycle timing
+- Incubation, gestation, baby, juvenile, adolescent, and adult lifecycle timing
 - Multi-container Normal, Maeguana, Tek, and hand-feed simulation with
   stack-slot capacity, multiple food types, multiple creature groups, and
   spoilage
@@ -67,16 +71,17 @@ Razor changes are required.
 ## GitHub Pages and domain
 
 GitHub Pages must use GitHub Actions as its source. The workflow reads the base
-path from `actions/configure-pages`: repository previews use `/HatchlyApp/`,
+path from `actions/configure-pages`: repository previews use `/Hatchly/`,
 while the configured `hatchlyapp.com` custom domain uses `/`. The workflow also
 installs the transformed Blazor boot index and generates `404.html` for direct
 client-side routes such as `/troughs`.
 
 The repository intentionally does not ship a `CNAME` file. Configure and verify
-the custom domain through the HatchlyApp repository's Pages settings after the
+the custom domain through the Hatchly repository's Pages settings after the
 repository preview is accepted.
 
 ## Attribution
 
-The initial migration used the legacy Hatchly/Crumplecorn data and behavior as
-a reference. See `THIRD_PARTY_NOTICES.md`.
+Hatchly no longer uses or depends on Crumplecorn. Historical attribution is
+retained because the original Hatchly project began as a Crumplecorn fork and
+legacy behavior was reviewed during the rewrite. See `THIRD_PARTY_NOTICES.md`.

@@ -1,9 +1,9 @@
 """ASA DevKit adapter for the deterministic Hatchly export core.
 
 Run from the Unreal Editor Python console:
-    py "I:/Repos/metalios/HatchlyApp/devkit/ExportHatchlyData.py"
+    py "I:/Repos/metalios/Hatchly/devkit/ExportHatchlyData.py"
 
-Set HATCHLY_REPO_ROOT to the HatchlyApp checkout. Set HATCHLY_EXPORT_MODE=probe
+Set HATCHLY_REPO_ROOT to the Hatchly checkout. Set HATCHLY_EXPORT_MODE=probe
 to verify reflected ASA property bindings without changing generated data.
 """
 

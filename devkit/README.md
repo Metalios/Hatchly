@@ -17,9 +17,9 @@ Set these environment variables in the editor process, then run the script from
 the Unreal Python console:
 
 ```text
-HATCHLY_REPO_ROOT=I:/Repos/metalios/HatchlyApp
+HATCHLY_REPO_ROOT=I:/Repos/metalios/Hatchly
 HATCHLY_EXPORT_MODE=probe
-py "I:/Repos/metalios/HatchlyApp/devkit/ExportHatchlyData.py"
+py "I:/Repos/metalios/Hatchly/devkit/ExportHatchlyData.py"
 ```
 
 Probe mode does not modify generated creature or food data. It writes

@@ -17,11 +17,11 @@ public sealed class PagesPreparerTests
             + "<script src=\"_framework/blazor.webassembly.abc123.js\"></script>"
             + "</body></html>\r\n");
 
-        var result = PagesPreparer.Prepare(fixture.PublishRoot, transformed, "/HatchlyApp");
+        var result = PagesPreparer.Prepare(fixture.PublishRoot, transformed, "/Hatchly");
 
         var index = File.ReadAllText(result.IndexPath);
-        Assert.Equal("/HatchlyApp/", result.BaseHref);
-        Assert.Contains("<base href=\"/HatchlyApp/\" />", index);
+        Assert.Equal("/Hatchly/", result.BaseHref);
+        Assert.Contains("<base href=\"/Hatchly/\" />", index);
         Assert.DoesNotContain('\r', index);
         Assert.Equal(index, File.ReadAllText(result.NotFoundPath));
         Assert.True(File.Exists(Path.Combine(result.WebRoot, ".nojekyll")));
@@ -34,8 +34,8 @@ public sealed class PagesPreparerTests
     [InlineData(null, "/")]
     [InlineData("", "/")]
     [InlineData("/", "/")]
-    [InlineData("HatchlyApp", "/HatchlyApp/")]
-    [InlineData("/HatchlyApp/", "/HatchlyApp/")]
+    [InlineData("Hatchly", "/Hatchly/")]
+    [InlineData("/Hatchly/", "/Hatchly/")]
     public void Base_paths_are_normalized(string? value, string expected)
     {
         Assert.Equal(expected, PagesPreparer.NormalizeBasePath(value));

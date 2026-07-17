@@ -1,11 +1,11 @@
 # Third-party notices
 
-The initial HatchlyApp creature/food data migration and representative
-calculation behavior were derived with reference to the legacy Hatchly project,
-which was originally based on Crumplecorn's ARK breeding calculator.
+The original Hatchly project began as a fork of Crumplecorn's ARK breeding
+calculator. The current Hatchly application is an independent rewrite and does
+not use or depend on Crumplecorn or legacy Hatchly application code.
 
-No AngularJS, jQuery, legacy HTML, `app.js`, or Angular controller code is
-included in this repository.
+This notice is retained for historical attribution because legacy data and
+representative behavior were reviewed during the rewrite.
 
 ## Crumplecorn
 

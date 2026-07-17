@@ -3,6 +3,7 @@ name: Sync official rates and deploy Pages
 on:
   push:
     branches:
+      - master
       - main
   schedule:
     - cron: "17 * * * *"
