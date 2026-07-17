@@ -95,9 +95,8 @@ p {
 }
 
 .app-frame {
-    width: min(1400px, calc(100% - 48px));
-    min-height: calc(100vh - 96px);
-    margin: 48px auto 18px;
+    width: min(1680px, calc(100% - 72px));
+    margin: 32px auto 18px;
     overflow: clip;
     border: 1px solid #52616b;
     border-radius: 18px;
@@ -112,10 +111,10 @@ p {
     z-index: 20;
     top: 0;
     display: grid;
-    grid-template-columns: 270px 1fr 270px;
+    grid-template-columns: 300px 1fr 300px;
     align-items: center;
-    min-height: 88px;
-    padding: 0 30px;
+    min-height: 92px;
+    padding: 0 34px;
     border-bottom: 1px solid var(--line);
     background: rgba(6, 20, 31, .96);
     backdrop-filter: blur(18px);
@@ -211,7 +210,7 @@ p {
 
 .app-main {
     width: 100%;
-    padding: 38px 28px 50px;
+    padding: 42px 36px 44px;
 }
 
 .site-footer {
@@ -232,7 +231,7 @@ p {
 }
 
 .page-heading {
-    margin: 0 10px 22px;
+    margin: 0 10px 26px;
 }
 
 .page-heading .eyebrow,
@@ -253,9 +252,9 @@ p {
 
 .planner-grid {
     display: grid;
-    grid-template-columns: 344px minmax(0, 1fr);
+    grid-template-columns: minmax(340px, 370px) minmax(0, 1fr);
     align-items: start;
-    gap: 18px;
+    gap: 22px;
 }
 
 .trough-grid {
@@ -269,7 +268,7 @@ p {
 .trough-inputs,
 .trough-results {
     display: grid;
-    gap: 14px;
+    gap: 16px;
 }
 
 .dashboard-grid {
@@ -319,7 +318,7 @@ p {
 
 .card {
     overflow: hidden;
-    padding: 20px;
+    padding: 22px;
     border: 1px solid #43535e;
     border-radius: 14px;
     background:
@@ -1471,6 +1470,28 @@ dd {
 
     .feeding-result {
         min-height: auto;
+    }
+}
+
+@media (min-width: 1500px) {
+    body {
+        font-size: 17px;
+    }
+
+    .brand-emblem {
+        width: 100px;
+        height: 76px;
+        flex-basis: 100px;
+    }
+
+    .brand-wordmark {
+        width: 142px;
+        height: 31px;
+        flex-basis: 142px;
+    }
+
+    .server-picker select {
+        min-width: 188px;
     }
 }
 
