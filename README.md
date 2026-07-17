@@ -55,8 +55,8 @@ required positive numeric values, and writes atomically only when profile
 values change.
 
 The combined GitHub Pages workflow runs this command hourly at minute 17,
-commits only changed normalized rate data, tests the same working tree, and
-deploys the validated Blazor output.
+commits only changed normalized rate data, tests and audits the same working
+tree, and deploys the validated Blazor output.
 
 ## Updating creatures
 
@@ -64,10 +64,17 @@ See [devkit/README.md](devkit/README.md). New creatures are data-driven: once a
 valid generated record and any necessary manual override are present, no C# or
 Razor changes are required.
 
-## Domain
+## GitHub Pages and domain
 
-The production build uses a root base path and includes `CNAME` for
-`hatchlyapp.com`. GitHub Pages must be configured to deploy from GitHub Actions.
+GitHub Pages must use GitHub Actions as its source. The workflow reads the base
+path from `actions/configure-pages`: repository previews use `/HatchlyApp/`,
+while the configured `hatchlyapp.com` custom domain uses `/`. The workflow also
+installs the transformed Blazor boot index and generates `404.html` for direct
+client-side routes such as `/troughs`.
+
+The repository intentionally does not ship a `CNAME` file. Configure and verify
+the custom domain through the HatchlyApp repository's Pages settings after the
+repository preview is accepted.
 
 ## Attribution
 

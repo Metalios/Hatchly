@@ -26,6 +26,7 @@ public static class ToolProgram
                 "merge-data" => await MergeDataAsync(args[1..]),
                 "validate-data" => await ValidateDataAsync(args[1..]),
                 "audit-publish" => AuditPublish(args[1..]),
+                "prepare-pages" => PreparePages(args[1..]),
                 _ => UnknownCommand(args[0])
             };
         }
@@ -75,6 +76,17 @@ public static class ToolProgram
         Console.WriteLine($"Framework Brotli payload: {PublishAuditor.FormatBytes(result.FrameworkBrotliBytes)}");
         Console.WriteLine($"Header branding: {PublishAuditor.FormatBytes(result.HeaderBrandingBytes)}");
         Console.WriteLine($"Cold transfer: {PublishAuditor.FormatBytes(result.ColdTransferBytes)}");
+        return 0;
+    }
+
+    private static int PreparePages(string[] args)
+    {
+        var publishPath = RequiredOption(args, "--publish-path");
+        var intermediateIndex = RequiredOption(args, "--intermediate-index");
+        var basePath = OptionalOption(args, "--base-path") ?? "/";
+        var result = PagesPreparer.Prepare(publishPath, intermediateIndex, basePath);
+        Console.WriteLine(
+            $"Prepared GitHub Pages at '{result.WebRoot}' with base href '{result.BaseHref}'.");
         return 0;
     }
 
@@ -176,6 +188,14 @@ public static class ToolProgram
         return Path.GetFullPath(args[index + 1]);
     }
 
+    private static string? OptionalOption(string[] args, string name)
+    {
+        var index = Array.FindIndex(
+            args,
+            item => item.Equals(name, StringComparison.OrdinalIgnoreCase));
+        return index < 0 || index + 1 >= args.Length ? null : args[index + 1];
+    }
+
     private static int UnknownCommand(string command)
     {
         Console.Error.WriteLine($"Unknown command '{command}'.");
@@ -190,6 +210,7 @@ public static class ToolProgram
         Console.WriteLine("  merge-data --data-dir <directory> --output <catalog.json>");
         Console.WriteLine("  validate-data --data-dir <directory>");
         Console.WriteLine("  audit-publish --path <publish directory or wwwroot>");
+        Console.WriteLine("  prepare-pages --publish-path <directory> --intermediate-index <index.html> [--base-path <path>]");
     }
 
     private sealed record CreatureFile

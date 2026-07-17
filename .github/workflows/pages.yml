@@ -26,13 +26,25 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - name: Install .NET 10
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
 
+      - name: Install WebAssembly build tools
+        run: dotnet workload install wasm-tools
+
       - name: Restore
         run: dotnet restore Hatchly.slnx
+
+      - name: Test DevKit extraction policy
+        run: python -m unittest discover -s devkit/tests -v
 
       - name: Synchronize official ASA rates
         run: >
@@ -53,7 +65,13 @@ jobs:
           git commit -m "chore(data): sync official ASA rates"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
-      - name: Merge and validate application data
+      - name: Validate generated application data
+        run: >
+          dotnet run --project tools/Hatchly.Tools --no-restore --
+          validate-data
+          --data-dir src/Hatchly.App/wwwroot/data
+
+      - name: Merge application data
         run: >
           dotnet run --project tools/Hatchly.Tools --no-restore --
           merge-data
@@ -64,19 +82,35 @@ jobs:
         run: dotnet test Hatchly.slnx --no-restore --configuration Release
 
       - name: Publish Blazor WebAssembly
-        run: dotnet publish src/Hatchly.App/Hatchly.App.csproj --no-restore --configuration Release --output publish
+        run: >
+          dotnet publish src/Hatchly.App/Hatchly.App.csproj
+          --no-restore
+          --configuration Release
+          --output publish
 
-      - name: Prepare GitHub Pages files
+      - name: Prepare repository or custom-domain Pages build
         shell: bash
+        env:
+          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
         run: |
-          touch publish/wwwroot/.nojekyll
-          cp publish/wwwroot/index.html publish/wwwroot/404.html
+          transformed_index="$(find src/Hatchly.App/obj/Release/net10.0/staticwebassets/htmlassetplaceholders/publish -type f -name '*.html' -print -quit)"
+          if [[ -z "$transformed_index" ]]; then
+            echo "The transformed Blazor index was not generated." >&2
+            exit 1
+          fi
+          dotnet run --project tools/Hatchly.Tools --configuration Release --no-build -- \
+            prepare-pages \
+            --publish-path publish \
+            --intermediate-index "$transformed_index" \
+            --base-path "${PAGES_BASE_PATH:-/}"
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+      - name: Audit published payload
+        run: >
+          dotnet run --project tools/Hatchly.Tools --configuration Release --no-build --
+          audit-publish
+          --path publish
 
       - name: Upload Pages artifact
-        id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
           path: publish/wwwroot
