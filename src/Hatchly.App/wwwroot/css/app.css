@@ -214,6 +214,21 @@ p {
     padding: 38px 28px 50px;
 }
 
+.site-footer {
+    display: grid;
+    gap: .25rem;
+    padding: 0 28px 28px;
+    color: var(--muted);
+    font-size: .72rem;
+    text-align: center;
+}
+
+.site-footer p {
+    max-width: 920px;
+    margin: 0 auto;
+    color: inherit;
+}
+
 .page-heading {
     margin: 0 10px 22px;
 }
@@ -1553,6 +1568,12 @@ dd {
 
     .app-main {
         padding: 10px 12px 92px;
+    }
+
+    .site-footer {
+        padding: 4px 16px 92px;
+        font-size: .68rem;
+        text-align: left;
     }
 
     .page-heading {

@@ -1,16 +1,14 @@
-name: Sync official rates and deploy Pages
+name: Deploy Pages
 
 on:
   push:
     branches:
       - master
       - main
-  schedule:
-    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -30,8 +28,6 @@ jobs:
       - name: Configure GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Install .NET 10
         uses: actions/setup-dotnet@v4
@@ -43,28 +39,6 @@ jobs:
 
       - name: Restore
         run: dotnet restore Hatchly.slnx
-
-      - name: Test DevKit extraction policy
-        run: python -m unittest discover -s devkit/tests -v
-
-      - name: Synchronize official ASA rates
-        run: >
-          dotnet run --project tools/Hatchly.Tools --no-restore --
-          sync-rates
-          --output src/Hatchly.App/wwwroot/data/official-rates.json
-
-      - name: Commit changed rate values
-        shell: bash
-        run: |
-          if git diff --quiet -- src/Hatchly.App/wwwroot/data/official-rates.json; then
-            echo "Official rates are unchanged."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- src/Hatchly.App/wwwroot/data/official-rates.json
-          git commit -m "chore(data): sync official ASA rates"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Validate generated application data
         run: >

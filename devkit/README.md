@@ -11,6 +11,10 @@ Hatchly's exporter has two layers:
 `ExportHatchlyCreatures.py` remains as a compatibility entry point and runs the
 new adapter.
 
+These scripts are maintainer tooling. They are run from inside the ASA DevKit to
+update generated JSON in the repository and are not published with the Hatchly
+site.
+
 ## 1. Probe an ASA DevKit release
 
 Set these environment variables in the editor process, then run the script from
