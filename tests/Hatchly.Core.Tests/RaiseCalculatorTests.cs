@@ -70,6 +70,22 @@ public sealed class RaiseCalculatorTests
     }
 
     [Fact]
+    public void Lifecycle_splits_ark_maturation_phases()
+    {
+        var plan = Calculate(
+            Creature(),
+            Food(foodValue: 100),
+            maturityPercent: 35);
+
+        Assert.Equal(100, plan.Lifecycle.BabyPhaseDuration.TotalSeconds, 3);
+        Assert.Equal(400, plan.Lifecycle.JuvenilePhaseDuration.TotalSeconds, 3);
+        Assert.Equal(500, plan.Lifecycle.AdolescentPhaseDuration.TotalSeconds, 3);
+        Assert.Equal(650, plan.Lifecycle.TimeToAdult.TotalSeconds, 3);
+        Assert.Equal(150, plan.Lifecycle.TimeToAdolescent.TotalSeconds, 3);
+        Assert.Equal(0, plan.Lifecycle.TimeToJuvenile.TotalSeconds, 3);
+    }
+
+    [Fact]
     public void Capacity_uses_weight_and_floors_to_whole_items()
     {
         var plan = Calculate(

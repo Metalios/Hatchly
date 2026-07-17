@@ -52,7 +52,7 @@ else
             <span class="mobile-creature-meta">@FormatPercent(maturityPercent) maturity · @adultWeight.ToString("0") weight</span>
         </div>
 
-        @if (maturityPercent < CurrentCreature.JuvenileThreshold * 100)
+        @if (maturityPercent < JuvenileThresholdPercent)
         {
             <fieldset class="mobile-buffer-card">
                 <legend>Desired feeding buffer</legend>
@@ -226,7 +226,7 @@ else
                     </div>
                 </label>
 
-                @if (maturityPercent < CurrentCreature.JuvenileThreshold * 100)
+                @if (maturityPercent < JuvenileThresholdPercent)
                 {
                     <fieldset class="buffer-fieldset">
                         <legend>Desired feeding buffer</legend>
@@ -336,9 +336,9 @@ else
                                 <small>@CurrentPhase phase</small>
                             </div>
                             <div>
-                                <span>Adult in</span>
-                                <strong>@FormatDuration(plan.Lifecycle.TimeToAdult)</strong>
-                                <small>Remaining maturation</small>
+                                <span>@NextMaturationMilestoneLabel</span>
+                                <strong>@FormatDuration(NextMaturationMilestoneDuration)</strong>
+                                <small>@NextMaturationMilestoneHelp</small>
                             </div>
                             <div>
                                 <span>Food remaining</span>
@@ -351,7 +351,7 @@ else
                             <div>
                                 <span>Juvenile in</span>
                                 <strong>@FormatDuration(plan.Lifecycle.TimeToJuvenile)</strong>
-                                <small>At @FormatPercent(CurrentCreature.JuvenileThreshold * 100)</small>
+                                <small>At @FormatPercent(JuvenileThresholdPercent)</small>
                             </div>
                             <div>
                                 <span>Adult in</span>
@@ -367,10 +367,30 @@ else
                     </div>
 
                     <div class="lifecycle-track" aria-label="Maturation progress">
-                        <span class="track-progress" style="@MaturityStyle"></span>
-                        <span class="track-point hatch active">Hatch</span>
-                        <span class="track-point juvenile">Juvenile</span>
-                        <span class="track-point adult">Adult</span>
+                        <div class="track-captions">
+                            <span>@BirthTrackLabel</span>
+                            <span>Adult</span>
+                        </div>
+                        <div class="phase-rail" aria-hidden="true">
+                            <span class="track-progress" style="@MaturityStyle"></span>
+                            <span class="phase-boundary juvenile @TrackBoundaryState(JuvenileThresholdPercent)" style="@JuvenileTrackStyle"></span>
+                            <span class="phase-boundary adolescent @TrackBoundaryState(AdolescentThresholdPercent)"></span>
+                            <span class="phase-boundary adult @TrackBoundaryState(100)"></span>
+                        </div>
+                        <div class="phase-labels">
+                            <span class='phase-label @PhaseLabelState("Baby")'>
+                                <strong>Baby</strong>
+                                <small>0-@FormatPercent(JuvenileThresholdPercent)</small>
+                            </span>
+                            <span class='phase-label @PhaseLabelState("Juvenile")'>
+                                <strong>Juvenile</strong>
+                                <small>@FormatPercent(JuvenileThresholdPercent)-@FormatPercent(AdolescentThresholdPercent)</small>
+                            </span>
+                            <span class='phase-label @PhaseLabelState("Adolescent")'>
+                                <strong>Adolescent</strong>
+                                <small>@FormatPercent(AdolescentThresholdPercent)-100%</small>
+                            </span>
+                        </div>
                     </div>
 
                     @if (plan.Feeding.Status == FeedingBufferStatus.Juvenile)
@@ -458,8 +478,12 @@ else
                             <dd>@FormatDuration(plan.Lifecycle.BabyPhaseDuration)</dd>
                         </div>
                         <div>
-                            <dt>Juvenile to adult</dt>
-                            <dd>@FormatDuration(plan.Lifecycle.JuvenileToAdultDuration)</dd>
+                            <dt>Juvenile phase</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.JuvenilePhaseDuration)</dd>
+                        </div>
+                        <div>
+                            <dt>Adolescent phase</dt>
+                            <dd>@FormatDuration(plan.Lifecycle.AdolescentPhaseDuration)</dd>
                         </div>
                         <div class="timeline-total">
                             <dt>Total raise time</dt>
@@ -515,7 +539,7 @@ else
                         <div class="action-item">
                             <span class="action-icon teal" aria-hidden="true">▰</span>
                             <div>
-                                <strong>Juvenile begins at @FormatPercent(CurrentCreature.JuvenileThreshold * 100)</strong>
+                                <strong>Juvenile begins at @FormatPercent(JuvenileThresholdPercent)</strong>
                                 <span>Last full baby inventory at @FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</span>
                             </div>
                         </div>
@@ -535,7 +559,7 @@ else
                         <div class="action-item">
                             <span class="action-icon amber" aria-hidden="true">◷</span>
                             <div>
-                                <strong>@FormatDuration(plan.Lifecycle.TimeToAdult) until adult</strong>
+                                <strong>@FormatDuration(NextMaturationMilestoneDuration) until @NextMaturationMilestoneName</strong>
                                 <span>@FormatPercent(maturityPercent) maturation complete</span>
                             </div>
                         </div>
@@ -592,8 +616,16 @@ else
                         else
                         {
                             <div>
-                                <dt>Juvenile in</dt>
-                                <dd>@FormatDuration(plan.Lifecycle.TimeToJuvenile)</dd>
+                                <dt>@NextMaturationMilestoneLabel</dt>
+                                <dd>@FormatDuration(NextMaturationMilestoneDuration)</dd>
+                            </div>
+                        }
+                        @if (plan.Feeding.Status == FeedingBufferStatus.Juvenile
+                            && maturityPercent < AdolescentThresholdPercent)
+                        {
+                            <div>
+                                <dt>Adolescent in</dt>
+                                <dd>@FormatDuration(plan.Lifecycle.TimeToAdolescent)</dd>
                             </div>
                         }
                         <div>
@@ -692,9 +724,61 @@ else
     private string CurrentPhase => maturityPercent switch
     {
         >= 100 => "Adult",
-        >= 50 => "Adolescent",
-        _ when maturityPercent >= CurrentCreature.JuvenileThreshold * 100 => "Juvenile",
+        _ when maturityPercent >= AdolescentThresholdPercent => "Adolescent",
+        _ when maturityPercent >= JuvenileThresholdPercent => "Juvenile",
         _ => "Baby"
+    };
+
+    private double JuvenileThresholdPercent =>
+        CurrentCreature.JuvenileThreshold * 100;
+
+    private double AdolescentThresholdPercent =>
+        MaturationThresholds.Adolescent * 100;
+
+    private string BirthTrackLabel =>
+        CurrentCreature.BirthMethod == BirthMethod.Gestation ? "Birth" : "Hatch";
+
+    private string JuvenileTrackStyle =>
+        $"--point-left:{JuvenileThresholdPercent.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
+
+    private string TrackBoundaryState(double maturityThresholdPercent) =>
+        maturityPercent + 0.0001 >= maturityThresholdPercent ? "active" : "";
+
+    private string PhaseLabelState(string phase) =>
+        string.Equals(CurrentPhase, phase, StringComparison.OrdinalIgnoreCase)
+            ? "active"
+            : "";
+
+    private string NextMaturationMilestoneName => maturityPercent switch
+    {
+        _ when maturityPercent < JuvenileThresholdPercent => "juvenile",
+        _ when maturityPercent < AdolescentThresholdPercent => "adolescent",
+        _ when maturityPercent < 100 => "adult",
+        _ => "complete"
+    };
+
+    private string NextMaturationMilestoneLabel => maturityPercent switch
+    {
+        _ when maturityPercent < JuvenileThresholdPercent => "Juvenile in",
+        _ when maturityPercent < AdolescentThresholdPercent => "Adolescent in",
+        _ when maturityPercent < 100 => "Adult in",
+        _ => "Complete"
+    };
+
+    private TimeSpan NextMaturationMilestoneDuration => maturityPercent switch
+    {
+        _ when maturityPercent < JuvenileThresholdPercent => plan!.Lifecycle.TimeToJuvenile,
+        _ when maturityPercent < AdolescentThresholdPercent => plan!.Lifecycle.TimeToAdolescent,
+        _ when maturityPercent < 100 => plan!.Lifecycle.TimeToAdult,
+        _ => TimeSpan.Zero
+    };
+
+    private string NextMaturationMilestoneHelp => maturityPercent switch
+    {
+        _ when maturityPercent < JuvenileThresholdPercent => $"At {FormatPercent(JuvenileThresholdPercent)}",
+        _ when maturityPercent < AdolescentThresholdPercent => $"At {FormatPercent(AdolescentThresholdPercent)}",
+        _ when maturityPercent < 100 => "Remaining maturation",
+        _ => "Raise complete"
     };
 
     private string JuvenileHeadline =>

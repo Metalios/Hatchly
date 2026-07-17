@@ -15,9 +15,12 @@ public sealed class RaiseCalculator
             / creature.AgeSpeedMultiplier
             / request.Rates.MaturationSpeed;
         var juvenileSeconds = maturationSeconds * creature.JuvenileThreshold;
+        var adolescentSeconds = maturationSeconds
+            * Math.Max(creature.JuvenileThreshold, MaturationThresholds.Adolescent);
         var elapsedSeconds = maturationSeconds * maturity;
         var remainingSeconds = Math.Max(0, maturationSeconds - elapsedSeconds);
         var toJuvenileSeconds = Math.Max(0, juvenileSeconds - elapsedSeconds);
+        var toAdolescentSeconds = Math.Max(0, adolescentSeconds - elapsedSeconds);
         var birthSeconds = CalculateBirthSeconds(request);
 
         var maxFoodRate = creature.BaseFoodRate
@@ -89,12 +92,15 @@ public sealed class RaiseCalculator
                     _ => "Incubation"
                 },
                 BabyPhaseDuration = TimeSpan.FromSeconds(juvenileSeconds),
+                JuvenilePhaseDuration = TimeSpan.FromSeconds(adolescentSeconds - juvenileSeconds),
+                AdolescentPhaseDuration = TimeSpan.FromSeconds(maturationSeconds - adolescentSeconds),
                 JuvenileToAdultDuration = TimeSpan.FromSeconds(maturationSeconds - juvenileSeconds),
                 BirthToAdultDuration = TimeSpan.FromSeconds(maturationSeconds),
                 EggOrConceptionToAdultDuration = TimeSpan.FromSeconds(birthSeconds + maturationSeconds),
                 ElapsedMaturation = TimeSpan.FromSeconds(elapsedSeconds),
                 RemainingMaturation = TimeSpan.FromSeconds(remainingSeconds),
                 TimeToJuvenile = TimeSpan.FromSeconds(toJuvenileSeconds),
+                TimeToAdolescent = TimeSpan.FromSeconds(toAdolescentSeconds),
                 TimeToAdult = TimeSpan.FromSeconds(remainingSeconds)
             },
             Feeding = capacity,

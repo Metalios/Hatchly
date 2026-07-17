@@ -20,6 +20,11 @@ public enum BirthMethod
     CropPlotIncubation
 }
 
+public static class MaturationThresholds
+{
+    public const double Adolescent = 0.50;
+}
+
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum FeedingBufferStatus
 {
@@ -187,12 +192,15 @@ public sealed record LifecycleResult
     public required TimeSpan BirthDuration { get; init; }
     public required string BirthLabel { get; init; }
     public required TimeSpan BabyPhaseDuration { get; init; }
+    public required TimeSpan JuvenilePhaseDuration { get; init; }
+    public required TimeSpan AdolescentPhaseDuration { get; init; }
     public required TimeSpan JuvenileToAdultDuration { get; init; }
     public required TimeSpan BirthToAdultDuration { get; init; }
     public required TimeSpan EggOrConceptionToAdultDuration { get; init; }
     public required TimeSpan ElapsedMaturation { get; init; }
     public required TimeSpan RemainingMaturation { get; init; }
     public required TimeSpan TimeToJuvenile { get; init; }
+    public required TimeSpan TimeToAdolescent { get; init; }
     public required TimeSpan TimeToAdult { get; init; }
 }
 
