@@ -1673,19 +1673,23 @@ dd {
     }
 
     .mobile-settings {
-        overflow: hidden;
+        display: grid;
+        gap: .85rem;
+        padding: 12px;
     }
 
-    .mobile-settings summary {
-        min-height: 44px;
-        padding: .7rem 1rem;
-        color: var(--muted);
-        font-size: .78rem;
-        font-weight: 700;
+    .mobile-settings-title h2 {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .mobile-settings-title p {
+        margin: .12rem 0 0;
+        font-size: .72rem;
     }
 
     .mobile-settings .form-stack {
-        padding: 0 12px 12px;
+        gap: .75rem;
     }
 
     .planner-grid,

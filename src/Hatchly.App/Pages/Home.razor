@@ -52,31 +52,11 @@ else
             <span class="mobile-creature-meta">@FormatPercent(maturityPercent) maturity · @adultWeight.ToString("0") weight</span>
         </div>
 
-        @if (maturityPercent < JuvenileThresholdPercent)
-        {
-            <fieldset class="mobile-buffer-card">
-                <legend>Desired feeding buffer</legend>
-                <div class="duration-fields">
-                    <label>
-                        <span>Hours</span>
-                        <input type="number" min="0" max="168" step="1"
-                               @bind="bufferHours"
-                               @bind:event="oninput"
-                               @bind:after="Recalculate" />
-                    </label>
-                    <label>
-                        <span>Minutes</span>
-                        <input type="number" min="0" max="59" step="1"
-                               @bind="bufferMinutes"
-                               @bind:event="oninput"
-                               @bind:after="Recalculate" />
-                    </label>
-                </div>
-            </fieldset>
-        }
-
-        <details class="mobile-settings">
-            <summary>Raise settings</summary>
+        <section class="mobile-settings" aria-label="Raise settings">
+            <div class="mobile-settings-title">
+                <h2>Raise settings</h2>
+                <p>Maturity, weight, and food drive every result below.</p>
+            </div>
             <div class="form-stack">
                 <label>
                     <span>Current maturity</span>
@@ -150,7 +130,30 @@ else
                     </fieldset>
                 }
             </div>
-        </details>
+        </section>
+
+        @if (maturityPercent < JuvenileThresholdPercent)
+        {
+            <fieldset class="mobile-buffer-card">
+                <legend>Desired feeding buffer</legend>
+                <div class="duration-fields">
+                    <label>
+                        <span>Hours</span>
+                        <input type="number" min="0" max="168" step="1"
+                               @bind="bufferHours"
+                               @bind:event="oninput"
+                               @bind:after="Recalculate" />
+                    </label>
+                    <label>
+                        <span>Minutes</span>
+                        <input type="number" min="0" max="59" step="1"
+                               @bind="bufferMinutes"
+                               @bind:event="oninput"
+                               @bind:after="Recalculate" />
+                    </label>
+                </div>
+            </fieldset>
+        }
     </section>
 
     @if (RequiresRenderedBloodPackWarning)
