@@ -11,6 +11,3 @@ TestResults/
 __pycache__/
 *.pyc
 devkit/creature-export-report.json
-src/Hatchly.App/wwwroot/favicon.png
-src/Hatchly.App/wwwroot/icon-192.png
-src/Hatchly.App/wwwroot/icon-512.png

@@ -25,6 +25,7 @@ public static class ToolProgram
                 "sync-rates" => await SyncRatesAsync(args[1..]),
                 "merge-data" => await MergeDataAsync(args[1..]),
                 "validate-data" => await ValidateDataAsync(args[1..]),
+                "audit-publish" => AuditPublish(args[1..]),
                 _ => UnknownCommand(args[0])
             };
         }
@@ -64,6 +65,16 @@ public static class ToolProgram
         var catalog = await LoadCatalogAsync(dataDirectory);
         Console.WriteLine(
             $"Validated {catalog.Creatures.Count} creatures, {catalog.Foods.Count} foods, and {catalog.Diets.Count} diets.");
+        return 0;
+    }
+
+    private static int AuditPublish(string[] args)
+    {
+        var path = RequiredOption(args, "--path");
+        var result = PublishAuditor.Audit(path);
+        Console.WriteLine($"Framework Brotli payload: {PublishAuditor.FormatBytes(result.FrameworkBrotliBytes)}");
+        Console.WriteLine($"Header branding: {PublishAuditor.FormatBytes(result.HeaderBrandingBytes)}");
+        Console.WriteLine($"Cold transfer: {PublishAuditor.FormatBytes(result.ColdTransferBytes)}");
         return 0;
     }
 
@@ -178,6 +189,7 @@ public static class ToolProgram
         Console.WriteLine("  sync-rates --output <official-rates.json>");
         Console.WriteLine("  merge-data --data-dir <directory> --output <catalog.json>");
         Console.WriteLine("  validate-data --data-dir <directory>");
+        Console.WriteLine("  audit-publish --path <publish directory or wwwroot>");
     }
 
     private sealed record CreatureFile

@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Text.Json;
 using Hatchly.Core;
 using Microsoft.JSInterop;
@@ -40,37 +41,75 @@ public sealed class RateService(HttpClient http, IJSRuntime js)
     {
         IsInitialized = true;
         await LoadPreferencesAsync();
+        var loadedFromCache = await TryLoadCachedOfficialRatesAsync();
+        if (loadedFromCache)
+        {
+            Changed?.Invoke();
+            _ = RefreshOfficialRatesAsync(revalidate: true);
+            return;
+        }
 
+        await RefreshOfficialRatesAsync(revalidate: false);
+    }
+
+    private async Task<bool> TryLoadCachedOfficialRatesAsync()
+    {
         try
         {
-            var json = await http.GetStringAsync(
-                $"data/official-rates.json?v={DateTimeOffset.UtcNow.ToUnixTimeSeconds()}");
-            var document = ParseAndValidate(json);
-            OfficialRates = document;
+            var cached = await js.InvokeAsync<string?>("hatchlyStorage.get", OfficialCacheKey);
+            if (string.IsNullOrWhiteSpace(cached))
+            {
+                return false;
+            }
+
+            OfficialRates = ParseAndValidate(cached);
+            UsingCachedOfficialRates = true;
+            Error = "Using cached official rates.";
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private async Task RefreshOfficialRatesAsync(bool revalidate)
+    {
+        try
+        {
+            using var request = new HttpRequestMessage(
+                HttpMethod.Get,
+                "data/official-rates.json");
+            if (revalidate)
+            {
+                request.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };
+            }
+
+            using var response = await http.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+            OfficialRates = ParseAndValidate(json);
             UsingCachedOfficialRates = false;
             Error = null;
-            await js.InvokeVoidAsync("hatchlyStorage.set", OfficialCacheKey, json);
-        }
-        catch (Exception networkException)
-        {
             try
             {
-                var cached = await js.InvokeAsync<string?>(
-                    "hatchlyStorage.get",
-                    OfficialCacheKey);
-                if (string.IsNullOrWhiteSpace(cached))
-                {
-                    throw new InvalidDataException("No cached official rates are available.");
-                }
-
-                OfficialRates = ParseAndValidate(cached);
-                UsingCachedOfficialRates = true;
-                Error = "Using cached official rates.";
+                await js.InvokeVoidAsync("hatchlyStorage.set", OfficialCacheKey, json);
             }
             catch
             {
-                OfficialRates = null;
+                // Validated rates remain usable even when local storage is unavailable.
+            }
+        }
+        catch (Exception networkException)
+        {
+            if (OfficialRates is null)
+            {
                 Error = $"Official rates could not be loaded: {networkException.Message}";
+            }
+            else
+            {
+                UsingCachedOfficialRates = true;
+                Error = "Using cached official rates.";
             }
         }
 

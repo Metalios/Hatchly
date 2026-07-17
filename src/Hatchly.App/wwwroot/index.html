@@ -7,23 +7,56 @@
     <title>Hatchly - ARK: Survival Ascended Raise Planner</title>
     <meta name="description" content="Plan ASA creature maturation, capacity-based baby feeding, and shared trough coverage." />
     <meta name="theme-color" content="#071512" />
-    <meta property="og:image" content="https://hatchlyapp.com/images/hatchly-logo.png" />
+    <meta property="og:image" content="https://hatchlyapp.com/images/hatchly-social.png" />
     <base href="/" />
     <link rel="preload" id="webassembly" />
+    <link rel="preload" href="data/catalog.json" as="fetch" crossorigin />
+    <link rel="preload" href="data/official-rates.json" as="fetch" crossorigin />
     <link rel="stylesheet" href="css/app.css" />
-    <link rel="icon" type="image/png" href="images/hatchly-logo.png" />
-    <link rel="apple-touch-icon" href="images/hatchly-logo.png" />
-    <link href="manifest.webmanifest" rel="manifest" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
     <script type="importmap"></script>
 </head>
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div class="app-frame startup-shell" role="status" aria-label="Loading the Hatchly planner">
+            <header class="app-header">
+                <span class="brand" aria-label="Hatchly">
+                    <span class="brand-emblem" aria-hidden="true"></span>
+                    <span class="brand-wordmark" aria-hidden="true"></span>
+                </span>
+                <nav class="desktop-nav startup-nav" aria-label="Primary navigation">
+                    <span class="active">Planner</span>
+                    <span>Troughs</span>
+                </nav>
+                <span class="startup-server">Standard</span>
+            </header>
+            <main class="app-main startup-main">
+                <div class="startup-heading skeleton-block"></div>
+                <div class="startup-grid">
+                    <section class="startup-panel startup-setup">
+                        <div class="startup-title skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                    </section>
+                    <section class="startup-results">
+                        <div class="startup-panel startup-hero">
+                            <div class="startup-title skeleton-block"></div>
+                            <div class="startup-result skeleton-block"></div>
+                            <div class="startup-timeline skeleton-block"></div>
+                        </div>
+                        <div class="startup-card-row">
+                            <div class="startup-panel"></div>
+                            <div class="startup-panel"></div>
+                            <div class="startup-panel"></div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
     </div>
 
     <div id="blazor-error-ui">
@@ -32,26 +65,6 @@
         <span class="dismiss">&#215;</span>
     </div>
     <script src="js/app-storage.js"></script>
-    <script>
-        window.addEventListener("load", () => {
-            void (async () => {
-                if ("serviceWorker" in navigator) {
-                    const registrations = await navigator.serviceWorker.getRegistrations();
-                    await Promise.all(registrations.map(registration => registration.unregister()));
-                }
-
-                if ("caches" in window) {
-                    const keys = await caches.keys();
-                    await Promise.all(
-                        keys
-                            .filter(key => key.startsWith("offline-cache-"))
-                            .map(key => caches.delete(key)));
-                }
-            })().catch(error => {
-                console.warn("Hatchly could not clear legacy offline data.", error);
-            });
-        });
-    </script>
     <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
 </body>
 
