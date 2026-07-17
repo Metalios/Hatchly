@@ -38,6 +38,25 @@ public enum TroughType
     HandFeed
 }
 
+public sealed record TroughContainerProfile(
+    TroughType Type,
+    string DisplayName,
+    int SlotCapacity,
+    double SpoilMultiplier,
+    bool SupportsBabyPhase);
+
+public static class TroughProfiles
+{
+    public static TroughContainerProfile Get(TroughType type) => type switch
+    {
+        TroughType.Normal => new(type, "Feeding Trough", 60, 4, false),
+        TroughType.Maeguana => new(type, "Maeguana", 300, 4, true),
+        TroughType.Tek => new(type, "Powered Tek Trough", 100, 100, false),
+        TroughType.HandFeed => new(type, "Hand-feed inventory", 300, 1, true),
+        _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+    };
+}
+
 public sealed record ServerRates(
     double HatchSpeed,
     double MaturationSpeed,
@@ -206,7 +225,8 @@ public sealed record TroughRequest
     public required IReadOnlyList<TroughFoodRequest> Foods { get; init; }
     public required IReadOnlyDictionary<string, DietDefinition> Diets { get; init; }
     public required ServerRates Rates { get; init; }
-    public required double SpoilMultiplier { get; init; }
+    public required TroughType ContainerType { get; init; }
+    public int ContainerCount { get; init; } = 1;
     public TimeSpan MaximumSimulation { get; init; } = TimeSpan.FromDays(3);
 }
 
@@ -214,6 +234,11 @@ public sealed record TroughResult
 {
     public required TimeSpan Coverage { get; init; }
     public required IReadOnlyDictionary<string, TimeSpan> CoverageByDiet { get; init; }
+    public required int ContainerCount { get; init; }
+    public required int SlotsPerContainer { get; init; }
+    public required int SlotCapacity { get; init; }
+    public required int UsedSlots { get; init; }
+    public required int AvailableSlots { get; init; }
     public required int TotalItems { get; init; }
     public required int EatenItems { get; init; }
     public required int SpoiledItems { get; init; }
@@ -221,4 +246,5 @@ public sealed record TroughResult
     public required double EatenFoodPoints { get; init; }
     public required double SpoiledFoodPoints { get; init; }
     public required double WastedFoodPoints { get; init; }
+    public required bool SimulationCapped { get; init; }
 }

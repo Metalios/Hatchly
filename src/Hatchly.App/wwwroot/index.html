@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="images/hatchly-logo.png" />
     <link rel="apple-touch-icon" href="images/hatchly-logo.png" />
-    <link href="Hatchly.App.styles.css" rel="stylesheet" />
     <link href="manifest.webmanifest" rel="manifest" />
     <script type="importmap"></script>
 </head>
@@ -33,10 +32,9 @@
         <span class="dismiss">&#215;</span>
     </div>
     <script src="js/app-storage.js"></script>
-    <script src="_framework/blazor.webassembly#[.{fingerprint}].js" autostart="false"></script>
     <script>
-        (async () => {
-            try {
+        window.addEventListener("load", () => {
+            void (async () => {
                 if ("serviceWorker" in navigator) {
                     const registrations = await navigator.serviceWorker.getRegistrations();
                     await Promise.all(registrations.map(registration => registration.unregister()));
@@ -49,22 +47,12 @@
                             .filter(key => key.startsWith("offline-cache-"))
                             .map(key => caches.delete(key)));
                 }
-            } finally {
-                await Blazor.start();
-            }
-        })().catch(error => {
-            console.error("Hatchly failed to start.", error);
-            const app = document.getElementById("app");
-            if (app) {
-                app.innerHTML = `
-                    <main style="max-width:42rem;margin:12vh auto;padding:1.5rem;color:#f4f6f7;font-family:system-ui">
-                        <h1>Hatchly could not start</h1>
-                        <p style="color:#aab4be">Reload the page. If this continues, clear this site's stored data and try again.</p>
-                        <pre style="white-space:pre-wrap;color:#ffb85c">${String(error)}</pre>
-                    </main>`;
-            }
+            })().catch(error => {
+                console.warn("Hatchly could not clear legacy offline data.", error);
+            });
         });
     </script>
+    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
 </body>
 
 </html>

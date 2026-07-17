@@ -125,21 +125,29 @@ p {
 
 .brand-emblem {
     display: block;
-    width: 72px;
-    height: 55px;
-    flex: 0 0 72px;
+    width: 92px;
+    height: 70px;
+    flex: 0 0 92px;
     overflow: hidden;
-    background-image: url("../images/hatchly-logo.png");
+    background-image: url("../images/hatchly-emblem.png");
     background-repeat: no-repeat;
-    background-position: center top;
-    background-size: 80px 80px;
-    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, .48));
+    background-position: center;
+    background-size: contain;
+    filter:
+        drop-shadow(0 0 7px rgba(69, 215, 210, .26))
+        drop-shadow(0 6px 12px rgba(0, 0, 0, .58));
 }
 
-.brand-name {
-    font-size: 1.55rem;
-    font-weight: 830;
-    letter-spacing: -.035em;
+.brand-wordmark {
+    display: block;
+    width: 128px;
+    height: 28px;
+    flex: 0 0 128px;
+    background-image: url("../images/hatchly-wordmark.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .58));
 }
 
 .desktop-nav {
@@ -944,6 +952,22 @@ dd {
     outline-offset: 2px;
 }
 
+.container-count-row {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(170px, .7fr);
+    align-items: end;
+    gap: .75rem;
+    margin-top: 1rem;
+    padding: 13px;
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: rgba(5, 18, 28, .52);
+}
+
+.container-count-row .row-readout {
+    min-height: 46px;
+}
+
 .editor-row {
     display: grid;
     align-items: end;
@@ -975,6 +999,68 @@ dd {
 .row-readout strong {
     display: block;
     margin-top: .1rem;
+}
+
+.row-readout small {
+    display: block;
+    margin-top: .12rem;
+    color: var(--muted);
+    font-size: .68rem;
+}
+
+.capacity-panel {
+    margin-top: 1rem;
+    padding: 13px;
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: rgba(5, 18, 28, .52);
+}
+
+.capacity-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--muted);
+    font-size: .78rem;
+}
+
+.capacity-heading strong {
+    color: var(--text);
+}
+
+.capacity-track {
+    display: block;
+    height: 8px;
+    margin-top: .65rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #263944;
+}
+
+.capacity-fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--orange);
+}
+
+.capacity-panel p {
+    margin: .55rem 0 0;
+    font-size: .72rem;
+}
+
+.capacity-panel.over-capacity {
+    border-color: rgba(255, 129, 119, .58);
+    background: rgba(91, 30, 26, .28);
+}
+
+.capacity-panel.over-capacity .capacity-fill {
+    background: var(--red);
+}
+
+.capacity-panel.over-capacity p,
+.capacity-panel.over-capacity .capacity-heading strong {
+    color: #ffd0cc;
 }
 
 .icon-button {
@@ -1056,6 +1142,39 @@ dd {
 .inline-notice {
     width: auto;
     margin-top: 1rem;
+}
+
+.global-notice.contextual-warning {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: .8rem;
+    margin: 0 0 18px;
+    padding: .9rem 1rem;
+}
+
+.contextual-warning-icon {
+    display: grid;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 50%;
+    color: #2e1b05;
+    background: var(--orange-soft);
+    font-weight: 900;
+}
+
+.contextual-warning strong {
+    display: block;
+    color: #ffe0b0;
+    font-size: .88rem;
+}
+
+.contextual-warning p {
+    margin: .18rem 0 0;
+    color: #e8cda4;
+    font-size: .78rem;
 }
 
 .empty-state,
@@ -1221,14 +1340,15 @@ dd {
     }
 
     .brand-emblem {
-        width: 58px;
-        height: 44px;
-        flex-basis: 58px;
-        background-size: 64px 64px;
+        width: 70px;
+        height: 53px;
+        flex-basis: 70px;
     }
 
-    .brand-name {
-        font-size: 1.36rem;
+    .brand-wordmark {
+        width: 104px;
+        height: 23px;
+        flex-basis: 104px;
     }
 
     .desktop-nav {
@@ -1526,14 +1646,15 @@ dd {
 
 @media (max-width: 560px) {
     .brand-emblem {
-        width: 54px;
-        height: 41px;
-        flex-basis: 54px;
-        background-size: 60px 60px;
+        width: 66px;
+        height: 50px;
+        flex-basis: 66px;
     }
 
-    .brand-name {
-        font-size: 1.25rem;
+    .brand-wordmark {
+        width: 96px;
+        height: 21px;
+        flex-basis: 96px;
     }
 
     .server-picker select {
@@ -1556,7 +1677,8 @@ dd {
     }
 
     .creature-editor,
-    .food-editor {
+    .food-editor,
+    .container-count-row {
         grid-template-columns: 1fr 1fr;
     }
 
@@ -1572,8 +1694,10 @@ dd {
 }
 
 @media (max-width: 380px) {
-    .brand-name {
-        display: none;
+    .brand-wordmark {
+        width: 82px;
+        height: 18px;
+        flex-basis: 82px;
     }
 
     .server-picker select {
@@ -1582,7 +1706,8 @@ dd {
 
     .feeding-facts,
     .creature-editor,
-    .food-editor {
+    .food-editor,
+    .container-count-row {
         grid-template-columns: 1fr;
     }
 

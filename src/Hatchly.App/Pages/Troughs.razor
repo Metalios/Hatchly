@@ -10,11 +10,11 @@
     <div>
         <span class="eyebrow">ASA trough planner</span>
         <h1>Provision the whole group</h1>
-        <p>Combine creatures, maturity levels, and whole or partial stacks to estimate shared food coverage.</p>
+        <p>Combine multiple containers, creatures, and food stacks to estimate shared coverage with spoilage.</p>
     </div>
     <div class="rate-summary">
-        <span>@TroughLabel</span>
-        <strong>@FormatRate(SpoilMultiplier) spoil time</strong>
+        <span>@ContainerCountLabel</span>
+        <strong>@SlotCapacity total slots</strong>
     </div>
 </header>
 
@@ -41,6 +41,20 @@ else if (Rates.CurrentRates is null)
 }
 else
 {
+    @if (RequiresRenderedBloodPackWarning)
+    {
+        <section class="global-notice warning contextual-warning" role="alert">
+            <span class="contextual-warning-icon" aria-hidden="true">!</span>
+            <div>
+                <strong>Keep these Blood Pack raises rendered</strong>
+                <p>
+                    @RenderedBloodPackCreatureNames must remain in player render range while feeding on Blood Packs.
+                    Current server behavior does not process this food reliably while they are unrendered, and they can starve.
+                </p>
+            </div>
+        </section>
+    }
+
     <div class="trough-grid">
         <div class="trough-inputs">
             <section class="card">
@@ -48,7 +62,7 @@ else
                     <span class="section-icon" aria-hidden="true">&#9632;</span>
                     <div>
                         <h2>Container</h2>
-                        <p>The container changes food spoil time, not consumption.</p>
+                        <p>Container count sets total stack capacity. Type sets slots and spoil time.</p>
                     </div>
                 </div>
 
@@ -63,11 +77,35 @@ else
                                    @onchange="() => SelectTrough(type)" />
                             <span>
                                 <strong>@DisplayTrough(type)</strong>
-                                <small>@FormatRate(GetSpoilMultiplier(type)) spoil time</small>
+                                <small>@TroughProfiles.Get(type).SlotCapacity slots · @FormatRate(TroughProfiles.Get(type).SpoilMultiplier) spoil</small>
                             </span>
                         </label>
                     }
                 </div>
+
+                <div class="container-count-row">
+                    <label>
+                        <span>Number of containers</span>
+                        <input type="number"
+                               min="1"
+                               max="50"
+                               step="1"
+                               @bind="containerCount"
+                               @bind:event="oninput"
+                               @bind:after="ContainerCountChanged" />
+                    </label>
+                    <div class="row-readout">
+                        <span>Combined capacity</span>
+                        <strong>@SlotCapacity slots</strong>
+                    </div>
+                </div>
+
+                @if (selectedTrough == TroughType.HandFeed)
+                {
+                    <div class="global-notice warning inline-notice">
+                        Hand-feed inventory uses the 300-slot ceiling here. The Planner remains the source for the creature's weight-based baby inventory capacity.
+                    </div>
+                }
             </section>
 
             <section class="card">
@@ -96,7 +134,7 @@ else
                             <label>
                                 <span>Maturity</span>
                                 <div class="input-with-suffix">
-                                    <input type="number" min="10" max="100" step="0.1"
+                                    <input type="number" min="@MinimumMaturity(row)" max="100" step="0.1"
                                            @bind="row.MaturityPercent"
                                            @bind:event="oninput"
                                            @bind:after="Recalculate" />
@@ -125,9 +163,11 @@ else
                     <span class="section-icon" aria-hidden="true">&#9670;</span>
                     <div>
                         <h2>Food stacks</h2>
-                        <p>Fractional stacks are converted to whole items.</p>
+                        <p>Each full or partial stack uses one container slot.</p>
                     </div>
-                    <button class="button secondary compact-button" @onclick="AddFood">Add food</button>
+                    <button class="button secondary compact-button"
+                            disabled="@(AvailableSlots <= 0)"
+                            @onclick="AddFood">Add food</button>
                 </div>
 
                 <div class="editor-list">
@@ -153,6 +193,7 @@ else
                             <div class="row-readout">
                                 <span>Whole items</span>
                                 <strong>@WholeItems(row)</strong>
+                                <small>@SlotsUsed(row) slot@(SlotsUsed(row) == 1 ? "" : "s")</small>
                             </div>
                             <button class="icon-button danger"
                                     title="Remove food"
@@ -160,6 +201,24 @@ else
                                     disabled="@(foodRows.Count == 1)"
                                     @onclick="() => RemoveFood(row)">&#215;</button>
                         </div>
+                    }
+                </div>
+
+                <div class="capacity-panel @(CapacityExceeded ? "over-capacity" : "")">
+                    <div class="capacity-heading">
+                        <span>Container capacity</span>
+                        <strong>@UsedSlots / @SlotCapacity slots</strong>
+                    </div>
+                    <span class="capacity-track" aria-hidden="true">
+                        <span class="capacity-fill" style="@CapacityStyle"></span>
+                    </span>
+                    @if (CapacityExceeded)
+                    {
+                        <p>Remove @(-AvailableSlots) stack slot@(-AvailableSlots == 1 ? "" : "s") or add another @DisplayTrough(selectedTrough).</p>
+                    }
+                    else
+                    {
+                        <p>@AvailableSlots slot@(AvailableSlots == 1 ? "" : "s") still available across @ContainerCountLabel.ToLowerInvariant().</p>
                     }
                 </div>
             </section>
@@ -176,10 +235,13 @@ else
             else if (result is not null)
             {
                 <section class="card trough-hero">
-                    <span class="eyebrow">Estimated coverage</span>
+                    <span class="eyebrow">Every listed diet covered for</span>
                     <strong class="coverage-value">@FormatCoverage(result.Coverage)</strong>
-                    <p>@result.TotalItems whole food items across @foodRows.Count food type@(foodRows.Count == 1 ? "" : "s").</p>
-                    @if (result.Coverage >= MaximumSimulation)
+                    <p>
+                        @result.TotalItems whole items in @result.UsedSlots of @result.SlotCapacity slots
+                        across @ContainerCountLabel.ToLowerInvariant().
+                    </p>
+                    @if (result.SimulationCapped)
                     {
                         <div class="global-notice warning inline-notice">Simulation is capped at three days.</div>
                     }
@@ -190,7 +252,7 @@ else
                         <span class="section-icon" aria-hidden="true">&#9678;</span>
                         <div>
                             <h2>Coverage by diet</h2>
-                            <p>The last successful feeding time for each diet.</p>
+                            <p>The headline uses the first listed diet expected to run out.</p>
                         </div>
                     </div>
                     <dl class="timeline-list">
@@ -258,11 +320,35 @@ else
     private readonly List<CreatureRow> creatureRows = [];
     private readonly List<FoodRow> foodRows = [];
     private TroughType selectedTrough = TroughType.Normal;
+    private int containerCount = 1;
     private TroughResult? result;
     private string? calculationError;
 
-    private double SpoilMultiplier => GetSpoilMultiplier(selectedTrough);
-    private string TroughLabel => DisplayTrough(selectedTrough);
+    private TroughContainerProfile ContainerProfile => TroughProfiles.Get(selectedTrough);
+    private int ContainerCount => Math.Clamp(containerCount, 1, 50);
+    private int SlotCapacity => ContainerProfile.SlotCapacity * ContainerCount;
+    private int UsedSlots => foodRows.Sum(SlotsUsed);
+    private int AvailableSlots => SlotCapacity - UsedSlots;
+    private bool CapacityExceeded => AvailableSlots < 0;
+    private string CapacityStyle =>
+        $"width:{Math.Clamp(UsedSlots * 100d / Math.Max(1, SlotCapacity), 0, 100).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
+    private string ContainerCountLabel => ContainerCount == 1
+        ? $"1 {DisplayTrough(selectedTrough)}"
+        : $"{ContainerCount} {PluralTroughName(selectedTrough)}";
+    private bool RequiresRenderedBloodPackWarning =>
+        foodRows.Any(row => row.FoodId == "blood-pack" && row.Stacks > 0)
+        && BloodPackRenderCreatures.Count > 0;
+    private IReadOnlyList<CreatureDefinition> BloodPackRenderCreatures =>
+        Catalog.Catalog is null
+            ? []
+            : creatureRows
+                .Where(row => row.Quantity > 0)
+                .Select(row => Catalog.Catalog.Creatures.First(item => item.Id == row.CreatureId))
+                .Where(creature => creature.SpecialBehavior == "blood-pack-render-required")
+                .DistinctBy(creature => creature.Id)
+                .ToArray();
+    private string RenderedBloodPackCreatureNames =>
+        string.Join(" and ", BloodPackRenderCreatures.Select(creature => creature.Name));
     private string LossPercent => result is null || result.TotalFoodPoints <= 0
         ? "0%"
         : $"{(result.SpoiledFoodPoints + result.WastedFoodPoints) * 100 / result.TotalFoodPoints:0.#}%";
@@ -303,6 +389,11 @@ else
 
     private void AddFood()
     {
+        if (AvailableSlots <= 0)
+        {
+            return;
+        }
+
         var id = Catalog.Catalog!.Foods[0].Id;
         foodRows.Add(new FoodRow(id, 1));
         Recalculate();
@@ -320,6 +411,13 @@ else
     private void SelectTrough(TroughType type)
     {
         selectedTrough = type;
+        ClampCreatureMaturity();
+        Recalculate();
+    }
+
+    private void ContainerCountChanged()
+    {
+        containerCount = ContainerCount;
         Recalculate();
     }
 
@@ -329,6 +427,16 @@ else
         if (Catalog.Catalog is null || Rates.CurrentRates is null)
         {
             result = null;
+            return;
+        }
+
+        if (CapacityExceeded)
+        {
+            result = null;
+            calculationError =
+                $"Food uses {UsedSlots} stack slots, but {ContainerCountLabel} "
+                + $"{(ContainerCount == 1 ? "holds" : "hold")} {SlotCapacity}. Remove {-AvailableSlots} slot"
+                + $"{(-AvailableSlots == 1 ? "" : "s")} or add another container.";
             return;
         }
 
@@ -350,7 +458,8 @@ else
                     item => item.Id,
                     StringComparer.OrdinalIgnoreCase),
                 Rates = Rates.CurrentRates,
-                SpoilMultiplier = SpoilMultiplier,
+                ContainerType = selectedTrough,
+                ContainerCount = ContainerCount,
                 MaximumSimulation = MaximumSimulation
             });
         }
@@ -367,6 +476,35 @@ else
         return Math.Max(0, (int)Math.Floor(row.Stacks * food.StackSize));
     }
 
+    private int SlotsUsed(FoodRow row)
+    {
+        var food = Catalog.Catalog!.Foods.First(item => item.Id == row.FoodId);
+        var items = WholeItems(row);
+        return items == 0
+            ? 0
+            : (int)Math.Ceiling(items / (double)food.StackSize);
+    }
+
+    private double MinimumMaturity(CreatureRow row)
+    {
+        if (ContainerProfile.SupportsBabyPhase)
+        {
+            return 0;
+        }
+
+        return Catalog.Catalog!.Creatures
+            .First(item => item.Id == row.CreatureId)
+            .JuvenileThreshold * 100;
+    }
+
+    private void ClampCreatureMaturity()
+    {
+        foreach (var row in creatureRows)
+        {
+            row.MaturityPercent = Math.Max(row.MaturityPercent, MinimumMaturity(row));
+        }
+    }
+
     private string DietName(string id) =>
         Catalog.Catalog!.Diets.FirstOrDefault(
             item => item.Id.Equals(id, StringComparison.OrdinalIgnoreCase))?.Name.Trim()
@@ -378,17 +516,16 @@ else
         StateHasChanged();
     });
 
-    private static double GetSpoilMultiplier(TroughType type) => type switch
-    {
-        TroughType.Tek => 100,
-        TroughType.HandFeed => 1,
-        _ => 4
-    };
+    private static string DisplayTrough(TroughType type) =>
+        TroughProfiles.Get(type).DisplayName;
 
-    private static string DisplayTrough(TroughType type) => type switch
+    private static string PluralTroughName(TroughType type) => type switch
     {
-        TroughType.HandFeed => "Hand feed",
-        _ => type.ToString()
+        TroughType.Normal => "Feeding Troughs",
+        TroughType.Maeguana => "Maeguanas",
+        TroughType.Tek => "Powered Tek Troughs",
+        TroughType.HandFeed => "Hand-feed inventories",
+        _ => $"{DisplayTrough(type)}s"
     };
 
     private static string FormatRate(double value) => $"{value:0.##}x";

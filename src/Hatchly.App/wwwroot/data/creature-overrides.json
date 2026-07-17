@@ -2,6 +2,14 @@
   "schemaVersion": 1,
   "overrides": [
     {
+      "creatureId": "bloodstalker",
+      "specialBehavior": "blood-pack-render-required"
+    },
+    {
+      "creatureId": "desmodus",
+      "specialBehavior": "blood-pack-render-required"
+    },
+    {
       "creatureId": "elderclaw",
       "birthMethod": "CropPlotIncubation",
       "specialBehavior": "elderclaw-crop-plot"

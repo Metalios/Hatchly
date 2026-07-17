@@ -359,7 +359,7 @@
       "juvenileThreshold": 0.1,
       "foodMultipliers": {},
       "wasteMultipliers": {},
-      "specialBehavior": null
+      "specialBehavior": "blood-pack-render-required"
     },
     {
       "id": "brontosaurus",
@@ -723,7 +723,7 @@
       "juvenileThreshold": 0.1,
       "foodMultipliers": {},
       "wasteMultipliers": {},
-      "specialBehavior": null
+      "specialBehavior": "blood-pack-render-required"
     },
     {
       "id": "dilophosaurus",

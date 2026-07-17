@@ -6,12 +6,26 @@ public sealed class TroughCalculator
 
     public TroughResult Calculate(TroughRequest request)
     {
-        if (request.Creatures.Count == 0)
+        var profile = TroughProfiles.Get(request.ContainerType);
+        var containerCount = Math.Clamp(request.ContainerCount, 1, 100);
+        var slotCapacity = checked(profile.SlotCapacity * containerCount);
+        var usedSlots = request.Foods.Sum(RequiredSlots);
+
+        if (usedSlots > slotCapacity)
         {
-            return Empty();
+            throw new ArgumentException(
+                $"The selected food uses {usedSlots} slots, but "
+                + $"{containerCount} {profile.DisplayName} container"
+                + $"{(containerCount == 1 ? "" : "s")} hold {slotCapacity}.",
+                nameof(request));
         }
 
-        var stacks = CreateStacks(request.Foods, request.SpoilMultiplier);
+        if (request.Creatures.Count == 0)
+        {
+            return Empty(containerCount, profile.SlotCapacity, slotCapacity, usedSlots);
+        }
+
+        var stacks = CreateStacks(request.Foods, profile.SpoilMultiplier);
         var totalItems = stacks.Sum(stack => stack.Count);
         var creatures = ExpandCreatures(request);
         var remainingItems = totalItems;
@@ -93,20 +107,29 @@ public sealed class TroughCalculator
         }
 
         var totalPoints = eatenPoints + spoiledPoints + wastedPoints;
+        var coverageSeconds = coverageByDiet.Count == 0
+            ? 0
+            : coverageByDiet.Values.Min();
         return new TroughResult
         {
-            Coverage = TimeSpan.FromSeconds(time),
+            Coverage = TimeSpan.FromSeconds(coverageSeconds),
             CoverageByDiet = coverageByDiet.ToDictionary(
                 entry => entry.Key,
                 entry => TimeSpan.FromSeconds(entry.Value),
                 StringComparer.OrdinalIgnoreCase),
+            ContainerCount = containerCount,
+            SlotsPerContainer = profile.SlotCapacity,
+            SlotCapacity = slotCapacity,
+            UsedSlots = usedSlots,
+            AvailableSlots = slotCapacity - usedSlots,
             TotalItems = totalItems,
             EatenItems = eatenItems,
             SpoiledItems = spoiledItems,
             TotalFoodPoints = totalPoints,
             EatenFoodPoints = eatenPoints,
             SpoiledFoodPoints = spoiledPoints,
-            WastedFoodPoints = wastedPoints
+            WastedFoodPoints = wastedPoints,
+            SimulationCapped = remainingItems > 0 && time >= maxSeconds
         };
     }
 
@@ -184,17 +207,37 @@ public sealed class TroughCalculator
         return result;
     }
 
-    private static TroughResult Empty() => new()
+    private static int RequiredSlots(TroughFoodRequest request)
+    {
+        var itemQuantity = Math.Max(
+            0,
+            (int)Math.Floor(request.Stacks * request.Food.StackSize));
+        return itemQuantity == 0
+            ? 0
+            : (int)Math.Ceiling(itemQuantity / (double)request.Food.StackSize);
+    }
+
+    private static TroughResult Empty(
+        int containerCount,
+        int slotsPerContainer,
+        int slotCapacity,
+        int usedSlots) => new()
     {
         Coverage = TimeSpan.Zero,
         CoverageByDiet = new Dictionary<string, TimeSpan>(),
+        ContainerCount = containerCount,
+        SlotsPerContainer = slotsPerContainer,
+        SlotCapacity = slotCapacity,
+        UsedSlots = usedSlots,
+        AvailableSlots = slotCapacity - usedSlots,
         TotalItems = 0,
         EatenItems = 0,
         SpoiledItems = 0,
         TotalFoodPoints = 0,
         EatenFoodPoints = 0,
         SpoiledFoodPoints = 0,
-        WastedFoodPoints = 0
+        WastedFoodPoints = 0,
+        SimulationCapped = false
     };
 
     private sealed class SimulatedCreature

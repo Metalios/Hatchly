@@ -153,6 +153,20 @@ else
         </details>
     </section>
 
+    @if (RequiresRenderedBloodPackWarning)
+    {
+        <section class="global-notice warning contextual-warning" role="alert">
+            <span class="contextual-warning-icon" aria-hidden="true">!</span>
+            <div>
+                <strong>Keep this Blood Pack raise rendered</strong>
+                <p>
+                    @CurrentCreature.Name must remain in player render range while feeding on Blood Packs.
+                    Current server behavior does not process this food reliably while the creature is unrendered, and it can starve.
+                </p>
+            </div>
+        </section>
+    }
+
     <div class="planner-grid">
         <section class="card setup-card">
             <div class="section-title">
@@ -295,12 +309,11 @@ else
                         <div class="result-heading">
                             <span class="status-symbol" aria-hidden="true">✓</span>
                             <div>
-                                <span class="eyebrow">Juvenile phase</span>
-                                <h2>Ready to eat from a trough</h2>
-                                <p>Baby inventory buffer controls are no longer needed at @FormatPercent(CurrentCreature.JuvenileThreshold * 100).</p>
+                                <span class="eyebrow">@CurrentPhase phase</span>
+                                <h2>@JuvenileHeadline</h2>
+                                <p>@JuvenileSupportingText</p>
                             </div>
                         </div>
-                        <a class="button primary" href="/troughs">Open Trough Planner</a>
                     }
                     else
                     {
@@ -312,8 +325,29 @@ else
                                 <p>@FeedingSupportingText</p>
                             </div>
                         </div>
+                    }
 
-                        <div class="hero-metrics">
+                    <div class="hero-metrics">
+                        @if (plan.Feeding.Status == FeedingBufferStatus.Juvenile)
+                        {
+                            <div>
+                                <span>Current maturity</span>
+                                <strong>@FormatPercent(maturityPercent)</strong>
+                                <small>@CurrentPhase phase</small>
+                            </div>
+                            <div>
+                                <span>Adult in</span>
+                                <strong>@FormatDuration(plan.Lifecycle.TimeToAdult)</strong>
+                                <small>Remaining maturation</small>
+                            </div>
+                            <div>
+                                <span>Food remaining</span>
+                                <strong>@plan.FoodToAdult</strong>
+                                <small>@CurrentFood.Name through adulthood</small>
+                            </div>
+                        }
+                        else
+                        {
                             <div>
                                 <span>Juvenile in</span>
                                 <strong>@FormatDuration(plan.Lifecycle.TimeToJuvenile)</strong>
@@ -329,15 +363,50 @@ else
                                 <strong>@plan.Feeding.FullItemQuantity</strong>
                                 <small>@CurrentFood.Name · @FormatDuration(plan.Feeding.FullInventoryDuration)</small>
                             </div>
-                        </div>
+                        }
+                    </div>
 
-                        <div class="lifecycle-track" aria-label="Maturation progress">
-                            <span class="track-progress" style="@MaturityStyle"></span>
-                            <span class="track-point hatch active">Hatch</span>
-                            <span class="track-point juvenile">Juvenile</span>
-                            <span class="track-point adult">Adult</span>
-                        </div>
+                    <div class="lifecycle-track" aria-label="Maturation progress">
+                        <span class="track-progress" style="@MaturityStyle"></span>
+                        <span class="track-point hatch active">Hatch</span>
+                        <span class="track-point juvenile">Juvenile</span>
+                        <span class="track-point adult">Adult</span>
+                    </div>
 
+                    @if (plan.Feeding.Status == FeedingBufferStatus.Juvenile)
+                    {
+                        <details class="feeding-details">
+                            <summary>Current feeding details</summary>
+                            <dl class="feeding-facts">
+                                <div>
+                                    <dt>Current consumption</dt>
+                                    <dd>@plan.CurrentFoodPointsPerMinute.ToString("0.##") food points/min</dd>
+                                </div>
+                                <div>
+                                    <dt>Selected food rate</dt>
+                                    <dd>@ItemsPerHour.ToString("0.##") @CurrentFood.Name/hour</dd>
+                                </div>
+                                <div>
+                                    <dt>Estimated daily food</dt>
+                                    <dd>@ItemsPerDay.ToString("0") @CurrentFood.Name/day</dd>
+                                </div>
+                                <div>
+                                    <dt>Food until adult</dt>
+                                    <dd>@plan.FoodToAdult @CurrentFood.Name</dd>
+                                </div>
+                                <div>
+                                    <dt>Elapsed maturation</dt>
+                                    <dd>@FormatDuration(plan.Lifecycle.ElapsedMaturation)</dd>
+                                </div>
+                                <div>
+                                    <dt>Remaining maturation</dt>
+                                    <dd>@FormatDuration(plan.Lifecycle.RemainingMaturation)</dd>
+                                </div>
+                            </dl>
+                        </details>
+                    }
+                    else
+                    {
                         <details class="feeding-details">
                             <summary>Feeding capacity details</summary>
                             <dl class="feeding-facts">
@@ -408,7 +477,7 @@ else
                         <span class="section-icon" aria-hidden="true">◎</span>
                         <div>
                             <h2>Next actions</h2>
-                            <p>Based on a full inventory.</p>
+                            <p>@(plan.Feeding.Status == FeedingBufferStatus.Juvenile ? "Based on current maturity and consumption." : "Based on a full baby inventory.")</p>
                         </div>
                     </div>
 
@@ -446,8 +515,35 @@ else
                         <div class="action-item">
                             <span class="action-icon teal" aria-hidden="true">▰</span>
                             <div>
-                                <strong>Move to trough at @FormatPercent(CurrentCreature.JuvenileThreshold * 100)</strong>
-                                <span>Last full inventory at @FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</span>
+                                <strong>Juvenile begins at @FormatPercent(CurrentCreature.JuvenileThreshold * 100)</strong>
+                                <span>Last full baby inventory at @FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</span>
+                            </div>
+                        </div>
+                    }
+                    else if (maturityPercent >= 100)
+                    {
+                        <div class="action-item">
+                            <span class="action-icon green" aria-hidden="true">✓</span>
+                            <div>
+                                <strong>Raise complete</strong>
+                                <span>This creature has reached adulthood.</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="action-item">
+                            <span class="action-icon amber" aria-hidden="true">◷</span>
+                            <div>
+                                <strong>@FormatDuration(plan.Lifecycle.TimeToAdult) until adult</strong>
+                                <span>@FormatPercent(maturityPercent) maturation complete</span>
+                            </div>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-icon green" aria-hidden="true">✓</span>
+                            <div>
+                                <strong>@plan.FoodToAdult @CurrentFood.Name remaining</strong>
+                                <span>Currently consuming about @ItemsPerHour.ToString("0.##") per hour</span>
                             </div>
                         </div>
                     }
@@ -486,10 +582,20 @@ else
                     </div>
 
                     <dl class="timeline-list">
-                        <div>
-                            <dt>Juvenile in</dt>
-                            <dd>@FormatDuration(plan.Lifecycle.TimeToJuvenile)</dd>
-                        </div>
+                        @if (plan.Feeding.Status == FeedingBufferStatus.Juvenile)
+                        {
+                            <div>
+                                <dt>Current phase</dt>
+                                <dd>@CurrentPhase</dd>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <dt>Juvenile in</dt>
+                                <dd>@FormatDuration(plan.Lifecycle.TimeToJuvenile)</dd>
+                            </div>
+                        }
                         <div>
                             <dt>Adult in</dt>
                             <dd>@FormatDuration(plan.Lifecycle.TimeToAdult)</dd>
@@ -578,9 +684,34 @@ else
     private FoodDefinition CurrentFood =>
         AvailableFoods.First(item => item.Id == selectedFoodId);
 
+    private bool RequiresRenderedBloodPackWarning =>
+        CurrentCreature.SpecialBehavior == "blood-pack-render-required"
+        && selectedFoodId == "blood-pack";
+
     private TimeSpan DesiredBuffer =>
         TimeSpan.FromHours(Math.Max(0, bufferHours))
         + TimeSpan.FromMinutes(Math.Clamp(bufferMinutes, 0, 59));
+
+    private string CurrentPhase => maturityPercent switch
+    {
+        >= 100 => "Adult",
+        >= 50 => "Adolescent",
+        _ when maturityPercent >= CurrentCreature.JuvenileThreshold * 100 => "Juvenile",
+        _ => "Baby"
+    };
+
+    private string JuvenileHeadline =>
+        maturityPercent >= 100
+            ? "Raise complete"
+            : $"{FormatDuration(plan!.Lifecycle.TimeToAdult)} until adult";
+
+    private string JuvenileSupportingText =>
+        maturityPercent >= 100
+            ? "The full lifecycle and food history remain available below."
+            : $"{plan!.FoodToAdult} {CurrentFood.Name} remain at the selected server rates.";
+
+    private double ItemsPerHour => (plan?.CurrentItemsPerMinute ?? 0) * 60;
+    private double ItemsPerDay => ItemsPerHour * 24;
 
     private string MaturityStyle =>
         $"width:{Math.Clamp(maturityPercent, 0, 100).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";

@@ -10,7 +10,9 @@ legacy Crumplecorn controller.
 - Capacity-based baby feeding using a completely filled creature inventory
 - Desired refill buffer with current/later/juvenile status
 - Incubation, gestation, baby, juvenile, and adult lifecycle timing
-- Normal, Maeguana, Tek, and hand-feed trough simulation
+- Multi-container Normal, Maeguana, Tek, and hand-feed simulation with
+  stack-slot capacity, multiple food types, multiple creature groups, and
+  spoilage
 - Standard, Apocalypse, Small Tribes, and Conquest official rate profiles
 - One browser-local unofficial hatch/mature/consume profile
 - Versioned creature, food, diet, and override data
