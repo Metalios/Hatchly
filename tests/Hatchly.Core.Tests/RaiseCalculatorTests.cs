@@ -277,6 +277,7 @@ public sealed class RaiseCalculatorTests
             Name = "Test Creature",
             BirthMethod = birthMethod,
             DietId = "diet",
+            RaisingFoodIds = ["food"],
             BaseFoodRate = baseFoodRate,
             BabyFoodRateMultiplier = 1,
             ExtraBabyFoodRateMultiplier = 1,

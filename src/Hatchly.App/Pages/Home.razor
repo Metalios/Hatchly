@@ -673,11 +673,8 @@ else
     private CreatureDefinition CurrentCreature =>
         Catalog.Catalog!.Creatures.First(item => item.Id == selectedCreatureId);
 
-    private DietDefinition CurrentDiet =>
-        Catalog.Catalog!.Diets.First(item => item.Id == CurrentCreature.DietId);
-
     private IReadOnlyList<FoodDefinition> AvailableFoods =>
-        CurrentDiet.FoodIds
+        CurrentCreature.RaisingFoodIds
             .Select(id => Catalog.Catalog!.Foods.First(food => food.Id == id))
             .ToArray();
 

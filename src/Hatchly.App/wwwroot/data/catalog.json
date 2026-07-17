@@ -6,6 +6,13 @@
       "name": "Acrocanthosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -26,6 +33,13 @@
       "name": "Allosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -46,6 +60,13 @@
       "name": "Anglerfish",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -66,6 +87,12 @@
       "name": "Ankylosaurus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -86,6 +113,11 @@
       "name": "Araneo",
       "birthMethod": "Incubation",
       "dietId": "carrion",
+      "raisingFoodIds": [
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion",
+        "spoiled-meat"
+      ],
       "baseFoodRate": 0.001736,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -106,6 +138,9 @@
       "name": "Archaeopteryx",
       "birthMethod": "Incubation",
       "dietId": "archaeopteryx",
+      "raisingFoodIds": [
+        "chitin"
+      ],
       "baseFoodRate": 0.001302,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -126,6 +161,15 @@
       "name": "Archelon",
       "birthMethod": "Incubation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.007716,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -146,6 +190,13 @@
       "name": "Argentavis",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -166,6 +217,13 @@
       "name": "Armadoggo",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -186,6 +244,11 @@
       "name": "Arthropluera",
       "birthMethod": "Incubation",
       "dietId": "carrion",
+      "raisingFoodIds": [
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion",
+        "spoiled-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -206,6 +269,13 @@
       "name": "Astrocetus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -226,6 +296,13 @@
       "name": "Aureliax",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -246,6 +323,10 @@
       "name": "Baryonyx",
       "birthMethod": "Incubation",
       "dietId": "piscivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "raw-fish-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -266,6 +347,13 @@
       "name": "Basilisk",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -286,6 +374,13 @@
       "name": "Basilosaurus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -306,6 +401,13 @@
       "name": "Beelzebufo",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -326,6 +428,12 @@
       "name": "Bison",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003556,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -346,6 +454,11 @@
       "name": "Bloodstalker",
       "birthMethod": "Incubation",
       "dietId": "bloodstalker",
+      "raisingFoodIds": [
+        "blood-pack",
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -366,6 +479,12 @@
       "name": "Brontosaurus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.007716,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -386,6 +505,15 @@
       "name": "Bulbdog",
       "birthMethod": "Gestation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -406,6 +534,12 @@
       "name": "Burrowbuck",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -426,6 +560,12 @@
       "name": "Carbonemys",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -446,6 +586,13 @@
       "name": "Carcharodontosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 35,
       "extraBabyFoodRateMultiplier": 20,
@@ -466,6 +613,13 @@
       "name": "Carnotaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -486,6 +640,12 @@
       "name": "Castoroides",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -506,6 +666,13 @@
       "name": "Cat",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.0008,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -526,6 +693,13 @@
       "name": "Ceratosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -546,6 +720,12 @@
       "name": "Chalicotherium",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -566,6 +746,13 @@
       "name": "Compy",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -586,6 +773,13 @@
       "name": "Cosmo",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -606,6 +800,13 @@
       "name": "Cryolophosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -626,6 +827,13 @@
       "name": "Daeodon",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 5,
       "extraBabyFoodRateMultiplier": 8,
@@ -650,6 +858,13 @@
       "name": "Deinonychus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -670,6 +885,13 @@
       "name": "Deinosuchus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -690,6 +912,12 @@
       "name": "Deinotherium",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -710,6 +938,11 @@
       "name": "Desmodus",
       "birthMethod": "Gestation",
       "dietId": "bloodstalker",
+      "raisingFoodIds": [
+        "blood-pack",
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -730,6 +963,13 @@
       "name": "Dilophosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -750,6 +990,13 @@
       "name": "Dimetrodon",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001736,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -770,6 +1017,13 @@
       "name": "Dimorphodon",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001302,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -790,6 +1044,13 @@
       "name": "Diplocaulus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -810,6 +1071,12 @@
       "name": "Diplodocus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.007716,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -830,6 +1097,15 @@
       "name": "Direbear",
       "birthMethod": "Gestation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -850,6 +1126,13 @@
       "name": "Direwolf",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -870,6 +1153,12 @@
       "name": "Dodo",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -890,6 +1179,12 @@
       "name": "Doedicurus",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -910,6 +1205,13 @@
       "name": "Dragon (Umbra/Lumina)",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000185,
       "babyFoodRateMultiplier": 13,
       "extraBabyFoodRateMultiplier": 3,
@@ -930,6 +1232,13 @@
       "name": "Drakeling",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001302,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -950,6 +1259,11 @@
       "name": "Dreadmare",
       "birthMethod": "Gestation",
       "dietId": "carrion",
+      "raisingFoodIds": [
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion",
+        "spoiled-meat"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -970,6 +1284,12 @@
       "name": "Dreadnoughtus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 50,
       "extraBabyFoodRateMultiplier": 20,
@@ -990,6 +1310,13 @@
       "name": "Dunkleosteus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1010,6 +1337,15 @@
       "name": "Elderclaw",
       "birthMethod": "CropPlotIncubation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1030,6 +1366,13 @@
       "name": "Electrophorus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1050,6 +1393,12 @@
       "name": "Equus",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1070,6 +1419,13 @@
       "name": "Fasolasuchus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1090,6 +1446,13 @@
       "name": "Featherlight",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1110,6 +1473,12 @@
       "name": "Ferox",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1130,6 +1499,15 @@
       "name": "Gacha",
       "birthMethod": "Gestation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1150,6 +1528,12 @@
       "name": "Gallimimus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1170,6 +1554,12 @@
       "name": "Gasbag",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.002066,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1190,6 +1580,13 @@
       "name": "Gigadesmodus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000185,
       "babyFoodRateMultiplier": 13,
       "extraBabyFoodRateMultiplier": 20,
@@ -1210,6 +1607,13 @@
       "name": "Giganotosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 45,
       "extraBabyFoodRateMultiplier": 20,
@@ -1230,6 +1634,12 @@
       "name": "Gigantopithecus",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.004156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1250,6 +1660,15 @@
       "name": "Gigantoraptor",
       "birthMethod": "Incubation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1270,6 +1689,13 @@
       "name": "Gloon",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1290,6 +1716,13 @@
       "name": "Glowtail",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1310,6 +1743,15 @@
       "name": "Grand Tortugar",
       "birthMethod": "Incubation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1330,6 +1772,13 @@
       "name": "Helicoprion",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1350,6 +1799,13 @@
       "name": "Hesperornis",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001389,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1370,6 +1826,13 @@
       "name": "Hyaenodon",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1390,6 +1853,13 @@
       "name": "Ichthyornis",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1410,6 +1880,13 @@
       "name": "Ichthyosaurus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1430,6 +1907,12 @@
       "name": "Iguanodon",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1450,6 +1933,12 @@
       "name": "Jerboa",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1470,6 +1959,13 @@
       "name": "Kairuku",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001389,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1490,6 +1986,13 @@
       "name": "Kaprosuchus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1510,6 +2013,11 @@
       "name": "Karkinos",
       "birthMethod": "Gestation",
       "dietId": "carrion",
+      "raisingFoodIds": [
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion",
+        "spoiled-meat"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1530,6 +2038,12 @@
       "name": "Kentrosaurus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.005341,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1550,6 +2064,12 @@
       "name": "Lymantria",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1570,6 +2090,12 @@
       "name": "Lystrosaurus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1590,6 +2116,15 @@
       "name": "Maeguana",
       "birthMethod": "Incubation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1610,6 +2145,10 @@
       "name": "Magmasaur",
       "birthMethod": "Incubation",
       "dietId": "magmasaur",
+      "raisingFoodIds": [
+        "ambergris",
+        "sulfur"
+      ],
       "baseFoodRate": 0.000385,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1630,6 +2169,12 @@
       "name": "Mammoth",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.004133,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1650,6 +2195,13 @@
       "name": "Managarmr",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1670,6 +2222,13 @@
       "name": "Manta",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1690,6 +2249,11 @@
       "name": "Mantis",
       "birthMethod": "Incubation",
       "dietId": "carrion",
+      "raisingFoodIds": [
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion",
+        "spoiled-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1710,6 +2274,15 @@
       "name": "Megachelon",
       "birthMethod": "Incubation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1730,6 +2303,13 @@
       "name": "Megalania",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001736,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1750,6 +2330,12 @@
       "name": "Megaloceros",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1770,6 +2356,13 @@
       "name": "Megalodon",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1790,6 +2383,13 @@
       "name": "Megalosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1810,6 +2410,13 @@
       "name": "Megaraptor",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001852,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1830,6 +2437,15 @@
       "name": "Megatherium",
       "birthMethod": "Gestation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1850,6 +2466,12 @@
       "name": "Mesopithecus",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1870,6 +2492,11 @@
       "name": "Microraptor",
       "birthMethod": "Incubation",
       "dietId": "microraptor",
+      "raisingFoodIds": [
+        "cooked-meat",
+        "rare-flower",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1890,6 +2517,12 @@
       "name": "Morellatops",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.005341,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1910,6 +2543,13 @@
       "name": "Mosasaurus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.005,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1930,6 +2570,15 @@
       "name": "Moschops",
       "birthMethod": "Incubation",
       "dietId": "omnivore",
+      "raisingFoodIds": [
+        "berry",
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "mejoberry",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001736,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1950,6 +2599,13 @@
       "name": "Onyc",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002893,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1970,6 +2626,13 @@
       "name": "Ossidon",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -1990,6 +2653,10 @@
       "name": "Otter",
       "birthMethod": "Gestation",
       "dietId": "piscivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "raw-fish-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2010,6 +2677,13 @@
       "name": "Oviraptor",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001302,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2030,6 +2704,12 @@
       "name": "Ovis",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2050,6 +2730,12 @@
       "name": "Pachy",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2070,6 +2756,12 @@
       "name": "Pachyrhinosaurus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2090,6 +2782,13 @@
       "name": "Paleoctopus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2110,6 +2809,12 @@
       "name": "Paraceratherium",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.0035,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2130,6 +2835,12 @@
       "name": "Parasaur",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2150,6 +2861,13 @@
       "name": "Parrot",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001302,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2170,6 +2888,12 @@
       "name": "Pegomastax",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2190,6 +2914,10 @@
       "name": "Pelagornis",
       "birthMethod": "Incubation",
       "dietId": "piscivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "raw-fish-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2210,6 +2938,12 @@
       "name": "Phiomia",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2230,6 +2964,13 @@
       "name": "Plesiosaurus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.003858,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2250,6 +2991,12 @@
       "name": "Procoptodon",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2270,6 +3017,13 @@
       "name": "Pteranodon",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2290,6 +3044,11 @@
       "name": "Pulmonoscorpius",
       "birthMethod": "Incubation",
       "dietId": "carrion",
+      "raisingFoodIds": [
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion",
+        "spoiled-meat"
+      ],
       "baseFoodRate": 0.001929,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2310,6 +3069,13 @@
       "name": "Purlovia",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2330,6 +3096,13 @@
       "name": "Pyromane",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001157,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2350,6 +3123,13 @@
       "name": "Quetzal",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.0035,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2370,6 +3150,13 @@
       "name": "Raptor",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2390,6 +3177,13 @@
       "name": "Ravager",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2410,6 +3204,13 @@
       "name": "Reaper",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2430,6 +3231,13 @@
       "name": "Rex",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2450,6 +3258,9 @@
       "name": "Rock Drake",
       "birthMethod": "Incubation",
       "dietId": "rockdrake",
+      "raisingFoodIds": [
+        "nameless-venom"
+      ],
       "baseFoodRate": 0.000185,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2470,6 +3281,12 @@
       "name": "Roll Rat",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2490,6 +3307,13 @@
       "name": "Sabertooth",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2510,6 +3334,13 @@
       "name": "Sarcosuchus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001578,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2530,6 +3361,13 @@
       "name": "Shastasaurus",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.005,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2550,6 +3388,12 @@
       "name": "Shinehorn",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.000868,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2570,6 +3414,13 @@
       "name": "Snow Owl",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.01,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2590,6 +3441,13 @@
       "name": "Spinosaurus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002066,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2610,6 +3468,12 @@
       "name": "Stegosaurus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.005341,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2630,6 +3494,13 @@
       "name": "Tapejara",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2650,6 +3521,13 @@
       "name": "Terror Bird",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001578,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2670,6 +3548,12 @@
       "name": "Therizinosaurus",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2690,6 +3574,13 @@
       "name": "Thorny Dragon",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2710,6 +3601,13 @@
       "name": "Thylacoleo",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2730,6 +3628,13 @@
       "name": "Tidepup",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.0015,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2750,6 +3655,12 @@
       "name": "Triceratops",
       "birthMethod": "Incubation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2770,6 +3681,13 @@
       "name": "Troodon",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2790,6 +3708,13 @@
       "name": "Tusoteuthis",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.005,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2810,6 +3735,13 @@
       "name": "Veilwyn",
       "birthMethod": "Gestation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2830,6 +3762,13 @@
       "name": "Velonasaur",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2850,6 +3789,11 @@
       "name": "Vulture",
       "birthMethod": "Incubation",
       "dietId": "carrion",
+      "raisingFoodIds": [
+        "raw-fish-meat-carrion",
+        "raw-meat-carrion",
+        "spoiled-meat"
+      ],
       "baseFoodRate": 0.001302,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2870,6 +3814,12 @@
       "name": "Woolly Rhino",
       "birthMethod": "Gestation",
       "dietId": "herbivore",
+      "raisingFoodIds": [
+        "berry",
+        "kibble",
+        "mejoberry",
+        "vegetables"
+      ],
       "baseFoodRate": 0.003156,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2890,6 +3840,10 @@
       "name": "Wyvern",
       "birthMethod": "Incubation",
       "dietId": "wyvern",
+      "raisingFoodIds": [
+        "bison-milk",
+        "wyvern-milk"
+      ],
       "baseFoodRate": 0.000185,
       "babyFoodRateMultiplier": 13,
       "extraBabyFoodRateMultiplier": 30,
@@ -2910,6 +3864,13 @@
       "name": "Xiphactinus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001578,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2930,6 +3891,13 @@
       "name": "Yi Ling",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.001543,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -2950,6 +3918,13 @@
       "name": "Yutyrannus",
       "birthMethod": "Incubation",
       "dietId": "carnivore",
+      "raisingFoodIds": [
+        "cooked-fish-meat",
+        "cooked-meat",
+        "kibble",
+        "raw-fish-meat",
+        "raw-meat"
+      ],
       "baseFoodRate": 0.002314,
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
@@ -3160,116 +4135,55 @@
   "diets": [
     {
       "id": "archaeopteryx",
-      "name": "Archaeopteryx",
-      "foodIds": [
-        "chitin"
-      ]
+      "name": "Archaeopteryx"
     },
     {
       "id": "bloodstalker",
-      "name": "BloodStalker",
-      "foodIds": [
-        "blood-pack",
-        "raw-meat-carrion",
-        "raw-fish-meat-carrion"
-      ]
+      "name": "BloodStalker"
     },
     {
       "id": "carnivore",
-      "name": "Carnivore",
-      "foodIds": [
-        "raw-meat",
-        "cooked-meat",
-        "raw-fish-meat",
-        "cooked-fish-meat",
-        "kibble"
-      ]
+      "name": "Carnivore"
     },
     {
       "id": "carrion",
-      "name": "Carrion ",
-      "foodIds": [
-        "spoiled-meat",
-        "raw-meat-carrion",
-        "raw-fish-meat-carrion"
-      ]
+      "name": "Carrion "
     },
     {
       "id": "crystalwyvern",
-      "name": "CrystalWyvern",
-      "foodIds": [
-        "primal-crystal"
-      ]
+      "name": "CrystalWyvern"
     },
     {
       "id": "herbivore",
-      "name": "Herbivore",
-      "foodIds": [
-        "mejoberry",
-        "berry",
-        "vegetables",
-        "kibble"
-      ]
+      "name": "Herbivore"
     },
     {
       "id": "magmasaur",
-      "name": "Magmasaur",
-      "foodIds": [
-        "ambergris",
-        "sulfur"
-      ]
+      "name": "Magmasaur"
     },
     {
       "id": "microraptor",
-      "name": "Microraptor",
-      "foodIds": [
-        "raw-meat",
-        "cooked-meat",
-        "rare-flower"
-      ]
+      "name": "Microraptor"
     },
     {
       "id": "omnivore",
-      "name": "Omnivore",
-      "foodIds": [
-        "raw-meat",
-        "cooked-meat",
-        "raw-fish-meat",
-        "cooked-fish-meat",
-        "mejoberry",
-        "berry",
-        "kibble"
-      ]
+      "name": "Omnivore"
     },
     {
       "id": "piscivore",
-      "name": "Piscivore",
-      "foodIds": [
-        "raw-fish-meat",
-        "cooked-fish-meat"
-      ]
+      "name": "Piscivore"
     },
     {
       "id": "rockdrake",
-      "name": "RockDrake",
-      "foodIds": [
-        "nameless-venom"
-      ]
+      "name": "RockDrake"
     },
     {
       "id": "sinomacrops",
-      "name": "Sinomacrops",
-      "foodIds": [
-        "chitin"
-      ]
+      "name": "Sinomacrops"
     },
     {
       "id": "wyvern",
-      "name": "Wyvern",
-      "foodIds": [
-        "wyvern-milk",
-        "bison-milk"
-      ]
+      "name": "Wyvern"
     }
   ]
 }

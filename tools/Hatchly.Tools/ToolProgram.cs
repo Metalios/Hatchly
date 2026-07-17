@@ -71,7 +71,10 @@ public static class ToolProgram
     {
         var creatures = await ReadAsync<CreatureFile>(
             Path.Combine(dataDirectory, "creatures.generated.json"));
-        var foods = await ReadAsync<FoodFile>(Path.Combine(dataDirectory, "foods.json"));
+        var foods = await ReadAsync<FoodFile>(
+            Path.Combine(dataDirectory, "foods.generated.json"));
+        var foodOverrides = await ReadAsync<FoodOverrideFile>(
+            Path.Combine(dataDirectory, "food-overrides.json"));
         var diets = await ReadAsync<DietFile>(Path.Combine(dataDirectory, "diets.json"));
         var overrides = await ReadAsync<OverrideFile>(
             Path.Combine(dataDirectory, "creature-overrides.json"));
@@ -86,6 +89,43 @@ public static class ToolProgram
                 $"Override references missing creature '{unknownOverride.CreatureId}'.");
         }
 
+        var generatedFoodIds = foods.Foods
+            .Select(item => item.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var unknownFoodOverride = foodOverrides.Overrides.FirstOrDefault(
+            item => !generatedFoodIds.Contains(item.FoodId));
+        if (unknownFoodOverride is not null)
+        {
+            throw new InvalidDataException(
+                $"Food override references missing food '{unknownFoodOverride.FoodId}'.");
+        }
+
+        foreach (var creatureOverride in overrides.Overrides)
+        {
+            var referencedFoodIds = creatureOverride.IncludeFoodIds
+                .Concat(creatureOverride.ExcludeFoodIds)
+                .Concat(creatureOverride.FoodMultipliers.Keys)
+                .Concat(creatureOverride.WasteMultipliers.Keys)
+                .Distinct(StringComparer.OrdinalIgnoreCase);
+            var unknownFoodId = referencedFoodIds.FirstOrDefault(
+                item => !generatedFoodIds.Contains(item));
+            if (unknownFoodId is not null)
+            {
+                throw new InvalidDataException(
+                    $"Creature override '{creatureOverride.CreatureId}' references missing food '{unknownFoodId}'.");
+            }
+
+            var conflictingFoodId = creatureOverride.IncludeFoodIds.FirstOrDefault(
+                item => creatureOverride.ExcludeFoodIds.Contains(
+                    item,
+                    StringComparer.OrdinalIgnoreCase));
+            if (conflictingFoodId is not null)
+            {
+                throw new InvalidDataException(
+                    $"Creature override '{creatureOverride.CreatureId}' both includes and excludes food '{conflictingFoodId}'.");
+            }
+        }
+
         var catalog = new DataCatalog
         {
             SchemaVersion = 1,
@@ -94,9 +134,9 @@ public static class ToolProgram
                     overrides.Overrides)
                 .OrderBy(item => item.Id, StringComparer.OrdinalIgnoreCase)
                 .ToArray(),
-            Foods = foods.Foods
-                .OrderBy(item => item.Id, StringComparer.OrdinalIgnoreCase)
-                .ToArray(),
+            Foods = DataCatalogMerger.ApplyFoodOverrides(
+                foods.Foods,
+                foodOverrides.Overrides),
             Diets = diets.Diets
                 .OrderBy(item => item.Id, StringComparer.OrdinalIgnoreCase)
                 .ToArray()
@@ -148,6 +188,11 @@ public static class ToolProgram
     private sealed record FoodFile
     {
         public required IReadOnlyList<FoodDefinition> Foods { get; init; }
+    }
+
+    private sealed record FoodOverrideFile
+    {
+        public required IReadOnlyList<FoodOverride> Overrides { get; init; }
     }
 
     private sealed record DietFile

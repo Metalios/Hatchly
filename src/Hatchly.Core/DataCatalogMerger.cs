@@ -22,10 +22,51 @@ public static class DataCatalogMerger
                 {
                     BirthMethod = value.BirthMethod ?? creature.BirthMethod,
                     SpecialBehavior = value.SpecialBehavior ?? creature.SpecialBehavior,
-                    JuvenileThreshold = value.JuvenileThreshold ?? creature.JuvenileThreshold
+                    JuvenileThreshold = value.JuvenileThreshold ?? creature.JuvenileThreshold,
+                    RaisingFoodIds = MergeFoodIds(
+                        creature.RaisingFoodIds,
+                        value.IncludeFoodIds,
+                        value.ExcludeFoodIds),
+                    FoodMultipliers = MergeMultipliers(
+                        creature.FoodMultipliers,
+                        value.FoodMultipliers),
+                    WasteMultipliers = MergeMultipliers(
+                        creature.WasteMultipliers,
+                        value.WasteMultipliers)
                 };
             })
             .OrderBy(creature => creature.Name, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    public static IReadOnlyList<FoodDefinition> ApplyFoodOverrides(
+        IEnumerable<FoodDefinition> foods,
+        IEnumerable<FoodOverride> overrides)
+    {
+        var byId = overrides.ToDictionary(
+            item => item.FoodId,
+            StringComparer.OrdinalIgnoreCase);
+
+        return foods
+            .Where(food => !byId.TryGetValue(food.Id, out var value) || !value.Disabled)
+            .Select(food =>
+            {
+                if (!byId.TryGetValue(food.Id, out var value))
+                {
+                    return food;
+                }
+
+                return food with
+                {
+                    Name = value.Name ?? food.Name,
+                    FoodValue = value.FoodValue ?? food.FoodValue,
+                    StackSize = value.StackSize ?? food.StackSize,
+                    SpoilSeconds = value.SpoilSeconds ?? food.SpoilSeconds,
+                    ItemWeight = value.ItemWeight ?? food.ItemWeight,
+                    Waste = value.Waste ?? food.Waste
+                };
+            })
+            .OrderBy(food => food.Id, StringComparer.OrdinalIgnoreCase)
             .ToArray();
     }
 
@@ -41,24 +82,6 @@ public static class DataCatalogMerger
         var dietIds = catalog.Diets
             .Select(item => item.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-        foreach (var diet in catalog.Diets)
-        {
-            if (diet.FoodIds.Count == 0)
-            {
-                throw new InvalidDataException(
-                    $"Diet '{diet.Id}' does not contain any foods.");
-            }
-
-            foreach (var foodId in diet.FoodIds)
-            {
-                if (!foodIds.Contains(foodId))
-                {
-                    throw new InvalidDataException(
-                        $"Diet '{diet.Id}' references missing food '{foodId}'.");
-                }
-            }
-        }
 
         foreach (var food in catalog.Foods)
         {
@@ -79,6 +102,22 @@ public static class DataCatalogMerger
             {
                 throw new InvalidDataException(
                     $"Creature '{creature.Id}' references missing diet '{creature.DietId}'.");
+            }
+
+            if (creature.RaisingFoodIds.Count == 0)
+            {
+                throw new InvalidDataException(
+                    $"Creature '{creature.Id}' does not contain any raising foods.");
+            }
+
+            EnsureUnique(creature.RaisingFoodIds, $"raising food on creature '{creature.Id}'");
+            foreach (var foodId in creature.RaisingFoodIds)
+            {
+                if (!foodIds.Contains(foodId))
+                {
+                    throw new InvalidDataException(
+                        $"Creature '{creature.Id}' references missing raising food '{foodId}'.");
+                }
             }
 
             if (creature.BaseFoodRate <= 0
@@ -117,7 +156,10 @@ public static class DataCatalogMerger
 
             foreach (var multiplier in creature.FoodMultipliers)
             {
-                if (!foodIds.Contains(multiplier.Key) || multiplier.Value <= 0)
+                if (!creature.RaisingFoodIds.Contains(
+                        multiplier.Key,
+                        StringComparer.OrdinalIgnoreCase)
+                    || multiplier.Value <= 0)
                 {
                     throw new InvalidDataException(
                         $"Creature '{creature.Id}' has invalid food multiplier '{multiplier.Key}'.");
@@ -126,13 +168,43 @@ public static class DataCatalogMerger
 
             foreach (var multiplier in creature.WasteMultipliers)
             {
-                if (!foodIds.Contains(multiplier.Key) || multiplier.Value < 0)
+                if (!creature.RaisingFoodIds.Contains(
+                        multiplier.Key,
+                        StringComparer.OrdinalIgnoreCase)
+                    || multiplier.Value < 0)
                 {
                     throw new InvalidDataException(
                         $"Creature '{creature.Id}' has invalid waste multiplier '{multiplier.Key}'.");
                 }
             }
         }
+    }
+
+    private static IReadOnlyList<string> MergeFoodIds(
+        IEnumerable<string> source,
+        IEnumerable<string> included,
+        IEnumerable<string> excluded)
+    {
+        var excludedIds = excluded.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return source
+            .Concat(included)
+            .Where(id => !excludedIds.Contains(id))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(id => id, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    private static Dictionary<string, double> MergeMultipliers(
+        IReadOnlyDictionary<string, double> source,
+        IReadOnlyDictionary<string, double> overrides)
+    {
+        var result = new Dictionary<string, double>(source, StringComparer.OrdinalIgnoreCase);
+        foreach (var (key, value) in overrides)
+        {
+            result[key] = value;
+        }
+
+        return result;
     }
 
     private static void EnsureUnique(IEnumerable<string> values, string label)

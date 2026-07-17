@@ -1,0 +1,4 @@
+src/Hatchly.App/wwwroot/data/*.json text eol=lf
+devkit/*.py text eol=lf
+devkit/*.json text eol=lf
+devkit/tests/*.py text eol=lf

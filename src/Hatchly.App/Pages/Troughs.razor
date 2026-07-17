@@ -454,9 +454,6 @@ else
             {
                 Creatures = creatures,
                 Foods = foods,
-                Diets = Catalog.Catalog.Diets.ToDictionary(
-                    item => item.Id,
-                    StringComparer.OrdinalIgnoreCase),
                 Rates = Rates.CurrentRates,
                 ContainerType = selectedTrough,
                 ContainerCount = ContainerCount,

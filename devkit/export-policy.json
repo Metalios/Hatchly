@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "officialRoots": [
+    "/Game/PrimalEarth",
+    "/Game/ScorchedEarth",
+    "/Game/Aberration",
+    "/Game/Extinction",
+    "/Game/Genesis",
+    "/Game/Genesis2",
+    "/Game/LostIsland",
+    "/Game/Fjordur",
+    "/Game/ASA"
+  ],
+  "excludedPathTokens": [
+    "/mods/",
+    "/developers/",
+    "/test/",
+    "/testing/",
+    "/deprecated/",
+    "_event_",
+    "_boss_"
+  ],
+  "stableIdAliases": {},
+  "forceIncludeIds": [
+    "reaper",
+    "rhyniognatha"
+  ],
+  "forceExcludeIds": [],
+  "specialReproductionIds": [
+    "reaper",
+    "rhyniognatha"
+  ],
+  "foodIncludes": {
+    "bloodstalker": [
+      "blood-pack"
+    ],
+    "desmodus": [
+      "blood-pack"
+    ],
+    "magmasaur": [
+      "ambergris",
+      "sulfur"
+    ],
+    "reaper": [
+      "raw-meat"
+    ],
+    "rock-drake": [
+      "nameless-venom"
+    ],
+    "wyvern": [
+      "bison-milk",
+      "wyvern-milk"
+    ]
+  },
+  "foodExcludes": {}
+}

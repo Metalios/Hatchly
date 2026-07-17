@@ -139,11 +139,6 @@ public sealed class TroughCalculator
 
         foreach (var row in request.Creatures)
         {
-            if (!request.Diets.TryGetValue(row.Creature.DietId, out var diet))
-            {
-                continue;
-            }
-
             var quantity = Math.Clamp(row.Quantity, 0, 500);
             for (var i = 0; i < quantity; i++)
             {
@@ -166,7 +161,8 @@ public sealed class TroughCalculator
                 {
                     Definition = row.Creature,
                     DietId = row.Creature.DietId,
-                    AllowedFoodIds = diet.FoodIds.ToHashSet(StringComparer.OrdinalIgnoreCase),
+                    AllowedFoodIds = row.Creature.RaisingFoodIds
+                        .ToHashSet(StringComparer.OrdinalIgnoreCase),
                     FoodRate = maxFoodRate - decay * maturity * maturationSeconds,
                     MinimumFoodRate = minimumFoodRate,
                     DecayPerSecond = decay

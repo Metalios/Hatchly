@@ -87,6 +87,7 @@ public sealed record CreatureDefinition
     public required string Name { get; init; }
     public required BirthMethod BirthMethod { get; init; }
     public required string DietId { get; init; }
+    public required IReadOnlyList<string> RaisingFoodIds { get; init; }
     public required double BaseFoodRate { get; init; }
     public required double BabyFoodRateMultiplier { get; init; }
     public required double ExtraBabyFoodRateMultiplier { get; init; }
@@ -124,7 +125,18 @@ public sealed record DietDefinition
 {
     public required string Id { get; init; }
     public required string Name { get; init; }
-    public required IReadOnlyList<string> FoodIds { get; init; }
+}
+
+public sealed record FoodOverride
+{
+    public required string FoodId { get; init; }
+    public bool Disabled { get; init; }
+    public string? Name { get; init; }
+    public double? FoodValue { get; init; }
+    public int? StackSize { get; init; }
+    public double? SpoilSeconds { get; init; }
+    public double? ItemWeight { get; init; }
+    public double? Waste { get; init; }
 }
 
 public sealed record CreatureOverride
@@ -133,6 +145,10 @@ public sealed record CreatureOverride
     public BirthMethod? BirthMethod { get; init; }
     public string? SpecialBehavior { get; init; }
     public double? JuvenileThreshold { get; init; }
+    public IReadOnlyList<string> IncludeFoodIds { get; init; } = [];
+    public IReadOnlyList<string> ExcludeFoodIds { get; init; } = [];
+    public Dictionary<string, double> FoodMultipliers { get; init; } = [];
+    public Dictionary<string, double> WasteMultipliers { get; init; } = [];
 }
 
 public sealed record DataCatalog
@@ -223,7 +239,6 @@ public sealed record TroughRequest
 {
     public required IReadOnlyList<TroughCreatureRequest> Creatures { get; init; }
     public required IReadOnlyList<TroughFoodRequest> Foods { get; init; }
-    public required IReadOnlyDictionary<string, DietDefinition> Diets { get; init; }
     public required ServerRates Rates { get; init; }
     public required TroughType ContainerType { get; init; }
     public int ContainerCount { get; init; } = 1;

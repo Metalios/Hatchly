@@ -1,37 +1,66 @@
 # ASA DevKit export
 
-`ExportHatchlyCreatures.py` is an Unreal Editor Python script. It scans creature
-character, status-component, and egg assets, then writes deterministic records
-sorted by stable creature ID.
+Hatchly's exporter has two layers:
 
-Set `HATCHLY_EXPORT_PATH` to the repository's
-`src/Hatchly.App/wwwroot/data/creatures.generated.json` before running it. The
-script also writes `creature-export-report.json` containing new, changed,
-missing, and suspicious records. It never reads or writes
-`creature-overrides.json`.
+- `ExportHatchlyData.py` is the Unreal adapter. It uses the Asset Registry and
+  reflected editor properties to discover official live creatures, reproduction
+  paths, accepted foods, and source metadata.
+- `hatchly_export_core.py` is Unreal-independent. It applies policy, validates
+  records, detects removals, and writes deterministic reviewable JSON.
 
-Property names in ASA assets can vary between engine/DevKit releases. The script
-uses a documented list of candidate property names and refuses to emit records
-that lack required age, food-rate, birth, or adult-weight values. Suspicious
-records remain visible in the report instead of being silently guessed.
+`ExportHatchlyCreatures.py` remains as a compatibility entry point and runs the
+new adapter.
 
-After export, run:
+## 1. Probe an ASA DevKit release
+
+Set these environment variables in the editor process, then run the script from
+the Unreal Python console:
+
+```text
+HATCHLY_REPO_ROOT=I:/Repos/metalios/HatchlyApp
+HATCHLY_EXPORT_MODE=probe
+py "I:/Repos/metalios/HatchlyApp/devkit/ExportHatchlyData.py"
+```
+
+Probe mode does not modify generated creature or food data. It writes
+`property-probe.json`, records the candidate property selected for each required
+field, and fails if the current DevKit cannot resolve a required binding.
+Property binding changes require explicit review before export.
+
+## 2. Export generated data
+
+Change `HATCHLY_EXPORT_MODE` to `export` and run the same script. Successful
+exports atomically write:
+
+- `creatures.generated.json`
+- `foods.generated.json`
+- `devkit-export-report.json`
+
+Generated application files contain no timestamps or source paths and remain
+byte-identical when the underlying DevKit data has not changed. Version, source
+assets, property matches, changes, missing records, and ambiguities are kept in
+the report. A previously exported creature cannot disappear unless its stable ID
+is explicitly excluded in `export-policy.json`.
+
+The exporter never writes `export-policy.json`, `creature-overrides.json`, or
+`food-overrides.json`. Exceptional native Blueprint behavior belongs in those
+reviewed manual files.
+
+## 3. Validate and review
+
+Run the repository wrapper after every export:
 
 ```powershell
-dotnet run --project tools/Hatchly.Tools -- validate-data --data-dir src/Hatchly.App/wwwroot/data
-dotnet run --project tools/Hatchly.Tools -- merge-data --data-dir src/Hatchly.App/wwwroot/data --output src/Hatchly.App/wwwroot/data/catalog.json
-dotnet test Hatchly.slnx
+./scripts/Validate-DevKitExport.ps1
 ```
+
+It runs Python fixtures, catalog validation and merge, all .NET tests, checks the
+semantic export report, and checks the resulting diff for whitespace errors.
 
 ## Editor Utility Blueprint fallback
 
-If an ASA DevKit release disables Python editor scripting, create an Editor
-Utility Blueprint that performs the same operations:
-
-1. Query Asset Registry paths under `/Game/PrimalEarth/Dinos` and `/Game/ASA`.
-2. Match character assets with their status component and fertilized egg asset.
-3. Read the candidate properties listed in `PROPERTY_NAMES` in the Python file.
-4. Build the same camel-case JSON record contract.
-5. Sort records by `id`, write UTF-8 JSON, and produce the same review report.
-
-The Blueprint output must pass `Hatchly.Tools validate-data` before review.
+If an ASA DevKit release disables Python editor scripting, an Editor Utility
+Blueprint may supply the Unreal-adapter records. It must use the same property
+candidates and policy, write the identical JSON contracts, and pass the same
+validation wrapper. The Python extraction core remains the authority for
+filtering, deterministic output, disappearance checks, and reporting.

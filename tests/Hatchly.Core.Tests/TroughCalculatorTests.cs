@@ -22,15 +22,6 @@ public sealed class TroughCalculatorTests
             [
                 new TroughFoodRequest(food, 2)
             ],
-            Diets = new Dictionary<string, DietDefinition>
-            {
-                ["diet"] = new()
-                {
-                    Id = "diet",
-                    Name = "Test Diet",
-                    FoodIds = ["food"]
-                }
-            },
             Rates = new ServerRates(1, 1, 1),
             ContainerType = TroughType.Normal,
             MaximumSimulation = TimeSpan.FromSeconds(500)
@@ -59,15 +50,6 @@ public sealed class TroughCalculatorTests
             {
                 Creatures = [new TroughCreatureRequest(creature, 10, 1)],
                 Foods = [new TroughFoodRequest(food, 1)],
-                Diets = new Dictionary<string, DietDefinition>
-                {
-                    ["diet"] = new()
-                    {
-                        Id = "diet",
-                        Name = "Test Diet",
-                        FoodIds = ["food"]
-                    }
-                },
                 Rates = new ServerRates(1, 1, 1),
                 ContainerType = type,
                 MaximumSimulation = TimeSpan.FromSeconds(30_000)
@@ -88,7 +70,6 @@ public sealed class TroughCalculatorTests
         {
             Creatures = [],
             Foods = [new TroughFoodRequest(food, 90)],
-            Diets = new Dictionary<string, DietDefinition>(),
             Rates = new ServerRates(1, 1, 1),
             ContainerType = TroughType.Normal,
             ContainerCount = 2
@@ -109,7 +90,6 @@ public sealed class TroughCalculatorTests
         {
             Creatures = [],
             Foods = [new TroughFoodRequest(food, 61)],
-            Diets = new Dictionary<string, DietDefinition>(),
             Rates = new ServerRates(1, 1, 1),
             ContainerType = TroughType.Normal
         };
@@ -126,12 +106,14 @@ public sealed class TroughCalculatorTests
     {
         var carnivore = RaiseCalculatorTests.Creature(baseFoodRate: .2) with
         {
-            DietId = "carnivore"
+            DietId = "carnivore",
+            RaisingFoodIds = ["meat"]
         };
         var herbivore = RaiseCalculatorTests.Creature(baseFoodRate: .2) with
         {
             Id = "herbivore",
-            DietId = "herbivore"
+            DietId = "herbivore",
+            RaisingFoodIds = ["berry"]
         };
         var meat = RaiseCalculatorTests.Food(
             foodValue: 10,
@@ -162,21 +144,6 @@ public sealed class TroughCalculatorTests
                 new TroughFoodRequest(meat, 1),
                 new TroughFoodRequest(berry, 2)
             ],
-            Diets = new Dictionary<string, DietDefinition>
-            {
-                ["carnivore"] = new()
-                {
-                    Id = "carnivore",
-                    Name = "Carnivore",
-                    FoodIds = ["meat"]
-                },
-                ["herbivore"] = new()
-                {
-                    Id = "herbivore",
-                    Name = "Herbivore",
-                    FoodIds = ["berry"]
-                }
-            },
             Rates = new ServerRates(1, 1, 1),
             ContainerType = TroughType.Normal,
             MaximumSimulation = TimeSpan.FromSeconds(500)
