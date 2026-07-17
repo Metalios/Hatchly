@@ -41,16 +41,6 @@
         @Body
     </main>
 
-    <footer class="site-footer">
-        <p>&copy; @DateTimeOffset.Now.Year Jason Thompson. All rights reserved.</p>
-        <p>
-            Hatchly is an independent fan-made tool and is not affiliated with,
-            endorsed by, or sponsored by Studio Wildcard. ARK: Survival Ascended,
-            ARK, Studio Wildcard, and related names, logos, and trademarks are
-            property of their respective owners.
-        </p>
-    </footer>
-
     <nav class="mobile-nav" aria-label="Primary navigation">
         <NavLink href="" Match="NavLinkMatch.All">
             <span class="mobile-nav-icon" aria-hidden="true">◉</span>
@@ -62,6 +52,16 @@
         </NavLink>
     </nav>
 </div>
+
+<footer class="site-footer">
+    <p>&copy; @DateTimeOffset.Now.Year Jason Thompson. All rights reserved.</p>
+    <p>
+        Hatchly is an independent fan-made tool and is not affiliated with,
+        endorsed by, or sponsored by Studio Wildcard. ARK: Survival Ascended,
+        ARK, Studio Wildcard, and related names, logos, and trademarks are
+        property of their respective owners.
+    </p>
+</footer>
 
 @code {
     protected override async Task OnInitializedAsync()

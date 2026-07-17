@@ -97,7 +97,7 @@ p {
 .app-frame {
     width: min(1400px, calc(100% - 48px));
     min-height: calc(100vh - 96px);
-    margin: 48px auto;
+    margin: 48px auto 18px;
     overflow: clip;
     border: 1px solid #52616b;
     border-radius: 18px;
@@ -216,15 +216,17 @@ p {
 
 .site-footer {
     display: grid;
-    gap: .25rem;
-    padding: 0 28px 28px;
-    color: var(--muted);
-    font-size: .72rem;
+    width: min(1040px, calc(100% - 48px));
+    gap: .35rem;
+    margin: 0 auto 42px;
+    color: #c8d0d7;
+    font-size: .78rem;
+    line-height: 1.5;
     text-align: center;
 }
 
 .site-footer p {
-    max-width: 920px;
+    max-width: 980px;
     margin: 0 auto;
     color: inherit;
 }
@@ -1447,7 +1449,7 @@ dd {
 @media (max-width: 1120px) {
     .app-frame {
         width: calc(100% - 24px);
-        margin: 12px auto;
+        margin: 12px auto 16px;
     }
 
     .app-header {
@@ -1571,8 +1573,10 @@ dd {
     }
 
     .site-footer {
-        padding: 4px 16px 92px;
-        font-size: .68rem;
+        width: calc(100% - 32px);
+        margin: 0 auto;
+        padding: 0 0 92px;
+        font-size: .72rem;
         text-align: left;
     }
 
