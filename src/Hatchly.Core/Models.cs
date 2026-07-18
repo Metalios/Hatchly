@@ -218,6 +218,7 @@ public sealed record FeedingCapacityResult
     public required int TargetAvailableItemQuantity { get; init; }
     public required TimeSpan TimeUntilLastFullInventory { get; init; }
     public required double LastFullInventoryMaturityPercent { get; init; }
+    public required int LastFullInventoryItemQuantity { get; init; }
     public required int FoodConsumedBeforeJuvenile { get; init; }
     public required int FoodRequiredToFillCurrentCapacity { get; init; }
 }

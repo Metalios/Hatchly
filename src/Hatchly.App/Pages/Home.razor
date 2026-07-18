@@ -438,7 +438,7 @@ else
                                     <dd>@FormatDuration(DesiredBuffer)</dd>
                                 </div>
                                 <div>
-                                    <dt>Lasts until</dt>
+                                    <dt>If filled now, lasts until</dt>
                                     <dd>@plan.Feeding.IfFilledUntil.ToString("h:mm tt")</dd>
                                 </div>
                                 <div>
@@ -452,6 +452,18 @@ else
                                 <div>
                                     <dt>Full quantity at target</dt>
                                     <dd>@plan.Feeding.TargetAvailableItemQuantity @CurrentFood.Name</dd>
+                                </div>
+                                <div>
+                                    <dt>Hand-feed/refill for</dt>
+                                    <dd>@FormatDuration(plan.Feeding.TimeUntilLastFullInventory)</dd>
+                                </div>
+                                <div>
+                                    <dt>Final baby fill maturity</dt>
+                                    <dd>@FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</dd>
+                                </div>
+                                <div>
+                                    <dt>Final baby fill quantity</dt>
+                                    <dd>@plan.Feeding.LastFullInventoryItemQuantity @CurrentFood.Name</dd>
                                 </div>
                                 <div>
                                     <dt>Consumed before juvenile</dt>
@@ -514,7 +526,7 @@ else
                             <span class="action-icon amber" aria-hidden="true">◷</span>
                             <div>
                                 <strong>Fill with @plan.Feeding.FullItemQuantity @CurrentFood.Name</strong>
-                                <span>It lasts until @plan.Feeding.IfFilledUntil.ToString("h:mm tt")</span>
+                                <span>If filled now, it lasts until @plan.Feeding.IfFilledUntil.ToString("h:mm tt")</span>
                             </div>
                         </div>
 
@@ -542,8 +554,8 @@ else
                         <div class="action-item">
                             <span class="action-icon teal" aria-hidden="true">▰</span>
                             <div>
-                                <strong>Juvenile begins at @FormatPercent(JuvenileThresholdPercent)</strong>
-                                <span>Last full baby inventory at @FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</span>
+                                <strong>@FinalBabyFillTitle</strong>
+                                <span>@FinalBabyFillText</span>
                             </div>
                         </div>
                     }
@@ -838,6 +850,20 @@ else
         FeedingBufferStatus.TargetAvailableLater =>
             $"Reach it in {FormatDuration(plan.Feeding.TimeUntilTargetAvailable)} at {FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)} maturity.",
         _ => ""
+    };
+
+    private string FinalBabyFillTitle => plan?.Feeding.Status switch
+    {
+        FeedingBufferStatus.CarriesToJuvenile => "One full baby inventory reaches juvenile now",
+        _ => $"Hand-feed/refill for {FormatDuration(plan!.Feeding.TimeUntilLastFullInventory)}"
+    };
+
+    private string FinalBabyFillText => plan?.Feeding.Status switch
+    {
+        FeedingBufferStatus.CarriesToJuvenile =>
+            $"A full baby inventory of {plan!.Feeding.FullItemQuantity} {CurrentFood.Name} carries to {FormatPercent(JuvenileThresholdPercent)}.",
+        _ =>
+            $"Then fill at {FormatPercent(plan!.Feeding.LastFullInventoryMaturityPercent)} with {plan.Feeding.LastFullInventoryItemQuantity} {CurrentFood.Name} to carry to juvenile."
     };
 
     protected override async Task OnInitializedAsync()

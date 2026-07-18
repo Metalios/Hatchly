@@ -144,6 +144,7 @@ public sealed class RaiseCalculator
                 TargetAvailableItemQuantity = 0,
                 TimeUntilLastFullInventory = TimeSpan.Zero,
                 LastFullInventoryMaturityPercent = maturity * 100,
+                LastFullInventoryItemQuantity = 0,
                 FoodConsumedBeforeJuvenile = 0,
                 FoodRequiredToFillCurrentCapacity = 0
             };
@@ -206,7 +207,7 @@ public sealed class RaiseCalculator
                 CoverageAt);
         }
 
-        var (lastFullMaturity, _) = FindEarliestMaturity(
+        var (lastFullMaturity, lastFullCoverage) = FindEarliestMaturity(
             maturity,
             threshold,
             candidate =>
@@ -235,6 +236,7 @@ public sealed class RaiseCalculator
             TimeUntilLastFullInventory = TimeSpan.FromSeconds(
                 Math.Max(0, (lastFullMaturity - maturity) * maturationSeconds)),
             LastFullInventoryMaturityPercent = lastFullMaturity * 100,
+            LastFullInventoryItemQuantity = lastFullCoverage.InitialItems,
             FoodConsumedBeforeJuvenile = ItemsForRemainingBaby(
                 creature,
                 food,

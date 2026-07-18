@@ -143,6 +143,10 @@ public sealed class RaiseCalculatorTests
         Assert.True(plan.Feeding.TimeUntilTargetAvailable > TimeSpan.Zero);
         Assert.True(plan.Feeding.TargetAvailableMaturityPercent > 1);
         Assert.True(plan.Feeding.TargetAvailableItemQuantity > 1);
+        Assert.True(plan.Feeding.TimeUntilLastFullInventory > TimeSpan.Zero);
+        Assert.True(plan.Feeding.LastFullInventoryMaturityPercent > 1);
+        Assert.True(plan.Feeding.LastFullInventoryMaturityPercent <= 10);
+        Assert.True(plan.Feeding.LastFullInventoryItemQuantity >= plan.Feeding.TargetAvailableItemQuantity);
     }
 
     [Fact]
@@ -161,6 +165,8 @@ public sealed class RaiseCalculatorTests
             plan.Lifecycle.TimeToJuvenile.TotalSeconds,
             plan.Feeding.FullInventoryDuration.TotalSeconds,
             0);
+        Assert.Equal(TimeSpan.Zero, plan.Feeding.TimeUntilLastFullInventory);
+        Assert.Equal(plan.Feeding.FullItemQuantity, plan.Feeding.LastFullInventoryItemQuantity);
     }
 
     [Fact]
