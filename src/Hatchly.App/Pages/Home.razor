@@ -362,9 +362,9 @@ else
                                 <small>Remaining maturation</small>
                             </div>
                             <div>
-                                <span>Full inventory</span>
-                                <strong>@plan.Feeding.FullItemQuantity</strong>
-                                <small>@CurrentFood.Name · @FormatDuration(plan.Feeding.FullInventoryDuration)</small>
+                                <span>Current buffer</span>
+                                <strong>@FormatDuration(plan.Feeding.FullInventoryDuration)</strong>
+                                <small>@plan.Feeding.FullItemQuantity @CurrentFood.Name if full now</small>
                             </div>
                         }
                     </div>
@@ -430,7 +430,7 @@ else
                     }
                     else
                     {
-                        <details class="feeding-details">
+                        <details class="feeding-details" open>
                             <summary>Feeding capacity details</summary>
                             <dl class="feeding-facts">
                                 <div>
@@ -838,17 +838,17 @@ else
     {
         FeedingBufferStatus.CarriesToJuvenile => "Full inventory carries this baby to juvenile",
         FeedingBufferStatus.TargetMet => $"Full inventory covers your {FormatDuration(DesiredBuffer)} target",
-        _ => $"Your {FormatDuration(DesiredBuffer)} target is available later"
+        _ => $"{FormatDuration(DesiredBuffer)} target available in {FormatDuration(plan!.Feeding.TimeUntilTargetAvailable)}"
     };
 
     private string FeedingSupportingText => plan?.Feeding.Status switch
     {
         FeedingBufferStatus.CarriesToJuvenile =>
-            $"The baby reaches juvenile in {FormatDuration(plan.Lifecycle.TimeToJuvenile)}.",
+            $"Current full-inventory buffer reaches juvenile in {FormatDuration(plan.Lifecycle.TimeToJuvenile)}.",
         FeedingBufferStatus.TargetMet =>
-            $"A full inventory lasts {FormatDuration(plan.Feeding.FullInventoryDuration)}.",
+            $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}.",
         FeedingBufferStatus.TargetAvailableLater =>
-            $"Reach it in {FormatDuration(plan.Feeding.TimeUntilTargetAvailable)} at {FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)} maturity.",
+            $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}; target at {FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)} maturity.",
         _ => ""
     };
 
