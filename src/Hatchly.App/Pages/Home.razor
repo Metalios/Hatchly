@@ -454,15 +454,15 @@ else
                                     <dd>@plan.Feeding.TargetAvailableItemQuantity @CurrentFood.Name</dd>
                                 </div>
                                 <div>
-                                    <dt>Hand-feed/refill for</dt>
+                                    <dt>Hand feed until</dt>
                                     <dd>@FormatDuration(plan.Feeding.TimeUntilLastFullInventory)</dd>
                                 </div>
                                 <div>
-                                    <dt>Final baby fill maturity</dt>
+                                    <dt>Hand feed until maturity</dt>
                                     <dd>@FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</dd>
                                 </div>
                                 <div>
-                                    <dt>Final baby fill quantity</dt>
+                                    <dt>Final refill amount</dt>
                                     <dd>@plan.Feeding.LastFullInventoryItemQuantity @CurrentFood.Name</dd>
                                 </div>
                                 <div>
@@ -545,7 +545,7 @@ else
                             <div class="action-item">
                                 <span class="action-icon green" aria-hidden="true">✓</span>
                                 <div>
-                                    <strong>@FormatDuration(DesiredBuffer) target covered</strong>
+                                    <strong>@FormatDuration(DesiredBuffer) target buffer covered</strong>
                                     <span>@FeedingSupportingText</span>
                                 </div>
                             </div>
@@ -837,8 +837,8 @@ else
     private string FeedingHeadline => plan?.Feeding.Status switch
     {
         FeedingBufferStatus.CarriesToJuvenile => "Full inventory carries this baby to juvenile",
-        FeedingBufferStatus.TargetMet => $"Full inventory covers your {FormatDuration(DesiredBuffer)} target",
-        _ => $"{FormatDuration(DesiredBuffer)} target available in {FormatDuration(plan!.Feeding.TimeUntilTargetAvailable)}"
+        FeedingBufferStatus.TargetMet => $"Full inventory covers your {FormatDuration(DesiredBuffer)} target buffer",
+        _ => $"{FormatDuration(DesiredBuffer)} target buffer available in {FormatDuration(plan!.Feeding.TimeUntilTargetAvailable)}"
     };
 
     private string FeedingSupportingText => plan?.Feeding.Status switch
@@ -848,14 +848,14 @@ else
         FeedingBufferStatus.TargetMet =>
             $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}.",
         FeedingBufferStatus.TargetAvailableLater =>
-            $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}; target at {FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)} maturity.",
+            $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}; target buffer at {FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)} maturity.",
         _ => ""
     };
 
     private string FinalBabyFillTitle => plan?.Feeding.Status switch
     {
         FeedingBufferStatus.CarriesToJuvenile => "One full baby inventory reaches juvenile now",
-        _ => $"Hand-feed/refill for {FormatDuration(plan!.Feeding.TimeUntilLastFullInventory)}"
+        _ => $"Hand feed until {FormatPercent(plan!.Feeding.LastFullInventoryMaturityPercent)}"
     };
 
     private string FinalBabyFillText => plan?.Feeding.Status switch
