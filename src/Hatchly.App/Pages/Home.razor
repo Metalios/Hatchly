@@ -441,25 +441,28 @@ else
                                     <dt>If filled now, lasts until</dt>
                                     <dd>@plan.Feeding.IfFilledUntil.ToString("h:mm tt")</dd>
                                 </div>
+                                @if (plan.Feeding.Status == FeedingBufferStatus.TargetAvailableLater)
+                                {
+                                    <div>
+                                        <dt>Time to desired buffer</dt>
+                                        <dd>@FormatDuration(plan.Feeding.TimeUntilTargetAvailable)</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Desired buffer at</dt>
+                                        <dd>@FormatPercent(plan.Feeding.TargetAvailableMaturityPercent) maturity</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Fill amount then</dt>
+                                        <dd>@plan.Feeding.TargetAvailableItemQuantity @CurrentFood.Name</dd>
+                                    </div>
+                                }
                                 <div>
-                                    <dt>Target possible in</dt>
-                                    <dd>@FormatDuration(plan.Feeding.TimeUntilTargetAvailable)</dd>
-                                </div>
-                                <div>
-                                    <dt>Target maturity</dt>
-                                    <dd>@FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)</dd>
-                                </div>
-                                <div>
-                                    <dt>Full quantity at target</dt>
-                                    <dd>@plan.Feeding.TargetAvailableItemQuantity @CurrentFood.Name</dd>
-                                </div>
-                                <div>
-                                    <dt>Hand feed until</dt>
+                                    <dt>Hand feed for</dt>
                                     <dd>@FormatDuration(plan.Feeding.TimeUntilLastFullInventory)</dd>
                                 </div>
                                 <div>
-                                    <dt>Hand feed until maturity</dt>
-                                    <dd>@FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent)</dd>
+                                    <dt>Hand feed until</dt>
+                                    <dd>@FormatPercent(plan.Feeding.LastFullInventoryMaturityPercent) maturity</dd>
                                 </div>
                                 <div>
                                     <dt>Final refill amount</dt>
@@ -830,15 +833,15 @@ else
     private string FeedingEyebrow => plan?.Feeding.Status switch
     {
         FeedingBufferStatus.CarriesToJuvenile => "Trough-ready plan",
-        FeedingBufferStatus.TargetMet => "Buffer target met",
+        FeedingBufferStatus.TargetMet => "Desired buffer met",
         _ => "Buffer grows with maturity"
     };
 
     private string FeedingHeadline => plan?.Feeding.Status switch
     {
         FeedingBufferStatus.CarriesToJuvenile => "Full inventory carries this baby to juvenile",
-        FeedingBufferStatus.TargetMet => $"Full inventory covers your {FormatDuration(DesiredBuffer)} target buffer",
-        _ => $"{FormatDuration(DesiredBuffer)} target buffer available in {FormatDuration(plan!.Feeding.TimeUntilTargetAvailable)}"
+        FeedingBufferStatus.TargetMet => $"Full inventory covers your {FormatDuration(DesiredBuffer)} desired buffer",
+        _ => $"Desired buffer in {FormatDuration(plan!.Feeding.TimeUntilTargetAvailable)}"
     };
 
     private string FeedingSupportingText => plan?.Feeding.Status switch
@@ -848,7 +851,7 @@ else
         FeedingBufferStatus.TargetMet =>
             $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}.",
         FeedingBufferStatus.TargetAvailableLater =>
-            $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}; target buffer at {FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)} maturity.",
+            $"Current full-inventory buffer is {FormatDuration(plan.Feeding.FullInventoryDuration)}; desired buffer at {FormatPercent(plan.Feeding.TargetAvailableMaturityPercent)} maturity.",
         _ => ""
     };
 
