@@ -27,6 +27,7 @@ from hatchly_export_core import (  # noqa: E402
     atomic_write_json,
     build_export,
     load_policy,
+    positive_magnitude_number,
     positive_number,
     read_records,
     slug,
@@ -383,20 +384,24 @@ def _extract_creature(
     sources = [character, status, egg, settings]
     status_values = _read_property([status], "statusValues")
 
-    values = {
-        key: positive_number(_read_property(sources, key))
-        for key in (
-            "baseFoodRate",
-            "babyFoodRateMultiplier",
-            "extraBabyFoodRateMultiplier",
-            "ageSpeed",
-            "ageSpeedMultiplier",
-            "eggSpeed",
-            "eggSpeedMultiplier",
-            "gestationSpeed",
-            "gestationSpeedMultiplier",
+    values = {}
+    for key in (
+        "baseFoodRate",
+        "babyFoodRateMultiplier",
+        "extraBabyFoodRateMultiplier",
+        "ageSpeed",
+        "ageSpeedMultiplier",
+        "eggSpeed",
+        "eggSpeedMultiplier",
+        "gestationSpeed",
+        "gestationSpeedMultiplier",
+    ):
+        raw_value = _read_property(sources, key)
+        values[key] = (
+            positive_magnitude_number(raw_value)
+            if key == "baseFoodRate"
+            else positive_number(raw_value)
         )
-    }
     uses_gender = bool(_read_property([character], "usesGender"))
     can_mate = _read_property([character], "canMate")
     prevented = bool(_read_property([character], "preventMating"))

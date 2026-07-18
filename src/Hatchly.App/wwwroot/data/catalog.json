@@ -17,7 +17,7 @@
       "babyFoodRateMultiplier": 25.5,
       "extraBabyFoodRateMultiplier": 20,
       "ageSpeed": 3E-06,
-      "ageSpeedMultiplier": 0.2,
+      "ageSpeedMultiplier": 1,
       "eggSpeed": 0.005556,
       "eggSpeedMultiplier": 1,
       "gestationSpeed": null,

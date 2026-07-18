@@ -145,6 +145,16 @@ class HatchlyExportCoreTests(unittest.TestCase):
         )
         self.assertIn("bad-food", report["ambiguousFoods"])
 
+    def test_devkit_negative_food_drain_exports_as_positive_rate(self):
+        creatures, _, report = build_export(
+            [creature(baseFoodRate=-0.002314)],
+            [food()],
+            policy(),
+        )
+
+        self.assertEqual([], report["blockingErrors"])
+        self.assertEqual(0.002314, creatures["creatures"][0]["baseFoodRate"])
+
     def test_missing_previous_creature_requires_explicit_exclusion(self):
         previous = [
             {

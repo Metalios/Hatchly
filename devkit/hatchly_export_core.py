@@ -33,6 +33,14 @@ def positive_number(value: Any) -> float | None:
     return number if number > 0 else None
 
 
+def positive_magnitude_number(value: Any) -> float | None:
+    try:
+        number = abs(float(value))
+    except (TypeError, ValueError):
+        return None
+    return number if number > 0 else None
+
+
 @dataclass(frozen=True)
 class ExportPolicy:
     official_roots: tuple[str, ...]
@@ -162,7 +170,14 @@ def _creature_record(
         "ageSpeedMultiplier",
         "adultWeight",
     )
-    values = {name: positive_number(raw.get(name)) for name in required_names}
+    values = {
+        name: (
+            positive_magnitude_number(raw.get(name))
+            if name == "baseFoodRate"
+            else positive_number(raw.get(name))
+        )
+        for name in required_names
+    }
     missing = sorted(name for name, value in values.items() if value is None)
     if missing:
         return None, f"missing required values: {', '.join(missing)}"
