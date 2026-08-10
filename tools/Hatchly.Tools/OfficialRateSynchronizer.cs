@@ -20,7 +20,7 @@ public sealed class OfficialRateSynchronizer
     [
         new(
             "standard",
-            "Standard",
+            "Official",
             "https://cdn2.arkdedicated.com/asa/dynamicconfig.ini"),
         new(
             "apocalypse",
@@ -143,6 +143,8 @@ public sealed class OfficialRateSynchronizer
         foreach (var profile in left)
         {
             if (!rightById.TryGetValue(profile.Id, out var candidate)
+                || !profile.DisplayName.Equals(candidate.DisplayName, StringComparison.Ordinal)
+                || !profile.SourceUrl.Equals(candidate.SourceUrl, StringComparison.Ordinal)
                 || profile.EggHatchSpeedMultiplier != candidate.EggHatchSpeedMultiplier
                 || profile.BabyMatureSpeedMultiplier != candidate.BabyMatureSpeedMultiplier)
             {

@@ -110,8 +110,8 @@ public sealed class OfficialRateSynchronizerTests
             Profiles = feeds.Select(feed => new OfficialRateProfile
             {
                 Id = feed.Id,
-                DisplayName = "Old formatting is ignored",
-                SourceUrl = "old-url",
+                DisplayName = feed.DisplayName,
+                SourceUrl = feed.SourceUrl,
                 EggHatchSpeedMultiplier = 2,
                 BabyMatureSpeedMultiplier = 3
             }).ToArray()
@@ -134,6 +134,50 @@ public sealed class OfficialRateSynchronizerTests
         Assert.False(result.Changed);
         Assert.Equal(timestamp, result.Document.LastRelevantRateChangeUtc);
         Assert.Equal(before, await File.ReadAllTextAsync(output));
+    }
+
+    [Fact]
+    public async Task Profile_metadata_change_rewrites_file()
+    {
+        using var directory = new TemporaryDirectory();
+        var output = Path.Combine(directory.Path, "rates.json");
+        var timestamp = new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var feed = new RateFeed("standard", "Official", "https://rates/current");
+        var existing = new OfficialRatesDocument
+        {
+            SchemaVersion = 1,
+            LastRelevantRateChangeUtc = timestamp,
+            Profiles =
+            [
+                new OfficialRateProfile
+                {
+                    Id = feed.Id,
+                    DisplayName = "Standard",
+                    SourceUrl = "https://rates/old",
+                    EggHatchSpeedMultiplier = 2,
+                    BabyMatureSpeedMultiplier = 3
+                }
+            ]
+        };
+        await File.WriteAllTextAsync(
+            output,
+            JsonSerializer.Serialize(existing, new JsonSerializerOptions(JsonSerializerDefaults.Web)
+            {
+                WriteIndented = false
+            }));
+        using var http = new HttpClient(new SequenceHandler(_ => TextResponse(2, 3)));
+        var synchronizer = new OfficialRateSynchronizer(
+            http,
+            [feed],
+            () => timestamp.AddDays(10));
+
+        var result = await synchronizer.SynchronizeAsync(output);
+
+        Assert.True(result.Changed);
+        Assert.Equal(timestamp.AddDays(10), result.Document.LastRelevantRateChangeUtc);
+        var profile = Assert.Single(result.Document.Profiles);
+        Assert.Equal("Official", profile.DisplayName);
+        Assert.Equal("https://rates/current", profile.SourceUrl);
     }
 
     private static HttpResponseMessage TextResponse(double hatch, double mature) =>

@@ -17,7 +17,7 @@ and deployment workflow.
 - Multi-container Normal, Maeguana, Tek, and hand-feed simulation with
   stack-slot capacity, multiple food types, multiple creature groups, and
   spoilage
-- Standard, Apocalypse, Small Tribes, and Conquest official rate profiles
+- Official, Apocalypse, Small Tribes, and Conquest official rate profiles
 - One browser-local unofficial hatch/mature/consume profile
 - Versioned creature, food, diet, and override data
 
@@ -63,8 +63,9 @@ values change.
 
 The `Sync official rates` workflow runs hourly at minute 17. It fetches the
 official feeds, validates all required values, and commits only changed
-normalized rate data to `official-rates.json`. A rate-change commit then
-triggers the normal Pages deployment workflow.
+normalized rate data to `official-rates.json` on `master`. It also updates
+`data/official-rates.json` on the deployed `gh-pages` branch so the running
+site can consume new official rates without rebuilding the Blazor application.
 
 ## Updating creatures
 
@@ -76,15 +77,13 @@ are required for a valid new creature record.
 
 ## GitHub Pages and domain
 
-GitHub Pages must use GitHub Actions as its source. The workflow reads the base
-path from `actions/configure-pages`: repository previews use `/Hatchly/`,
-while the configured `hatchlyapp.com` custom domain uses `/`. The workflow also
-installs the transformed Blazor boot index and generates `404.html` for direct
-client-side routes such as `/troughs`.
+GitHub Pages must use `Deploy from a branch` with `gh-pages` and `/` selected
+as the source. The Pages workflow publishes the transformed Blazor output to
+that branch with a root base path for `hatchlyapp.com`, writes `CNAME`, and
+generates `404.html` for direct client-side routes such as `/troughs`.
 
-The repository intentionally does not ship a `CNAME` file. Configure and verify
-the custom domain through the Hatchly repository's Pages settings after the
-repository preview is accepted.
+Rate-only updates do not rebuild the site. The rate-sync workflow patches the
+deployed `gh-pages` JSON file directly after validating all official feeds.
 
 ## Attribution
 

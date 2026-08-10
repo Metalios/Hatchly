@@ -38,12 +38,48 @@ jobs:
       - name: Commit changed rate values
         shell: bash
         run: |
+          set -euo pipefail
+
           if git diff --quiet -- src/Hatchly.App/wwwroot/data/official-rates.json; then
             echo "Official rates are unchanged."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- src/Hatchly.App/wwwroot/data/official-rates.json
           git commit -m "chore(data): sync official ASA rates"
           git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Update deployed official rates
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if ! git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            echo "gh-pages does not exist yet; deploy the site once before patching live rates."
+            exit 0
+          fi
+
+          source_file="$PWD/src/Hatchly.App/wwwroot/data/official-rates.json"
+
+          git clone --depth 1 --branch gh-pages \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            gh-pages
+
+          mkdir -p gh-pages/data
+          cp "$source_file" gh-pages/data/official-rates.json
+
+          git -C gh-pages config user.name "github-actions[bot]"
+          git -C gh-pages config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C gh-pages add data/official-rates.json
+
+          if git -C gh-pages diff --cached --quiet; then
+            echo "Deployed official rates are already current."
+            exit 0
+          fi
+
+          git -C gh-pages commit -m "chore(data): sync official ASA rates"
+          git -C gh-pages push origin HEAD:gh-pages

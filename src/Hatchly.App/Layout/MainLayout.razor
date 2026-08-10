@@ -19,7 +19,7 @@
             <select id="server-selection"
                     value="@Rates.SelectedServer"
                     @onchange="ChangeServerAsync">
-                <option value="@ServerSelection.Standard">@OfficialOption("standard", "Standard")</option>
+                <option value="@ServerSelection.Standard">@OfficialOption("standard", "Official")</option>
                 <option value="@ServerSelection.Apocalypse">@OfficialOption("apocalypse", "Apocalypse")</option>
                 <option value="@ServerSelection.SmallTribes">@OfficialOption("small-tribes", "Small Tribes")</option>
                 <option value="@ServerSelection.Conquest">@OfficialOption("conquest", "Conquest")</option>
@@ -85,9 +85,12 @@
     {
         var profile = Rates.OfficialRates?.Profiles.FirstOrDefault(
             item => item.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        var displayName = id.Equals("standard", StringComparison.OrdinalIgnoreCase)
+            ? "Official"
+            : profile?.DisplayName ?? fallback;
         return profile is null
             ? fallback
-            : $"{profile.DisplayName} · {profile.BabyMatureSpeedMultiplier:0.##}×";
+            : $"{displayName} · {profile.BabyMatureSpeedMultiplier:0.##}×";
     }
 
     public void Dispose() => Rates.Changed -= OnRatesChanged;
