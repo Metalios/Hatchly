@@ -8,20 +8,26 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: hatchly-pages
   cancel-in-progress: false
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v6
 
       - name: Install .NET 10
         uses: actions/setup-dotnet@v6
@@ -77,38 +83,18 @@ jobs:
           audit-publish
           --path publish
 
-      - name: Publish static site to gh-pages
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: publish/wwwroot
 
-          printf 'hatchlyapp.com\n' > publish/wwwroot/CNAME
-
-          site_dir="$(mktemp -d)"
-          cp -a publish/wwwroot/. "$site_dir"/
-
-          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
-            git clone --depth 1 --branch gh-pages \
-              "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-              gh-pages
-          else
-            git init gh-pages
-            git -C gh-pages checkout --orphan gh-pages
-            git -C gh-pages remote add origin \
-              "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          fi
-
-          rsync -a --delete --exclude .git "$site_dir"/ gh-pages/
-          git -C gh-pages config user.name "github-actions[bot]"
-          git -C gh-pages config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C gh-pages add -A
-
-          if git -C gh-pages diff --cached --quiet; then
-            echo "Published site is unchanged."
-            exit 0
-          fi
-
-          git -C gh-pages commit -m "deploy: publish Hatchly site"
-          git -C gh-pages push origin HEAD:gh-pages
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

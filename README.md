@@ -63,9 +63,9 @@ values change.
 
 The `Sync official rates` workflow runs hourly at minute 17. It fetches the
 official feeds, validates all required values, and commits only changed
-normalized rate data to `official-rates.json` on `master`. It also updates
-`data/official-rates.json` on the deployed `gh-pages` branch so the running
-site can consume new official rates without rebuilding the Blazor application.
+normalized rate data to `official-rates.json` on `master`. When rates change,
+the same workflow tests, publishes, and deploys the updated static site through
+GitHub Pages. If rates are unchanged, it does not create a commit or redeploy.
 
 ## Updating creatures
 
@@ -77,13 +77,14 @@ are required for a valid new creature record.
 
 ## GitHub Pages and domain
 
-GitHub Pages must use `Deploy from a branch` with `gh-pages` and `/` selected
-as the source. The Pages workflow publishes the transformed Blazor output to
-that branch with a root base path for `hatchlyapp.com`, writes `CNAME`, and
-generates `404.html` for direct client-side routes such as `/troughs`.
+GitHub Pages must use GitHub Actions as its source. The Pages workflow
+publishes the transformed Blazor output with a root base path for
+`hatchlyapp.com` and generates `404.html` for direct client-side routes such as
+`/troughs`.
 
-Rate-only updates do not rebuild the site. The rate-sync workflow patches the
-deployed `gh-pages` JSON file directly after validating all official feeds.
+Rate-only updates are handled by the `Sync official rates` workflow. It
+publishes a fresh Pages artifact only when the normalized official-rate file
+changes.
 
 ## Attribution
 
