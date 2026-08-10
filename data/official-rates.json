@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "lastRelevantRateChangeUtc": "2026-08-10T20:04:14.1427614+00:00",
+  "lastRelevantRateChangeUtc": "2026-08-10T21:01:58.7671514+00:00",
   "profiles": [
     {
       "id": "standard",
-      "displayName": "Standard",
+      "displayName": "Official",
       "sourceUrl": "https://cdn2.arkdedicated.com/asa/dynamicconfig.ini",
       "eggHatchSpeedMultiplier": 1,
       "babyMatureSpeedMultiplier": 1
