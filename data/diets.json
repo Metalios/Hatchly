@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "diets": [
+    {
+      "id": "archaeopteryx",
+      "name": "Archaeopteryx"
+    },
+    {
+      "id": "bloodstalker",
+      "name": "BloodStalker"
+    },
+    {
+      "id": "carnivore",
+      "name": "Carnivore"
+    },
+    {
+      "id": "carrion",
+      "name": "Carrion "
+    },
+    {
+      "id": "crystalwyvern",
+      "name": "CrystalWyvern"
+    },
+    {
+      "id": "herbivore",
+      "name": "Herbivore"
+    },
+    {
+      "id": "magmasaur",
+      "name": "Magmasaur"
+    },
+    {
+      "id": "microraptor",
+      "name": "Microraptor"
+    },
+    {
+      "id": "omnivore",
+      "name": "Omnivore"
+    },
+    {
+      "id": "piscivore",
+      "name": "Piscivore"
+    },
+    {
+      "id": "rockdrake",
+      "name": "RockDrake"
+    },
+    {
+      "id": "sinomacrops",
+      "name": "Sinomacrops"
+    },
+    {
+      "id": "wyvern",
+      "name": "Wyvern"
+    }
+  ]
+}

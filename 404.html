@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hatchly - ARK: Survival Ascended Raise Planner</title>
+    <meta name="description" content="Plan ASA creature maturation, capacity-based baby feeding, and shared trough coverage." />
+    <meta name="theme-color" content="#071512" />
+    <meta property="og:image" content="https://hatchlyapp.com/images/hatchly-social.png" />
+    <base href="/" />
+    <link href="_framework/dotnet.ph46uaa1rs.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-PYLf3++ewtEH/Cvq/4BqhXeibQKm9wIRYq9D6DMgN3U=" />
+    <link rel="preload" href="data/catalog.json" as="fetch" crossorigin />
+    <link rel="preload" href="data/official-rates.json" as="fetch" crossorigin />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <script type="importmap">{
+  "imports": {
+    "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.958z1vx7fr.js",
+    "./_framework/dotnet.native.js": "./_framework/dotnet.native.6qb078f95t.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.ph46uaa1rs.js",
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.web2r9gqbh.js"
+  },
+  "scopes": {},
+  "integrity": {
+    "./_framework/blazor.webassembly.958z1vx7fr.js": "sha256-A59Tr9HqEhHMu8kU7kruLI9ayw5MRS6Lvc6z7jCbghk=",
+    "./_framework/blazor.webassembly.js": "sha256-A59Tr9HqEhHMu8kU7kruLI9ayw5MRS6Lvc6z7jCbghk=",
+    "./_framework/dotnet.js": "sha256-PYLf3++ewtEH/Cvq/4BqhXeibQKm9wIRYq9D6DMgN3U=",
+    "./_framework/dotnet.native.6qb078f95t.js": "sha256-og3cp1XzbFjBWL6eCfjJLBcWpniuDtZEiWfAG3J8Uk8=",
+    "./_framework/dotnet.native.js": "sha256-og3cp1XzbFjBWL6eCfjJLBcWpniuDtZEiWfAG3J8Uk8=",
+    "./_framework/dotnet.ph46uaa1rs.js": "sha256-PYLf3++ewtEH/Cvq/4BqhXeibQKm9wIRYq9D6DMgN3U=",
+    "./_framework/dotnet.runtime.js": "sha256-SOUHEQ3FhDAibBSR2u90NWZpoBjPuWRmH0BAATUlhJU=",
+    "./_framework/dotnet.runtime.web2r9gqbh.js": "sha256-SOUHEQ3FhDAibBSR2u90NWZpoBjPuWRmH0BAATUlhJU="
+  }
+}</script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="app-frame startup-shell" role="status" aria-label="Loading the Hatchly planner">
+            <header class="app-header">
+                <span class="brand" aria-label="Hatchly">
+                    <span class="brand-emblem" aria-hidden="true"></span>
+                    <span class="brand-wordmark" aria-hidden="true"></span>
+                </span>
+                <nav class="desktop-nav startup-nav" aria-label="Primary navigation">
+                    <span class="active">Planner</span>
+                    <span>Troughs</span>
+                </nav>
+                <span class="startup-server">Official</span>
+            </header>
+            <main class="app-main startup-main">
+                <div class="startup-heading skeleton-block"></div>
+                <div class="startup-grid">
+                    <section class="startup-panel startup-setup">
+                        <div class="startup-title skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                        <div class="startup-field skeleton-block"></div>
+                    </section>
+                    <section class="startup-results">
+                        <div class="startup-panel startup-hero">
+                            <div class="startup-title skeleton-block"></div>
+                            <div class="startup-result skeleton-block"></div>
+                            <div class="startup-timeline skeleton-block"></div>
+                        </div>
+                        <div class="startup-card-row">
+                            <div class="startup-panel"></div>
+                            <div class="startup-panel"></div>
+                            <div class="startup-panel"></div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">&#215;</span>
+    </div>
+    <script src="js/app-storage.js"></script>
+    <script src="_framework/blazor.webassembly.958z1vx7fr.js"></script>
+</body>
+
+</html>

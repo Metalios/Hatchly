@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "foods": [
+    {
+      "id": "ambergris",
+      "name": "Ambergris",
+      "foodValue": 500,
+      "stackSize": 1,
+      "spoilSeconds": 1200,
+      "itemWeight": 5,
+      "waste": 0
+    },
+    {
+      "id": "berry",
+      "name": "Berry",
+      "foodValue": 20,
+      "stackSize": 100,
+      "spoilSeconds": 600,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "bison-milk",
+      "name": "Bison Milk",
+      "foodValue": 1200,
+      "stackSize": 1,
+      "spoilSeconds": 1800,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "blood-pack",
+      "name": "Blood Pack",
+      "foodValue": 200,
+      "stackSize": 100,
+      "spoilSeconds": 1800,
+      "itemWeight": 0.05,
+      "waste": 0
+    },
+    {
+      "id": "chitin",
+      "name": "Chitin",
+      "foodValue": 50,
+      "stackSize": 100,
+      "spoilSeconds": 81018001,
+      "itemWeight": 0.01,
+      "waste": 0
+    },
+    {
+      "id": "cooked-fish-meat",
+      "name": "Cooked Fish Meat",
+      "foodValue": 12.5,
+      "stackSize": 50,
+      "spoilSeconds": 1800,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "cooked-meat",
+      "name": "Cooked Meat",
+      "foodValue": 25,
+      "stackSize": 50,
+      "spoilSeconds": 1200,
+      "itemWeight": 0.1,
+      "waste": 25
+    },
+    {
+      "id": "kibble",
+      "name": "Kibble",
+      "foodValue": 60,
+      "stackSize": 100,
+      "spoilSeconds": 259200,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "mejoberry",
+      "name": "Mejoberry",
+      "foodValue": 30,
+      "stackSize": 100,
+      "spoilSeconds": 600,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "mutagen",
+      "name": "Mutagen",
+      "foodValue": 1000,
+      "stackSize": 1,
+      "spoilSeconds": 1800,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "nameless-venom",
+      "name": "Nameless Venom",
+      "foodValue": 400,
+      "stackSize": 1,
+      "spoilSeconds": 1800,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "primal-crystal",
+      "name": "Primal Crystal",
+      "foodValue": 350,
+      "stackSize": 1,
+      "spoilSeconds": 10800,
+      "itemWeight": 1,
+      "waste": 0
+    },
+    {
+      "id": "rare-flower",
+      "name": "Rare Flower",
+      "foodValue": 60,
+      "stackSize": 100,
+      "spoilSeconds": 259200,
+      "itemWeight": 0.15,
+      "waste": 0
+    },
+    {
+      "id": "raw-fish-meat",
+      "name": "Raw Fish Meat",
+      "foodValue": 25,
+      "stackSize": 40,
+      "spoilSeconds": 1200,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "raw-fish-meat-carrion",
+      "name": "Raw Fish Meat (Carrion)",
+      "foodValue": 5,
+      "stackSize": 40,
+      "spoilSeconds": 1200,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "raw-meat",
+      "name": "Raw Meat",
+      "foodValue": 50,
+      "stackSize": 40,
+      "spoilSeconds": 600,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "raw-meat-carrion",
+      "name": "Raw Meat (Carrion)",
+      "foodValue": 10,
+      "stackSize": 40,
+      "spoilSeconds": 600,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "spoiled-meat",
+      "name": "Spoiled Meat",
+      "foodValue": 50,
+      "stackSize": 100,
+      "spoilSeconds": 3600,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "sulfur",
+      "name": "Sulfur",
+      "foodValue": 50,
+      "stackSize": 100,
+      "spoilSeconds": 81018001,
+      "itemWeight": 0.05,
+      "waste": 0
+    },
+    {
+      "id": "vegetables",
+      "name": "Vegetables",
+      "foodValue": 40,
+      "stackSize": 100,
+      "spoilSeconds": 300,
+      "itemWeight": 0.1,
+      "waste": 0
+    },
+    {
+      "id": "wyvern-milk",
+      "name": "Wyvern Milk",
+      "foodValue": 1200,
+      "stackSize": 1,
+      "spoilSeconds": 1800,
+      "itemWeight": 0.1,
+      "waste": 0
+    }
+  ]
+}
