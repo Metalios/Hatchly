@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
-  "lastRelevantRateChangeUtc": "2026-08-10T21:01:58.7671514+00:00",
+  "lastRelevantRateChangeUtc": "2026-08-14T17:11:05.5684124+00:00",
   "profiles": [
     {
       "id": "standard",
       "displayName": "Official",
       "sourceUrl": "https://cdn2.arkdedicated.com/asa/dynamicconfig.ini",
-      "eggHatchSpeedMultiplier": 1,
-      "babyMatureSpeedMultiplier": 1
+      "eggHatchSpeedMultiplier": 2,
+      "babyMatureSpeedMultiplier": 2
     },
     {
       "id": "apocalypse",
       "displayName": "Apocalypse",
       "sourceUrl": "https://cdn2.arkdedicated.com/asa/arkpocalypse_dynamicconfig.ini",
-      "eggHatchSpeedMultiplier": 3,
-      "babyMatureSpeedMultiplier": 3
+      "eggHatchSpeedMultiplier": 5,
+      "babyMatureSpeedMultiplier": 5
     },
     {
       "id": "small-tribes",
       "displayName": "Small Tribes",
       "sourceUrl": "https://cdn2.arkdedicated.com/asa/smalltribes_dynamicconfig.ini",
-      "eggHatchSpeedMultiplier": 2,
-      "babyMatureSpeedMultiplier": 2
+      "eggHatchSpeedMultiplier": 4,
+      "babyMatureSpeedMultiplier": 4
     },
     {
       "id": "conquest",
