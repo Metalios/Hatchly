@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastRelevantRateChangeUtc": "2026-10-29T07:05:08.6679499+00:00",
+  "lastRelevantRateChangeUtc": "2026-10-31T02:22:48.4109323+00:00",
   "profiles": [
     {
       "id": "standard",
@@ -27,8 +27,8 @@
       "id": "conquest",
       "displayName": "Conquest",
       "sourceUrl": "https://cdn2.arkdedicated.com/asa/conquest_dynamicconfig.ini",
-      "eggHatchSpeedMultiplier": 6,
-      "babyMatureSpeedMultiplier": 6
+      "eggHatchSpeedMultiplier": 7,
+      "babyMatureSpeedMultiplier": 7
     }
   ]
 }
